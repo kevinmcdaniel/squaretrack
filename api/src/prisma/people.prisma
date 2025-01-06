@@ -1,17 +1,17 @@
 // squarePeople
 
 model dancer {
-  id      String @id @default(uuid())
+  dancerId Int @id @default(autoincrement())
   name    String?
   email   String @unique
   groups  dance_group[]
-  levels  dance_level[]
+  levels  dance_program[]
   @@index([email])
 }
 
 model dance_group {
-  dancerId    String
-  dancer      dancer @relation(fields: [dancerId], references: [id])
+  dancerId    Int
+  dancer      dancer @relation(fields: [dancerId], references: [dancerId])
   groupId     String
   group       group @relation(fields: [groupId], references: [id])
   side        String
@@ -19,14 +19,14 @@ model dance_group {
   @@id(fields: [dancerId, groupId])
 }
 
-model dance_level {
-  dancerId    String
-  dancer      dancer @relation(fields: [dancerId], references: [id])
-  levelId     String
-  level       level @relation(fields: [levelId], references: [id])
+model dance_program {
+  dancerId    Int
+  dancer      dancer @relation(fields: [dancerId], references: [dancerId])
+  programId   Int
+  program     program @relation(fields: [programId], references: [programId])
   type        String   // dancer, caller, other
   proficency  String   // learning, perfecting, proficient
-  @@id(fields: [dancerId, levelId, type])
+  @@id(fields: [dancerId, programId, type, proficency])
 }
 
 model group {

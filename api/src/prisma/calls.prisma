@@ -1,7 +1,94 @@
 // Calls and Programs
 
-model level {
-  id String @id @default(uuid())
-  name  String
-  dancers dance_level[]
+// call family r&l thru
+// program - ssd  facing regular couples only
+// program - plus any facing couple
+
+model call {
+  callId     Int @id @default(autoincrement())
+  name       String  @unique
+  tamSeq     String?
+  formations call_formation[]
+  sequences  sequence_calls[]
+}
+//   callType  String
+//   refSource String
+//   refId     String
+//   sdString  String
+//   sequences call_sequence[]
+// }
+
+// model call_family {
+//   familyId Int @id @default(autoincrement())
+//   name     String
+//   call    call[]
+// }
+
+// model call_sequence {
+//   seqId Int
+//   sequence sequence @relation(fields: [seqId], references: [seqId])
+//   callId Int
+//   call     call  @relation(fields: [callId], references: [callId])
+//   order Int
+//   name String @unique
+//   @@id([seqId,callId,order])
+// }
+
+model call_formation {
+  callId    Int
+  call      call @relation(fields: [callId], references: [callId])
+  startId   Int
+  startForm formation @relation(name: "startFormation", fields: [startId], references: [formId])
+  endId     Int
+  endForm   formation @relation(name: "endingFormation", fields: [endId], references: [formId])
+  @@id([callId, startId])
+  @@index([startId])
+  @@index([endId])
+}
+
+model formation {
+  formId      Int @id @default(autoincrement())
+  name        String
+  description String?
+  clCode      String?
+  sdCode      String?
+  callStart   call_formation[] @relation(name: "startFormation")
+  callEnding  call_formation[] @relation(name: "endingFormation")
+  sequences   sequence_calls[]
+}
+
+model program {
+  programId Int @id @default(autoincrement())
+  name      String
+  order     Int
+  dancers   dance_program[]
+}
+
+// model program_calls {
+//   programId  Int
+//   program    program @relation(fields: [programId], references: [programId])
+//   callId     Int
+//   call       call @relation(fields: [callId], references: [callId])
+//   order      Int
+//   subOrder   Int
+//   @@id([programId,callId,order,])
+// }
+
+model sequence {
+  seqId    Int @id @default(autoincrement())
+  name     String @unique
+  calls    sequence_calls[]
+}
+
+model sequence_calls {
+  seqId      Int
+  sequence   sequence @relation(fields: [seqId], references: [seqId])
+  callId     Int
+  call       call @relation(fields: [callId], references: [callId])
+  startId    Int
+  startForm  formation @relation(fields: [startId], references: [formId])
+  order      Int
+  helperText String?
+  @@id([seqId,callId,startId,order])
+
 }
