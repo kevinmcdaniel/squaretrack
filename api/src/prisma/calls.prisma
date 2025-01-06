@@ -1,0 +1,7 @@
+// Calls and Programs
+
+model level {
+  id String @id @default(uuid())
+  name  String
+  dancers dance_level[]
+}

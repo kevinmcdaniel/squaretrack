@@ -1,0 +1,52 @@
+// squarePeople
+
+model dancer {
+  id      String @id @default(uuid())
+  name    String?
+  email   String @unique
+  groups  dance_group[]
+  levels  dance_level[]
+  @@index([email])
+}
+
+model dance_group {
+  dancerId    String
+  dancer      dancer @relation(fields: [dancerId], references: [id])
+  groupId     String
+  group       group @relation(fields: [groupId], references: [id])
+  side        String
+  proficency  String
+  @@id(fields: [dancerId, groupId])
+}
+
+model dance_level {
+  dancerId    String
+  dancer      dancer @relation(fields: [dancerId], references: [id])
+  levelId     String
+  level       level @relation(fields: [levelId], references: [id])
+  type        String   // dancer, caller, other
+  proficency  String   // learning, perfecting, proficient
+  @@id(fields: [dancerId, levelId, type])
+}
+
+model group {
+  id      String @id @default(uuid())
+  name    String
+  type    String   // make a enum?
+  country String
+  state   String?  
+  dancers dance_group[]
+  parent group_assocations[] @relation(name: "childGroup")
+  child  group_assocations[] @relation(name: "parentGroup")
+  @@index([name])
+}
+
+model group_assocations {
+  groupId   String
+  group     group @relation(name: "childGroup", fields: [groupId],references: [id])
+  parentId  String
+  parent    group @relation(name: "parentGroup", fields: [parentId], references: [id])
+  @@id([groupId, parentId])
+}
+
+// level - see calls.prisma
