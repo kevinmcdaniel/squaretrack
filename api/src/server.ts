@@ -1,42 +1,28 @@
-import { PrismaClient } from '@prisma/client';
-import express from 'express';
-
-// NOTE: Because we are using custom PrismaClient, we need to import it from the custom path
-// instead of '@prisma/client'
-
-const prisma = new PrismaClient();
+// import { PrismaClient } from '@prisma/client';
+import express, { Request, Response } from 'express';
+import { prisma } from './database';
+import { indexRoute } from './route';
 
 const app = express();
 
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.json({
-    message: 'Hello World 🌍🚀',
-  });
+app.use('/api',indexRoute);
+
+app.use((err: any, req: Request, res: Response, next: any) => {
+  if (res.headersSent) {
+    return next(err);
+  }
+  // future - add passing of status for error message types...
+  if (err.name === 'ValidationError') {
+    res.status(406)
+    res.json({
+      message: `${err.name}: ${err.message}`,
+      data: null,
+    });
+  }
+  return next(err);
 });
-
-// app.get('/users', async (req, res) => {
-//   const users = await prisma.user.findMany();
-//   res.json({
-//     message: 'List of all users',
-//     data: users,
-//   });
-// });
-
-// app.post('/users', async (req, res) => {
-//   const { name, email } = req.body;
-//   const user = await prisma.user.create({
-//     data: {
-//       name,
-//       email,
-//     },
-//   });
-//   res.json({
-//     message: 'User created successfully',
-//     data: user,
-//   });
-// });
 
 const PORT = process.env.API_PORT || 3000;
 

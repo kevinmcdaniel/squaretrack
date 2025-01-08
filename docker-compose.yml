@@ -67,6 +67,31 @@ services:
   #   depends_on:
   #     - db
 
+  studio:
+    image: squareapi
+    build:
+      dockerfile: Dockerfile.api
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: ${DB_SQUARETRACK_URL}
+    env_file: 
+      - path: .env
+        required: true
+    volumes:
+      - ./api:/app/
+    networks:
+    #   - backend
+      - default
+      - squarenet
+    ports:
+      - ${STUDIO_PORT}:5555
+    container_name: square.studio
+    command: npx prisma studio
+    # command: npm run dev
+    depends_on:
+      - db
+      - api
+
 networks:
   squarenet:
     driver: bridge
