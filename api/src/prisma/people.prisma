@@ -1,5 +1,11 @@
 // squarePeople
 
+model country {
+  code        String @id
+  name        String?
+  states      state[]
+}
+
 model dancer {
   dancerId Int @id @default(autoincrement())
   name    String?
@@ -30,11 +36,12 @@ model dance_program {
 }
 
 model group {
-  id      String @id @default(uuid())
-  name    String
-  type    String   // make a enum?
-  country String
-  state   String?  
+  id          String @id @default(uuid())
+  name        String
+  type        String   // make a enum?
+  countryCode String
+  state       String
+  countryState state @relation(fields: [countryCode,state], references: [countryCode,state])
   dancers dance_group[]
   parent group_assocations[] @relation(name: "childGroup")
   child  group_assocations[] @relation(name: "parentGroup")
@@ -49,4 +56,12 @@ model group_assocations {
   @@id([groupId, parentId])
 }
 
+model state {
+  countryCode  String
+  country      country @relation(fields: [countryCode], references: [code])
+  state        String
+  name         String?
+  groups       group[]
+  @@id([countryCode,state])
+}
 // level - see calls.prisma

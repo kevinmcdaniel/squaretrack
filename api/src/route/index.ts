@@ -1,5 +1,4 @@
 import express from "express";
-
 import { callRoute } from "./calls/calls";
 import { groupRoute } from "./people/groups";
 
@@ -13,18 +12,3 @@ indexRoute.get('/', (req, res) => {
 
 indexRoute.use('/call',callRoute);
 indexRoute.use('/group',groupRoute);
-
-
-// app.post('/users', async (req, res) => {
-//   const { name, email } = req.body;
-//   const user = await prisma.user.create({
-//     data: {
-//       name,
-//       email,
-//     },
-//   });
-//   res.json({
-//     message: 'User created successfully',
-//     data: user,
-//   });
-// });

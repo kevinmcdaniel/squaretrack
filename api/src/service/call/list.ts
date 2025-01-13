@@ -1,38 +1,18 @@
+// service - call table
+import { prisma } from '../../database';
+import { call } from '@prisma/client';
 
-// import { prisma } from '../../database';
 
+const listCallService = async (iCallId: number): Promise<call | null> => {
+  return prisma.call.findUnique({
+    where: {
+      callId: iCallId,
+    },
+  });
+};
 
-// // import type { CommonServiceResponse } from '../../common/types';
+const listCallsService = async (): Promise<call[]> => {
+  return prisma.call.findMany();
+};
 
-// const listCallService = async (req: any): Promise<Response> => {
-//   try {
-//     let calls = await prisma.call.findMany({
-//     //   where: {
-//     //     countryCode: req.countryCode,
-//     //   },
-//     //   include: {
-//     //     states: true
-//     //   }
-//     });
-
-//     if (!calls) {
-//       return { 
-//         // err: true,
-//         data: '',
-//       }; 
-//     }
-//     return {
-//       err: false,
-//       msg: 'Success',
-//       data: calls,
-//     };
-//   } catch (error) {
-//     return {
-//       err: true,
-//       msg: 'Could not list Country: ' + error.message,
-//       data: '',
-//     };
-//   }
-// };
-
-// export { listCallService };
+export { listCallService, listCallsService };

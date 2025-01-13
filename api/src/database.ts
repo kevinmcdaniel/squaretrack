@@ -1,8 +1,9 @@
+// database.ts - database connection and create of prisma object
 import { PrismaClient } from '@prisma/client';
 
 // temporary with logging
 export const prisma = new PrismaClient({
     log: ['info'],
 });
-// future simple 
+// future simple
 // export const prisma = new PrismaClient();
