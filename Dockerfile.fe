@@ -1,0 +1,13 @@
+
+FROM node:22-alpine3.19
+
+RUN mkdir /app
+WORKDIR /app
+
+COPY fe/package.json fe/package-lock.json fe/eslint.config.mjs fe/next.config.ts fe/postcss.config.mjs fe/tailwind.config.ts fe/tsconfig.json ./
+
+RUN npm install
+
+# RUN npx prisma generate --schema=./src/model
+
+CMD ["npm", "run", "dev"]

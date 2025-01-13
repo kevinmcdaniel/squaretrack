@@ -7,7 +7,7 @@ services:
     environment:
       NODE_ENV: development
       DATABASE_URL: ${DB_SQUARETRACK_URL}
-    env_file: 
+    env_file:
       - path: .env
         required: true
     volumes:
@@ -51,21 +51,29 @@ services:
       retries: 5
       start_period: 30s
 
-  # dbadmin:
-  #   profiles:
-  #     - admin,
-  #   image: dpage/pgadmin4:latest
-  #   env_file:
-  #     - .env
-  #   environment:
-  #     PGADMIN_DEFAULT_EMAIL: {$PGADMIN_EMAIL}
-  #     PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PW}
-  #     PGADMIN_DISABLE_POSTFIX: true
-  #     PGADMIN_LISTEN_PORT: ${PGADMIN_PORT}
-  #   ports:
-  #     - "${PGADMIN_PORT}:5433"
-  #   depends_on:
-  #     - db
+  fe:
+    image: squarefe
+    build:
+      dockerfile: Dockerfile.fe
+    environment:
+      NODE_ENV: development
+    env_file:
+      - path: .env
+        required: true
+    volumes:
+      - ./fe/public:/app/public
+      - ./fe/src:/app/src
+    networks:
+      - default
+      - squarenet
+    ports:
+      - ${FE_PORT}:3000
+    container_name: square.fe
+    command: npm run dev
+    # command: npm run dev
+    depends_on:
+      - api
+      - db
 
   studio:
     image: squareapi
@@ -74,7 +82,7 @@ services:
     environment:
       NODE_ENV: development
       DATABASE_URL: ${DB_SQUARETRACK_URL}
-    env_file: 
+    env_file:
       - path: .env
         required: true
     volumes:
