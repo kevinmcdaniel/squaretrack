@@ -1,15 +1,18 @@
+// group table routing
 import express from "express";
+import { listGroup, listGroups } from "../../controller";
 
-// temporary
-import { prisma } from "../../database";
 
 export const groupRoute = express.Router();
 
+groupRoute.get(
+  '/list',
+  // featurecheck,
+  // authorizeUser,
+  listGroups,
+ );
 
-groupRoute.get('/list', async (req, res) => {
-  const groups = await prisma.group.findMany();
-  res.json({
-    message: 'List of all groups',
-    data: groups,
-  });
-});
+groupRoute.get(
+  '/list/:groupId',
+  listGroup,
+);
