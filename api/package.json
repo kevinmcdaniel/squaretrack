@@ -1,6 +1,6 @@
 {
   "name": "api",
-  "version": "0.1.4",
+  "version": "0.1.6",
   "main": "index.js",
   "keywords": [],
   "author": "Kevin McDaniel",
@@ -11,7 +11,7 @@
     "seed": "ts-node ./src/prisma/seed.ts"
   },
   "scripts": {
-    "dev": "npx nodemon src/server.ts",
+    "dev": "npx prisma generate && npx nodemon src/server.ts",
     "dev2": "npx prisma migrate deploy && npx prisma generate && npx nodemon",
     "migrate": "npx prisma migrate dev",
     "start:local": "npx nodemon /app/src/server.ts",

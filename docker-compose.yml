@@ -7,6 +7,7 @@ services:
     environment:
       NODE_ENV: development
       DATABASE_URL: ${DB_SQUARETRACK_URL}
+      PORT: ${API_PORT_INT}
     env_file:
       - path: .env
         required: true
@@ -17,7 +18,8 @@ services:
       - default
       - squarenet
     ports:
-      - ${API_PORT}:${API_PORT}
+      #- ${API_PORT}:${API_PORT}
+      - ${API_PORT_EXT}:${API_PORT_INT}
     container_name: square.api
     command: npm run dev
     # command: npm run dev
@@ -34,10 +36,10 @@ services:
       POSTGRES_DB: ${DB_POSTGRES_NAME}
       POSTGRES_USER: ${DB_POSTGRES_USER}
       POSTGRES_PASSWORD: ${DB_POSTGRES_PW}
-      PGPORT: ${DB_PORT}
-    command: -p ${DB_PORT}
+      PGPORT: ${DB_PORT_INT}
+    command: -p ${DB_PORT_INT}
     ports:
-      - "${DB_PORT}:5432"
+      - "${DB_PORT_EXT}:${DB_PORT_INT}"
     container_name: square.db
     volumes:
       - squaredb_vol:/var/lib/postgresql/data
@@ -45,7 +47,7 @@ services:
       - default
       - squarenet
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -u ${DB_POSTGRES_USER} -d ${DB_POSTGRES_NAME} -p 5432"]
+      test: ["CMD-SHELL", "pg_isready -u ${DB_POSTGRES_USER} -d ${DB_POSTGRES_NAME} -p ${DB_PORT_INT}"]
       interval: 1m30s
       timeout: 5s
       retries: 5
@@ -56,7 +58,8 @@ services:
     build:
       dockerfile: Dockerfile.fe
     environment:
-      NODE_ENV: development
+      NODE_ENV: development,
+      PORT: ${FE_PORT_INT}
     env_file:
       - path: .env
         required: true
@@ -67,7 +70,7 @@ services:
       - default
       - squarenet
     ports:
-      - ${FE_PORT}:3000
+      - ${FE_PORT_EXT}:${FE_PORT_INT}
     container_name: square.fe
     command: npm run dev
     # command: npm run dev
@@ -92,9 +95,9 @@ services:
       - default
       - squarenet
     ports:
-      - ${STUDIO_PORT}:5555
+      - ${STUDIO_PORT_EXT}:${STUDIO_PORT_INT}
     container_name: square.studio
-    command: npx prisma studio
+    command: npx prisma studio -p ${STUDIO_PORT_INT}
     # command: npm run dev
     depends_on:
       - db
