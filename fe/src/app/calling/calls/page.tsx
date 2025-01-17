@@ -1,5 +1,5 @@
 export default function Page() {
-  return <h1>Hello - definition directory... Next.js!</h1>
+  return <h1>Hello - calls directory... Next.js!</h1>
 }
 
 // import { getPosts } from '@/lib/posts'

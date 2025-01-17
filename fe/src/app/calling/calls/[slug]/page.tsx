@@ -1,5 +1,5 @@
 // function generateStaticParams() {}
 
 export default function Page() {
-  return <h1>Hello - definitions slug page. Next.js!</h1>
+  return <h1>Hello - calls slug page. Next.js!</h1>
 }

@@ -1,6 +1,6 @@
 {
   "name": "api",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "main": "index.js",
   "keywords": [],
   "author": "Kevin McDaniel",
@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@prisma/client": "^6.1.0",
-    "express": "^4.21.2"
+    "express": "^5.0.1"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",

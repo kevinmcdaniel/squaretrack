@@ -24,7 +24,7 @@ const listCall = async (req: Request, res: Response, next: any) => {
 
 const listCalls = async (req: Request, res: Response, next: any) => {
   try {
-    const records = await listCallsService;
+    const records = await listCallsService();
     if (records.length === 0) {
       throw new emptyError('No calls found!');
     }
