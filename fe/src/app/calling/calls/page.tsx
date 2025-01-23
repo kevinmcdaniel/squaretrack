@@ -1,6 +1,24 @@
-export default function Page() {
-  return <h1>Hello - calls directory... Next.js!</h1>
-}
+import { fetchData } from "@/lib/hac/fetch"
+import Link from 'next/link';
+
+
+const Page = async () => {
+  const calls: any = await fetchData('call/list');
+  return (
+    <ul>
+      {calls.message}...
+      {calls.data.map((call: any) => (
+         <li key={call.callId}>
+           <Link href={`/calling/calls/${call.callId}`}>{call.name}</Link>
+         </li>
+
+        // <Call key={call.callId} call={call} />
+      ))}
+    </ul>
+  );
+};
+
+export default Page;
 
 // import { getPosts } from '@/lib/posts'
 // import { Post } from '@/ui/post'

@@ -1,4 +1,6 @@
 import Image from "next/image";
+import styles from "@/ui/home.module.css";
+import { inter, montsie } from "@/ui/fonts";
 
 export default function Home() {
   return (
@@ -12,6 +14,27 @@ export default function Home() {
           height={38}
           priority
         />
+          {/* doesn't work - need to figure out path right through ui/images function */}
+        <Image
+          src="/squareset.png"
+          width={100}
+          height={100}
+          className="hidden md:block"
+          alt="squared set"
+        />
+        <div
+          className="relative w-0 h-0 border-l-[15px] border-r-[15px] border-b-[26px] border-l-transparent border-r-transparent border-b-black"
+        />
+        {/* old school way to do this. */}
+        <div className={styles.shape} />
+        <p className={`${montsie.className} text-xl text-gray-500 md:text-3xl md:leading-normal`}
+        >
+          <strong>Go Square Tracking</strong>
+          </p>
+          <p className={`${inter.className} text-xl text-gray-500 md:text-2xl md:leading-normal`} >
+          All you need to know about square dance.
+        </p>
+
         <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
           <li className="mb-2">
             Get started by editing{" "}

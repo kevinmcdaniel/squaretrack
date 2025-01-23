@@ -58,7 +58,7 @@ services:
     build:
       dockerfile: Dockerfile.fe
     environment:
-      NODE_ENV: development,
+      NODE_ENV: development
       PORT: ${FE_PORT_INT}
     env_file:
       - path: .env
