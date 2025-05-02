@@ -8,6 +8,8 @@ model call {
   callId     Int @id @default(autoincrement())
   name       String  @unique
   tamSeq     String?
+  familyId   Int?
+  callFamily call_family? @relation(fields: [familyId], references: [familyId])
   formations call_formation[]
   sequences  sequence_calls[]
 }
@@ -18,11 +20,11 @@ model call {
 //   sequences call_sequence[]
 // }
 
-// model call_family {
-//   familyId Int @id @default(autoincrement())
-//   name     String
-//   call    call[]
-// }
+model call_family {
+  familyId Int @id @default(autoincrement())
+  name     String
+  call    call[]
+}
 
 // model call_sequence {
 //   seqId Int

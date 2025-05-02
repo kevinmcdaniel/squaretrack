@@ -65,3 +65,14 @@ model state {
   @@id([countryCode,state])
 }
 // level - see calls.prisma
+
+
+///
+///                    club (organization)
+//            person (dancer/ caller / ect)
+//                             programss (levels)
+//////                                          sides and proficiency
+///                    formations
+///         calls
+///                   sequences...
+///

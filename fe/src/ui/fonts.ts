@@ -4,6 +4,6 @@ export const inter = Inter({
   subsets: ['latin']
 });
 export const montsie = Montserrat({
-  weight: ['400', '700', '800'],
+  weight: ['100', '500', '700'],
   subsets: ['latin']
 });
