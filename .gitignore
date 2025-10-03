@@ -38,3 +38,4 @@ fe/.vercel
 # typescript
 fe/*.tsbuildinfo
 fe/next-env.d.ts
+/api/src/generated/client

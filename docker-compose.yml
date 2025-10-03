@@ -79,7 +79,7 @@ services:
       - db
 
   studio:
-    image: squareapi
+    image: squarestudio
     build:
       dockerfile: Dockerfile.api
     environment:

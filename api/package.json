@@ -1,6 +1,6 @@
 {
   "name": "api",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "main": "index.js",
   "keywords": [],
   "author": "Kevin McDaniel",
@@ -19,14 +19,14 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@prisma/client": "^6.1.0",
+    "@prisma/client": "^6.7.0",
     "express": "^5.0.1"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",
     "@types/node": "^22.10.1",
     "nodemon": "^3.1.7",
-    "prisma": "^6.1.0",
+    "prisma": "^6.7.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.2"
   }

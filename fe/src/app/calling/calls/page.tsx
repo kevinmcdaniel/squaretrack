@@ -4,18 +4,24 @@ import Link from 'next/link';
 
 const Page = async () => {
   const calls: any = await fetchData('call/list');
-  return (
-    <ul>
-      {calls.message}...
-      {calls.data.map((call: any) => (
-         <li key={call.callId}>
-           <Link href={`/calling/calls/${call.callId}`}>{call.name}</Link>
-         </li>
+  console.log(calls);
+  if (!calls) {
+    return <div>Loading...</div>;
+  } else if (calls.status !== 200 || calls.data.length === 0) {
+    return <div>{calls.message}</div>;
+  } else {
+    return (
+      <ul>
+        {calls.data.map((call: any) => (
+          <li key={call.callId}>
+            <Link href={`/calling/calls/${call.callId}`}>{call.name}</Link>
+          </li>
 
-        // <Call key={call.callId} call={call} />
-      ))}
-    </ul>
-  );
+          // <Call key={call.callId} call={call} />
+        ))}
+      </ul>
+    );
+  }
 };
 
 export default Page;

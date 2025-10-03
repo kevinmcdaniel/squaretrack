@@ -29,8 +29,9 @@ const listCalls = async (req: Request, res: Response, next: any) => {
       throw new emptyError('No calls found!');
     }
     res.json({
-      message: 'List of all calls',
       data: records,
+      message: 'List of all calls',
+      status: 200
     });
   } catch (error) {
     next(error);
