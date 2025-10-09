@@ -1,4 +1,4 @@
-### Welcome to SquareTrack 
+### Welcome to SquareTrack
 ###
 ###  Your Square Dance Track Everything System.
 
@@ -16,19 +16,19 @@
 
 ## DB initialization using a postgresql database
 
-# connect to postgres.db container 
+# connect to postgres.db container
     * first time you will have to exec into the container and create db and users.
 
 1. Start the database container
   a. change .env to only have the db username, db password and db database.  comment out others.
-  b. run `docker compose --profiel db up -d`
+  b. run `docker compose --profile db up -d`
   c. follow steps 2-5 below
-  
+
 2. access shell of container and su to postgres user
   `su - postgres`
 
 3. start postgres process
-  `psql` 
+  `psql`
 
 4. set postgres password in database.
   `postgres=# \password <USERNAME>  {enter key}`
@@ -62,6 +62,8 @@ GRANT
   f. enable create database?  was needed but thought grant all cover it.
   `squaretrack=# alter user squaretrack createdb;`
 ALTER ROLE
+
+
 
 ## Initialize API container
 
