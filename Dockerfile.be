@@ -1,10 +1,10 @@
 
-FROM node:22-alpine3.19
+FROM node:22-alpine
 
 RUN mkdir /app
 WORKDIR /app
 
-COPY api/package.json api/package-lock.json api/tsconfig.json api/src ./
+COPY be/package.json be/package-lock.json be/tsconfig.json be/src ./
 
 RUN npm install
 

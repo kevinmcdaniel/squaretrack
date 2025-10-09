@@ -1,0 +1,194 @@
+// Calls and Programs
+
+// call family r&l thru
+// program - ssd  facing regular couples only
+// program - plus any facing couple
+
+model call {
+  callId     Int              @id @default(autoincrement())
+  name       String           @unique
+  tamSeq     String?
+  familyId   Int?
+  callFamily call_family?     @relation(fields: [familyId], references: [familyId])
+  formations call_formation[]
+  sequences  sequence_calls[]
+}
+
+//   callType  String
+//   refSource String
+//   refId     String
+//   sdString  String
+//   sequences call_sequence[]
+// }
+
+model call_family {
+  familyId Int    @id @default(autoincrement())
+  name     String
+  call     call[]
+}
+
+// model call_sequence {
+//   seqId Int
+//   sequence sequence @relation(fields: [seqId], references: [seqId])
+//   callId Int
+//   call     call  @relation(fields: [callId], references: [callId])
+//   order Int
+//   name String @unique
+//   @@id([seqId,callId,order])
+// }
+
+model call_formation {
+  callId    Int
+  call      call      @relation(fields: [callId], references: [callId])
+  startId   Int
+  startForm formation @relation(name: "startFormation", fields: [startId], references: [formId])
+  endId     Int
+  endForm   formation @relation(name: "endingFormation", fields: [endId], references: [formId])
+
+  @@id([callId, startId])
+  @@index([startId])
+  @@index([endId])
+}
+
+model formation {
+  formId      Int              @id @default(autoincrement())
+  name        String
+  description String?
+  clCode      String?
+  sdCode      String?
+  callStart   call_formation[] @relation(name: "startFormation")
+  callEnding  call_formation[] @relation(name: "endingFormation")
+  sequences   sequence_calls[]
+}
+
+model program {
+  programId Int             @id @default(autoincrement())
+  name      String
+  order     Int
+  dancers   dance_program[]
+}
+
+// model program_calls {
+//   programId  Int
+//   program    program @relation(fields: [programId], references: [programId])
+//   callId     Int
+//   call       call @relation(fields: [callId], references: [callId])
+//   order      Int
+//   subOrder   Int
+//   @@id([programId,callId,order,])
+// }
+
+model sequence {
+  seqId Int              @id @default(autoincrement())
+  name  String           @unique
+  calls sequence_calls[]
+}
+
+model sequence_calls {
+  seqId      Int
+  sequence   sequence  @relation(fields: [seqId], references: [seqId])
+  callId     Int
+  call       call      @relation(fields: [callId], references: [callId])
+  startId    Int
+  startForm  formation @relation(fields: [startId], references: [formId])
+  order      Int
+  helperText String?
+
+  @@id([seqId, callId, startId, order])
+}
+
+// squarePeople
+
+model country {
+  code   String  @id
+  name   String?
+  states state[]
+}
+
+model dancer {
+  dancerId Int             @id @default(autoincrement())
+  name     String?
+  email    String          @unique
+  groups   dance_group[]
+  levels   dance_program[]
+
+  @@index([email])
+}
+
+model dance_group {
+  dancerId   Int
+  dancer     dancer @relation(fields: [dancerId], references: [dancerId])
+  groupId    String
+  group      group  @relation(fields: [groupId], references: [id])
+  side       String
+  proficency String
+
+  @@id(fields: [dancerId, groupId])
+}
+
+model dance_program {
+  dancerId   Int
+  dancer     dancer  @relation(fields: [dancerId], references: [dancerId])
+  programId  Int
+  program    program @relation(fields: [programId], references: [programId])
+  type       String // dancer, caller, other
+  proficency String // learning, perfecting, proficient
+
+  @@id(fields: [dancerId, programId, type, proficency])
+}
+
+model group {
+  id           String              @id @default(uuid())
+  name         String
+  type         String // make a enum?
+  countryCode  String
+  state        String
+  countryState state               @relation(fields: [countryCode, state], references: [countryCode, state])
+  dancers      dance_group[]
+  parent       group_assocations[] @relation(name: "childGroup")
+  child        group_assocations[] @relation(name: "parentGroup")
+
+  @@index([name])
+}
+
+model group_assocations {
+  groupId  String
+  group    group  @relation(name: "childGroup", fields: [groupId], references: [id])
+  parentId String
+  parent   group  @relation(name: "parentGroup", fields: [parentId], references: [id])
+
+  @@id([groupId, parentId])
+}
+
+model state {
+  countryCode String
+  country     country @relation(fields: [countryCode], references: [code])
+  state       String
+  name        String?
+  groups      group[]
+
+  @@id([countryCode, state])
+}
+
+// level - see calls.prisma
+
+///
+///                    club (organization)
+//            person (dancer/ caller / ect)
+//                             programss (levels)
+//////                                          sides and proficiency
+///                    formations
+///         calls
+///                   sequences...
+///
+
+generator client {
+  provider      = "prisma-client-js"
+  output        = "../generated/client"
+  binaryTargets = ["native", "debian-openssl-3.0.x", "linux-musl-arm64-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_SQUARETRACK_URL")
+}
