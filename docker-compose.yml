@@ -7,7 +7,7 @@ services:
     environment:
       NODE_ENV: development
       DATABASE_URL: ${DB_SQUARETRACK_URL}
-      PORT: ${API_PORT_INT}
+      PORT: ${BE_PORT_INT}
     env_file:
       - path: .env
         required: true
@@ -18,8 +18,8 @@ services:
       - default
       - squarenet
     ports:
-      #- ${API_PORT}:${API_PORT}
-      - ${API_PORT_EXT}:${API_PORT_INT}
+      #- ${BE_PORT}:${BE_PORT}
+      - ${BE_PORT_EXT}:${BE_PORT_INT}
     container_name: square.be
     command: npm run dev
     # command: npm run dev

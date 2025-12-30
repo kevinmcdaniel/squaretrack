@@ -10,9 +10,17 @@
 
 
 
-# sqaureLab
+# sqaureTrack - Your home for all things square...
 
 
+Key technoligies used:
+- Next.js
+- Node.js - https://nodejs.org/en/download
+- PostgreSQL
+- Prisma
+- TailwindCSS
+__ Shadcn UI
+- Docker
 
 ## DB initialization using a postgresql database
 
