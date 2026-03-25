@@ -42,3 +42,4 @@ fe/next-env.d.ts
 
 # trivy logs
 trivy*.log
+/.claude
