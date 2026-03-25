@@ -1,0 +1,55 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project Overview
+
+SquareTrack is a Square Dance tracking application with a monorepo structure containing:
+- `be/` — Express.js backend API with Prisma ORM
+- `fe/` — Next.js 15 frontend with App Router
+
+## Development Commands
+
+### Docker (recommended for full-stack dev)
+```bash
+docker compose up          # Start all services: BE (5002), FE (5001), DB (5004), Prisma Studio (5003)
+```
+
+### Backend (`be/`)
+```bash
+npm run dev      # Generate Prisma client + start nodemon (hot reload)
+npm run migrate  # Run Prisma migrations (prisma migrate dev)
+```
+
+### Frontend (`fe/`)
+```bash
+npm run dev      # Start Next.js with Turbopack on $PORT
+npm run build    # Production build
+npm run lint     # ESLint
+```
+
+### Database
+The README has instructions for initializing PostgreSQL with user `squaretrack` and database `squaretrack`. Connection config lives in `.env` at the repo root.
+
+## Architecture
+
+### Backend structure
+- `be/src/server.ts` — Express app entry point (port 3000 internally, 5002 externally)
+- `be/src/database.ts` — Prisma client singleton using `@prisma/adapter-pg`
+- `be/src/route/` — Express routers; `index.ts` mounts sub-routers at `/api/call`, `/api/formation`, `/api/group`, `/api/sequence`
+- `be/src/controller/` — Request handlers (thin layer, delegates to services)
+- `be/src/service/` — Business logic
+- `be/src/common/` — `authorize.ts` (API key/user auth middleware), `errorHandler.ts` (custom error classes + handler), `utils.ts`
+- `be/src/prisma/` — Schema split into `calls.prisma` and `people.prisma`, plus `seed.ts` and `migrations/`
+
+### Frontend structure
+- `fe/src/app/` — Next.js App Router; main feature area is `calling/` with nested `calls/` and `sequences/` routes
+- `fe/src/ui/` — Shared UI components (nav, sidebar, logo)
+- `fe/src/lib/hac/fetch.ts` — API client for backend calls
+
+### Data domains
+- **Calls domain**: `call`, `call_family`, `call_formation`, `formation`, `program`, `sequence`, `sequence_calls`
+- **People domain**: `dancer`, `dance_group`, `dance_program`, `group`, `group_assocations`, `country`, `state`
+
+### Prisma setup
+The backend uses `@prisma/adapter-pg` (not the default Prisma driver). Schema is split across multiple `.prisma` files referenced from `schema.prisma`. After any schema change, run `npm run migrate` in `be/`.
