@@ -1,96 +1,126 @@
 // Calls and Programs
 
-// call family r&l thru
-// program - ssd  facing regular couples only
-// program - plus any facing couple
-
 model call {
-  callId     Int @id @default(autoincrement())
-  name       String  @unique
-  tamSeq     String?
-  familyId   Int?
-  callFamily call_family? @relation(fields: [familyId], references: [familyId])
-  formations call_formation[]
-  sequences  sequence_calls[]
+  callId           Int              @id @default(autoincrement())
+  name             String           @unique
+  tamSeq           String?          // Taminations call identifier
+  sdSeq            String?          // SD program call identifier
+  preferredDisplay String?          // caller's preferred name; falls back to name
+  familyId         Int?
+  callFamily       call_family?     @relation(fields: [familyId], references: [familyId])
+  formations       call_formation[]
+  synonyms         call_synonym[]
 }
-//   callType  String
-//   refSource String
-//   refId     String
-//   sdString  String
-//   sequences call_sequence[]
-// }
 
 model call_family {
-  familyId Int @id @default(autoincrement())
+  familyId Int    @id @default(autoincrement())
   name     String
-  call    call[]
+  calls    call[]
 }
 
-// model call_sequence {
-//   seqId Int
-//   sequence sequence @relation(fields: [seqId], references: [seqId])
-//   callId Int
-//   call     call  @relation(fields: [callId], references: [callId])
-//   order Int
-//   name String @unique
-//   @@id([seqId,callId,order])
-// }
+// Alternate names for a call used when parsing pasted sequence text.
+model call_synonym {
+  id     Int    @id @default(autoincrement())
+  callId Int
+  call   call   @relation(fields: [callId], references: [callId])
+  alias  String @unique
+}
 
+// A call executed from a specific starting formation, producing a specific ending formation.
+// The (callId, startId) pair is the atomic unit placed in teach orders and sequence steps.
+// Flow fields describe directional momentum entering and exiting the call.
+// Flow compatibility rules are enforced in the service layer, not here.
 model call_formation {
-  callId    Int
-  call      call @relation(fields: [callId], references: [callId])
-  startId   Int
-  startForm formation @relation(name: "startFormation", fields: [startId], references: [formId])
-  endId     Int
-  endForm   formation @relation(name: "endingFormation", fields: [endId], references: [formId])
+  callId           Int
+  call             call                @relation(fields: [callId], references: [callId])
+  startId          Int
+  startForm        formation           @relation(name: "startFormation", fields: [startId], references: [formId])
+  endId            Int
+  endForm          formation           @relation(name: "endingFormation", fields: [endId], references: [formId])
+  inFlowRotation   String?             // left | right | none
+  inFlowDirection  String?             // forward | backward | slideLeft | slideRight
+  outFlowRotation  String?             // left | right | none
+  outFlowDirection String?             // forward | backward | slideLeft | slideRight
+  teachEntries     teach_order_entry[]
+  sequenceSteps    sequence_calls[]
   @@id([callId, startId])
   @@index([startId])
   @@index([endId])
 }
 
 model formation {
-  formId      Int @id @default(autoincrement())
+  formId      Int              @id @default(autoincrement())
   name        String
   description String?
   clCode      String?
   sdCode      String?
   callStart   call_formation[] @relation(name: "startFormation")
   callEnding  call_formation[] @relation(name: "endingFormation")
-  sequences   sequence_calls[]
 }
 
 model program {
-  programId Int @id @default(autoincrement())
-  name      String
-  order     Int
-  dancers   dance_program[]
+  programId   Int             @id @default(autoincrement())
+  name        String
+  order       Int
+  dancers     dance_program[]
+  teachOrders teach_order[]
 }
 
-// model program_calls {
-//   programId  Int
-//   program    program @relation(fields: [programId], references: [programId])
-//   callId     Int
-//   call       call @relation(fields: [callId], references: [callId])
-//   order      Int
-//   subOrder   Int
-//   @@id([programId,callId,order,])
-// }
+// A named ordering of call_formation entries within a program.
+// Different callers or updated curricula produce different teach orders for the same program.
+model teach_order {
+  id        Int                 @id @default(autoincrement())
+  programId Int
+  program   program             @relation(fields: [programId], references: [programId])
+  name      String
+  entries   teach_order_entry[]
+  sequences sequence[]
+}
+
+// Places a specific call_formation at a position and week within a teach order.
+// The same call taught from a harder formation gets a later position than from an easier one.
+model teach_order_entry {
+  teachOrderId  Int
+  teachOrder    teach_order    @relation(fields: [teachOrderId], references: [id])
+  callId        Int
+  startId       Int
+  callFormation call_formation @relation(fields: [callId, startId], references: [callId, startId])
+  position      Int            // absolute index in this teach order
+  week          Int            // class night this call_formation is introduced
+  @@id([teachOrderId, callId, startId])
+  @@index([teachOrderId, position])
+  @@index([teachOrderId, week])
+}
 
 model sequence {
-  seqId    Int @id @default(autoincrement())
-  name     String @unique
-  calls    sequence_calls[]
+  seqId             Int              @id @default(autoincrement())
+  name              String           @unique
+  teachOrderId      Int?
+  teachOrder        teach_order?     @relation(fields: [teachOrderId], references: [id])
+  safeAfterPosition Int?             // max teach_order_entry.position across all call steps; computed on save
+  activator         String?          // heads | sides — if set, sequence can be swapped at render time
+  rating            String?          // excellent | good | acceptable | poor
+  notes             String?
+  isVerified        Boolean          @default(false)
+  sourceText        String?          // raw pasted input, preserved as-is
+  calls             sequence_calls[]
 }
 
+// An ordered entry in a sequence. Not all entries are calls — see type field.
+// callId and startId are null for non-call entries.
+// Render order: text (override) ?? call.preferredDisplay ?? call.name
+// Taminations and SD exports skip all non-call entries.
 model sequence_calls {
-  seqId      Int
-  sequence   sequence @relation(fields: [seqId], references: [seqId])
-  callId     Int
-  call       call @relation(fields: [callId], references: [callId])
-  startId    Int
-  startForm  formation @relation(fields: [startId], references: [formId])
-  order      Int
-  helperText String?
-  @@id([seqId,callId,startId,order])
-
+  seqId         Int
+  sequence      sequence        @relation(fields: [seqId], references: [seqId])
+  order         Int
+  type          String          // call | activator | filler | warning | tip | recovery
+  callId        Int?
+  startId       Int?
+  callFormation call_formation? @relation(fields: [callId, startId], references: [callId, startId])
+  designator    String?         // heads | sides | boys | girls | centers | ends | leads | trailers | beaus | belles
+  count         Int?            // e.g. 4 for "square thru 4"
+  text          String?         // display override for calls; full content for non-call types
+  helperText    String?         // caller annotation; never exported to Taminations or SD
+  @@id([seqId, order])
 }
