@@ -1,9 +1,7 @@
 // service - call table
-import { prisma } from '../../database';
-import { call } from '@prisma/client';
+import { prisma } from '../../database.js';
 
-
-const listCallService = async (iCallId: number): Promise<call | null> => {
+const listCallService = async (iCallId: number) => {
   return prisma.call.findUnique({
     where: {
       callId: iCallId,
@@ -11,7 +9,7 @@ const listCallService = async (iCallId: number): Promise<call | null> => {
   });
 };
 
-const listCallsService = async (): Promise<call[]> => {
+const listCallsService = async () => {
   return prisma.call.findMany();
 };
 

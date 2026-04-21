@@ -5,7 +5,7 @@ RUN mkdir /app
 
 WORKDIR /app
 
-COPY be/package.json be/package-lock.json be/tsconfig.json be/src ./
+COPY be/package.json be/tsconfig.json be/prisma.config.ts be/src ./
 
 RUN chown -R node:node /app
 

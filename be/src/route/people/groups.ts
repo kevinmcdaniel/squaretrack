@@ -1,6 +1,6 @@
 // group table routing
 import express from "express";
-import { listGroup, listGroups } from "../../controller";
+import { listGroup, listGroups } from "../../controller/index.js";
 
 
 export const groupRoute = express.Router();

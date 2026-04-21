@@ -1,16 +1,10 @@
 import express from "express";
-import { listFormation, listFormations } from "../../controller";
+import { listFormation, listFormations, createFormation, createCallFormation } from "../../controller/index.js";
 
 export const formationRoute = express.Router();
 
-formationRoute.get(
-  '/list',
-  // featurecheck,
-  // authorizeUser,
-  listFormations,
- );
-
-formationRoute.get(
-  '/list/:formationId',
-  listFormation,
-);
+formationRoute.get('/list', listFormations);
+formationRoute.get('/list/:formationId', listFormation);
+formationRoute.get('/', listFormations);
+formationRoute.post('/', createFormation);
+formationRoute.post('/call-formation', createCallFormation);
