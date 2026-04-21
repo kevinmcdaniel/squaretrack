@@ -41,6 +41,7 @@ model call_formation {
   inFlowDirection  String?             // forward | backward | slideLeft | slideRight
   outFlowRotation  String?             // left | right | none
   outFlowDirection String?             // forward | backward | slideLeft | slideRight
+  programEntries   program_call_formation[]
   teachEntries     teach_order_entry[]
   sequenceSteps    sequence_calls[]
   @@id([callId, startId])
@@ -60,11 +61,27 @@ model formation {
 }
 
 model program {
-  programId   Int             @id @default(autoincrement())
-  name        String
-  order       Int
-  dancers     dance_program[]
-  teachOrders teach_order[]
+  programId             Int                      @id @default(autoincrement())
+  name                  String
+  abbreviation          String                   @unique  // e.g. ms26, plus, a1
+  order                 Int
+  dancers               dance_program[]
+  teachOrders           teach_order[]
+  programCallFormations program_call_formation[]
+}
+
+// Defines which call_formations are valid within a program and how difficult each is at that level.
+// Difficulty is program-relative: a FASR that is 'challenging' in Mainstream is 'easy' in Plus.
+model program_call_formation {
+  programId     Int
+  program       program        @relation(fields: [programId], references: [programId])
+  callId        Int
+  startId       Int
+  callFormation call_formation @relation(fields: [callId, startId], references: [callId, startId])
+  difficulty    String         // easy | hard | challenging
+
+  @@id([programId, callId, startId])
+  @@index([programId, difficulty])
 }
 
 // A named ordering of call_formation entries within a program.
@@ -78,18 +95,27 @@ model teach_order {
   sequences sequence[]
 }
 
-// Places a specific call_formation at a position and week within a teach order.
-// The same call taught from a harder formation gets a later position than from an easier one.
+// One row per (call, FASR) pair introduced in this teach order.
+// The same call appears multiple times if valid from multiple starting formations
+// introduced at different points. Family header rows have entryType='family',
+// null callId and startId.
 model teach_order_entry {
+  id            Int             @id @default(autoincrement())
   teachOrderId  Int
-  teachOrder    teach_order    @relation(fields: [teachOrderId], references: [id])
-  callId        Int
-  startId       Int
-  callFormation call_formation @relation(fields: [callId, startId], references: [callId, startId])
-  position      Int            // absolute index in this teach order
-  week          Int            // class night this call_formation is introduced
-  @@id([teachOrderId, callId, startId])
-  @@index([teachOrderId, position])
+  teachOrder    teach_order     @relation(fields: [teachOrderId], references: [id])
+  sortOrder     Int             // teaching sequence; unique per teach order; drives safeAfterPosition
+  position      Int             // Callerlab curriculum number
+  subPosition   String?         // Callerlab sub-letter ('a'–'e'); null for top-level entries
+  entryType     String          // family | call
+  label         String?         // family header text; or display override for call rows
+  callId        Int?            // null when entryType = family
+  startId       Int?            // null when entryType = family
+  callFormation call_formation? @relation(fields: [callId, startId], references: [callId, startId])
+  week          Int?            // class night introduced; nullable until scheduled
+
+  @@unique([teachOrderId, sortOrder])
+  @@unique([teachOrderId, callId, startId])
+  @@index([teachOrderId, position, subPosition])
   @@index([teachOrderId, week])
 }
 
