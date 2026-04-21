@@ -54,8 +54,9 @@ model formation {
   description String?
   clCode      String?
   sdCode      String?
-  callStart   call_formation[] @relation(name: "startFormation")
-  callEnding  call_formation[] @relation(name: "endingFormation")
+  callStart       call_formation[] @relation(name: "startFormation")
+  callEnding      call_formation[] @relation(name: "endingFormation")
+  sequenceStarts  sequence[]
 }
 
 model program {
@@ -95,6 +96,8 @@ model teach_order_entry {
 model sequence {
   seqId             Int              @id @default(autoincrement())
   name              String           @unique
+  startFormationId  Int
+  startFormation    formation        @relation(fields: [startFormationId], references: [formId])
   teachOrderId      Int?
   teachOrder        teach_order?     @relation(fields: [teachOrderId], references: [id])
   safeAfterPosition Int?             // max teach_order_entry.position across all call steps; computed on save
@@ -103,7 +106,10 @@ model sequence {
   notes             String?
   isVerified        Boolean          @default(false)
   sourceText        String?          // raw pasted input, preserved as-is
+  variantGroupId    String?          // shared uuid across sequences with identical Taminations output
+  isValid           Boolean          @default(false)
   calls             sequence_calls[]
+  @@index([variantGroupId])
 }
 
 // An ordered entry in a sequence. Not all entries are calls — see type field.

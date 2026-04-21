@@ -1,6 +1,6 @@
 import type { NextFunction, Response, Request } from 'express';
 // import { prisma } from '../database';
-import { authError } from './errorHandler';
+import { authError } from './errorHandler.js';
 
 
 export const authorizeApiKey = (apiValue: string) => {

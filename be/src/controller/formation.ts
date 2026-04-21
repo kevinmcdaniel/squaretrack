@@ -1,40 +1,73 @@
 import { Request, Response } from 'express';
-import { emptyError, validationError } from '../common/errorHandler';
-import { isNumeric } from '../common/utils';
-import { listFormationService, listFormationsService } from '../service/formation';
+import { emptyError, validationError, conflictError } from '../common/errorHandler.js';
+import { isNumeric } from '../common/utils.js';
+import {
+  listFormationService,
+  listFormationsService,
+  searchFormationsService,
+  listFormationsByCallService,
+  createFormationService,
+  createCallFormationService,
+} from '../service/formation/index.js';
 
-const listFormation = async (req: Request, res: Response, next: any) => {
+export const listFormation = async (req: Request, res: Response, next: any) => {
   try {
     if (!isNumeric(req.params.formationId)) {
-      throw new validationError(`Formation ID is an integer.  Invalid value:${req.params.formationId}.`);
+      throw new validationError(`Formation ID is an integer. Invalid value:${req.params.formationId}.`);
     }
-    const record = await listFormationService(parseInt(req.params.formationId,10));
-    if (!record) {
-      throw new emptyError(`Formation id:${req.params.formationId} not found!`);
-    } else {
-      res.json({
-        message: 'Unique formation by id',
-        data: record,
-      });
-    }
+    const record = await listFormationService(parseInt(req.params.formationId, 10));
+    if (!record) throw new emptyError(`Formation id:${req.params.formationId} not found!`);
+    res.json({ message: 'Unique formation by id', data: record });
   } catch (error) {
     next(error);
   }
 };
 
-const listFormations = async (req: Request, res: Response, next: any) => {
+export const listFormations = async (req: Request, res: Response, next: any) => {
   try {
-    const records = await listFormationsService;
-    if (records.length === 0) {
-      throw new emptyError('No formations found!');
+    const { search, callId } = req.query as Record<string, string>;
+
+    if (callId !== undefined) {
+      if (!isNumeric(callId)) throw new validationError(`callId must be an integer. Invalid value:${callId}.`);
+      const records = await listFormationsByCallService(parseInt(callId, 10));
+      return res.json({ message: 'Formations for call', data: records });
     }
-    res.json({
-      message: 'List of all formations',
-      data: records,
-    });
+
+    if (search !== undefined) {
+      const records = await searchFormationsService(search);
+      return res.json({ message: 'Formation search results', data: records });
+    }
+
+    const records = await listFormationsService();
+    if (records.length === 0) throw new emptyError('No formations found!');
+    res.json({ message: 'List of all formations', data: records });
   } catch (error) {
     next(error);
   }
 };
 
-export { listFormation, listFormations };
+export const createFormation = async (req: Request, res: Response, next: any) => {
+  try {
+    const { name, description, clCode, sdCode } = req.body;
+    if (!name) throw new validationError('name is required.');
+    const record = await createFormationService({ name, description, clCode, sdCode });
+    res.status(201).json({ message: 'Formation created', data: record });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const createCallFormation = async (req: Request, res: Response, next: any) => {
+  try {
+    const { callId, startId, endId, inFlowRotation, inFlowDirection, outFlowRotation, outFlowDirection } = req.body;
+    if (!callId || !startId || !endId) throw new validationError('callId, startId, and endId are required.');
+    const record = await createCallFormationService({
+      callId, startId, endId, inFlowRotation, inFlowDirection, outFlowRotation, outFlowDirection,
+    });
+    res.status(201).json({ message: 'Call formation created', data: record });
+  } catch (error: any) {
+    if (error?.code === 'P2002') return next(new conflictError('Call formation (callId, startId) already exists.'));
+    if (error?.code === 'P2003') return next(new conflictError('callId or startId/endId does not exist.'));
+    next(error);
+  }
+};

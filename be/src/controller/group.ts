@@ -1,7 +1,7 @@
 // group table controller
 import { Request, Response } from 'express';
-import { emptyError } from '../common/errorHandler';
-import { listGroupService, listGroupsService } from '../service/group';
+import { emptyError } from '../common/errorHandler.js';
+import { listGroupService, listGroupsService } from '../service/group.js';
 
 const listGroup = async (req: Request, res: Response, next: any) => {
   try {

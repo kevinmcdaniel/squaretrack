@@ -1,40 +1,57 @@
 import { Request, Response } from 'express';
-import { emptyError, validationError } from '../common/errorHandler';
-import { isNumeric } from '../common/utils';
-import { listSequenceService, listSequencesService } from '../service/sequence';
+import { emptyError, validationError, conflictError } from '../common/errorHandler.js';
+import { isNumeric } from '../common/utils.js';
+import { listSequencesService, getSequenceService, createSequenceService } from '../service/sequence/index.js';
+import { parseSequenceText } from '../service/parser.js';
 
-const listSequence = async (req: Request, res: Response, next: any) => {
+export const listSequence = async (req: Request, res: Response, next: any) => {
   try {
-    if (!isNumeric(req.params.sequenceId)) {
-      throw new validationError(`Sequence ID is an integer.  Invalid value:${req.params.sequenceId}.`);
+    if (!isNumeric(req.params.seqId ?? req.params.sequenceId)) {
+      throw new validationError(`Sequence ID is an integer. Invalid value:${req.params.seqId ?? req.params.sequenceId}.`);
     }
-    const record = await listSequenceService(parseInt(req.params.sequenceId,10));
-    if (!record) {
-      throw new emptyError(`Sequence id:${req.params.sequenceId} not found!`);
-    } else {
-      res.json({
-        message: 'Unique sequence by id',
-        data: record,
-      });
-    }
+    const id = parseInt(req.params.seqId ?? req.params.sequenceId, 10);
+    const record = await getSequenceService(id);
+    if (!record) throw new emptyError(`Sequence id:${id} not found!`);
+    res.json({ message: 'Sequence by id', data: record });
   } catch (error) {
     next(error);
   }
 };
 
-const listSequences = async (req: Request, res: Response, next: any) => {
+export const listSequences = async (req: Request, res: Response, next: any) => {
   try {
-    const records = await listSequencesService;
-    if (records.length === 0) {
-      throw new emptyError('No sequences found!');
-    }
-    res.json({
-      message: 'List of all sequences',
-      data: records,
+    const records = await listSequencesService();
+    if (records.length === 0) throw new emptyError('No sequences found!');
+    res.json({ message: 'List of all sequences', data: records });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const parseSequence = async (req: Request, res: Response, next: any) => {
+  try {
+    const { text } = req.body;
+    if (!text) throw new validationError('text is required.');
+    const steps = await parseSequenceText(text);
+    res.json({ message: 'Parsed sequence', data: steps });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const createSequence = async (req: Request, res: Response, next: any) => {
+  try {
+    const { name, startFormationId, activator, rating, notes, isVerified, sourceText, teachOrderId, steps } = req.body;
+    if (!name) throw new validationError('name is required.');
+    if (!startFormationId) throw new validationError('startFormationId is required.');
+    const record = await createSequenceService({
+      name, startFormationId, activator, rating, notes, isVerified, sourceText, teachOrderId,
+      steps: steps ?? [],
     });
-  } catch (error) {
+    res.status(201).json({ message: 'Sequence created', data: record });
+  } catch (error: any) {
+    if (error?.code === 'P2002') return next(new conflictError('Sequence name already exists.'));
+    if (error?.code === 'P2003') return next(new conflictError('startFormationId does not exist.'));
     next(error);
   }
 };
-
-export { listSequence, listSequences };

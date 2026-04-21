@@ -1,9 +1,7 @@
 // service - group table
-import { prisma } from '../database';
-import { group } from '@prisma/client';
+import { prisma } from '../database.js';
 
-
-const listGroupService = async (iGroupId: string): Promise<group | null> => {
+const listGroupService = async (iGroupId: string) => {
   return prisma.group.findUnique({
     where: {
       id: iGroupId,
@@ -11,7 +9,7 @@ const listGroupService = async (iGroupId: string): Promise<group | null> => {
   });
 };
 
-const listGroupsService = async (): Promise<group[]> => {
+const listGroupsService = async () => {
   return prisma.group.findMany();
 };
 

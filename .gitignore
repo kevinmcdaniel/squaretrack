@@ -38,7 +38,7 @@ fe/.vercel
 # typescript
 fe/*.tsbuildinfo
 fe/next-env.d.ts
-/api/src/generated/client
+be/src/generated/
 
 # trivy logs
 trivy*.log
