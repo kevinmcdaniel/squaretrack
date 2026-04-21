@@ -68,6 +68,7 @@ services:
     volumes:
       - ./fe/public:/app/public
       - ./fe/src:/app/src
+      - ./docs:/app/docs
     networks:
       - default
       - squarenet
