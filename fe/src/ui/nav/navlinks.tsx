@@ -2,6 +2,7 @@ import {
   UserGroupIcon,
   HomeIcon,
   DocumentDuplicateIcon,
+  BookOpenIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
@@ -14,6 +15,7 @@ const links = [
     icon: DocumentDuplicateIcon,
   },
   { name: 'Sequences', href: '/calling/sequences', icon: UserGroupIcon },
+  { name: 'API Docs', href: '/docs', icon: BookOpenIcon },
 ];
 
 export default function NavLinks() {
