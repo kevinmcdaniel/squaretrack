@@ -33,4 +33,6 @@ All endpoints return JSON. Response envelope:
 | [Formations](formations.md) | `/api/formation` | Starting/ending formations |
 | [Call Formations](call-formations.md) | `/api/call-formation` | Call-to-formation mappings |
 | [Sequences](sequences.md) | `/api/sequence` | Calling sequences and step management |
+| [Programs](programs.md) | `/api/program` | Dance programs, FASR vocabulary, and difficulty ratings |
+| [Teach Orders](teach-orders.md) | `/api/teach-order` | Curriculum teach sequences |
 | [Groups](groups.md) | `/api/group` | Dance groups (clubs and organizations) |
