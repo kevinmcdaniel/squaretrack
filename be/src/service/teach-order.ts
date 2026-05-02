@@ -1,17 +1,26 @@
 import { prisma } from '../database.js';
 
-type EntryInput = {
-  sortOrder: number;
-  position: number;
-  subPosition?: string | null;
-  entryType: string;
-  label?: string | null;
-  callId?: number | null;
-  startId?: number | null;
-  week?: number | null;
+export type FasrInput = {
+  fasrOrder: number;
+  callId: number;
+  startId: number;
 };
 
-const ENTRY_INCLUDE = { orderBy: { sortOrder: 'asc' } } as const;
+export type EntryInput = {
+  entryOrder: number;
+  displayOrder: string;
+  entryType: 'family' | 'call';
+  label?: string | null;
+  familyId?: number | null;
+  callId?: number | null;
+  week?: number | null;
+  fasrs?: FasrInput[];
+};
+
+const ENTRY_INCLUDE = {
+  orderBy: { entryOrder: 'asc' },
+  include: { fasrs: { orderBy: { fasrOrder: 'asc' } } },
+} as const;
 
 export const listTeachOrdersService = async () =>
   prisma.teach_order.findMany({ include: { program: true } });
@@ -22,6 +31,27 @@ export const getTeachOrderService = async (id: number) =>
     include: { entries: ENTRY_INCLUDE },
   });
 
+function buildEntryCreate(entries: EntryInput[]) {
+  return entries.map((e) => ({
+    entryOrder: e.entryOrder,
+    displayOrder: e.displayOrder,
+    entryType: e.entryType,
+    label: e.label ?? null,
+    familyId: e.familyId ?? null,
+    callId: e.callId ?? null,
+    week: e.week ?? null,
+    fasrs: e.fasrs?.length
+      ? {
+          create: e.fasrs.map((f) => ({
+            fasrOrder: f.fasrOrder,
+            callId: f.callId,
+            startId: f.startId,
+          })),
+        }
+      : undefined,
+  }));
+}
+
 export const createTeachOrderService = async (data: {
   name: string;
   programId: number;
@@ -31,18 +61,7 @@ export const createTeachOrderService = async (data: {
   return prisma.teach_order.create({
     data: {
       ...meta,
-      entries: {
-        create: entries.map((e) => ({
-          sortOrder: e.sortOrder,
-          position: e.position,
-          subPosition: e.subPosition ?? null,
-          entryType: e.entryType,
-          label: e.label ?? null,
-          callId: e.callId ?? null,
-          startId: e.startId ?? null,
-          week: e.week ?? null,
-        })),
-      },
+      entries: { create: buildEntryCreate(entries) },
     },
     include: { entries: ENTRY_INCLUDE },
   });
@@ -53,18 +72,7 @@ export const updateTeachOrderService = async (id: number, entries: EntryInput[])
   return prisma.teach_order.update({
     where: { id },
     data: {
-      entries: {
-        create: entries.map((e) => ({
-          sortOrder: e.sortOrder,
-          position: e.position,
-          subPosition: e.subPosition ?? null,
-          entryType: e.entryType,
-          label: e.label ?? null,
-          callId: e.callId ?? null,
-          startId: e.startId ?? null,
-          week: e.week ?? null,
-        })),
-      },
+      entries: { create: buildEntryCreate(entries) },
     },
     include: { entries: ENTRY_INCLUDE },
   });

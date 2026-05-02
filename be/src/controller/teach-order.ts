@@ -13,13 +13,25 @@ import { parseTeachOrderText } from '../service/teach-order-parser.js';
 async function validateEntries(programId: number, entries: any[]) {
   for (const entry of entries) {
     if (entry.entryType === 'call') {
-      if (!entry.callId) throw new validationError('call entries require callId and startId.');
-      if (!entry.startId) throw new validationError('call entries require callId and startId.');
-      const inProgram = await checkCallFormationInProgram(programId, entry.callId, entry.startId);
-      if (!inProgram) {
-        throw new conflictError(
-          `call formation (callId ${entry.callId}, startId ${entry.startId}) is not valid for this program.`
-        );
+      if (!entry.callId) throw new validationError('call entries require callId.');
+      if (!Array.isArray(entry.fasrs) || entry.fasrs.length === 0) {
+        throw new validationError('call entries require at least one fasr.');
+      }
+      for (const fasr of entry.fasrs) {
+        if (!fasr.callId || !fasr.startId) {
+          throw new validationError('each fasr requires callId and startId.');
+        }
+        if (fasr.callId !== entry.callId) {
+          throw new validationError(
+            `fasr callId ${fasr.callId} does not match entry callId ${entry.callId}.`
+          );
+        }
+        const inProgram = await checkCallFormationInProgram(programId, fasr.callId, fasr.startId);
+        if (!inProgram) {
+          throw new conflictError(
+            `call formation (callId ${fasr.callId}, startId ${fasr.startId}) is not valid for this program.`
+          );
+        }
       }
     }
   }
@@ -64,7 +76,7 @@ export const createTeachOrder = async (req: Request, res: Response, next: any) =
     res.status(201).json({ message: 'Teach order created', data: record });
   } catch (error: any) {
     if (error?.code === 'P2003') return next(new conflictError('programId does not exist.'));
-    if (error?.code === 'P2002') return next(new conflictError('Duplicate sortOrder within this teach order.'));
+    if (error?.code === 'P2002') return next(new conflictError('Duplicate entryOrder or displayOrder within this teach order.'));
     next(error);
   }
 };
@@ -86,7 +98,7 @@ export const updateTeachOrder = async (req: Request, res: Response, next: any) =
     const record = await updateTeachOrderService(id, entries);
     res.json({ message: 'Teach order updated', data: record });
   } catch (error: any) {
-    if (error?.code === 'P2002') return next(new conflictError('Duplicate sortOrder within this teach order.'));
+    if (error?.code === 'P2002') return next(new conflictError('Duplicate entryOrder or displayOrder within this teach order.'));
     next(error);
   }
 };

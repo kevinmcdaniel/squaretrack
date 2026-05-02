@@ -2,8 +2,7 @@ import { prisma } from '../database.js';
 
 export type ParsedEntry = {
   rawLine: string;
-  position: number | null;
-  subPosition: string | null;
+  displayOrder: string | null;
   entryType: 'family' | 'call';
   label: string;
   callMatches: { callId: number; name: string }[];
@@ -15,16 +14,16 @@ function stripVariants(text: string): string {
   return text.replace(/\s*\([^)]*\)/g, '').trim();
 }
 
-function parsePosition(line: string): { position: number | null; subPosition: string | null; rest: string } {
+function parsePosition(line: string): { position: number | null; subLetter: string | null; rest: string } {
   // Numbered top-level: "10. Right and Left Thru"
   const numbered = line.match(/^(\d+)\.\s*(.*)/);
-  if (numbered) return { position: parseInt(numbered[1], 10), subPosition: null, rest: numbered[2] };
+  if (numbered) return { position: parseInt(numbered[1], 10), subLetter: null, rest: numbered[2] };
 
   // Lettered sub-entry: "a. Circle Left/Right"
   const lettered = line.match(/^([a-z])\.\s*(.*)/i);
-  if (lettered) return { position: null, subPosition: lettered[1].toLowerCase(), rest: lettered[2] };
+  if (lettered) return { position: null, subLetter: lettered[1].toLowerCase(), rest: lettered[2] };
 
-  return { position: null, subPosition: null, rest: line };
+  return { position: null, subLetter: null, rest: line };
 }
 
 function isFamily(text: string): boolean {
@@ -35,7 +34,6 @@ function splitLeftRight(text: string): string[] {
   // "Circle Left/Right" → ["Circle Left", "Circle Right"]
   return text.split('/').map((part, i, arr) => {
     if (i === 0) return part.trim();
-    // Take the last word of the previous part as the base
     const baseParts = arr[0].trim().split(/\s+/);
     baseParts[baseParts.length - 1] = part.trim();
     return baseParts.join(' ');
@@ -56,18 +54,22 @@ export async function parseTeachOrderText(
 
   for (const line of lines) {
     const normalized = line.toLowerCase().replace(/\s+/g, ' ').trim();
-    const { position, subPosition, rest } = parsePosition(normalized);
+    const { position, subLetter, rest } = parsePosition(normalized);
 
     if (position !== null) currentPosition = position;
     const effectivePosition = position ?? currentPosition;
+
+    let displayOrder: string | null = null;
+    if (effectivePosition !== null) {
+      displayOrder = subLetter ? `${effectivePosition}${subLetter}` : String(effectivePosition);
+    }
 
     const cleanText = stripVariants(rest);
 
     if (isFamily(cleanText)) {
       results.push({
         rawLine: line,
-        position: effectivePosition,
-        subPosition,
+        displayOrder,
         entryType: 'family',
         label: cleanText,
         callMatches: [],
@@ -100,7 +102,6 @@ export async function parseTeachOrderText(
       allCallMatches.push(...merged);
     }
 
-    // Deduplicate by callId
     const seen = new Set<number>();
     const callMatches = allCallMatches.filter((m) => {
       if (seen.has(m.callId)) return false;
@@ -113,7 +114,6 @@ export async function parseTeachOrderText(
     else if (callMatches.length === callNames.length) resolution = 'resolved';
     else resolution = 'ambiguous';
 
-    // Formation matches from program_call_formation for resolved calls
     const formationMatches: { startId: number; name: string; difficulty: string }[] = [];
     for (const match of callMatches) {
       const pcfs = await prisma.program_call_formation.findMany({
@@ -131,8 +131,7 @@ export async function parseTeachOrderText(
 
     results.push({
       rawLine: line,
-      position: effectivePosition,
-      subPosition,
+      displayOrder,
       entryType: 'call',
       label: cleanText,
       callMatches,

@@ -1,21 +1,23 @@
 // Calls and Programs
 
 model call {
-  callId           Int              @id @default(autoincrement())
-  name             String           @unique
-  tamSeq           String?          // Taminations call identifier
-  sdSeq            String?          // SD program call identifier
-  preferredDisplay String?          // caller's preferred name; falls back to name
+  callId           Int                 @id @default(autoincrement())
+  name             String              @unique
+  tamSeq           String?             // Taminations call identifier
+  sdSeq            String?             // SD program call identifier
+  preferredDisplay String?             // caller's preferred name; falls back to name
   familyId         Int?
-  callFamily       call_family?     @relation(fields: [familyId], references: [familyId])
+  callFamily       call_family?        @relation(fields: [familyId], references: [familyId])
   formations       call_formation[]
   synonyms         call_synonym[]
+  teachEntries     teach_order_entry[]
 }
 
 model call_family {
-  familyId Int    @id @default(autoincrement())
-  name     String
-  calls    call[]
+  familyId    Int                 @id @default(autoincrement())
+  name        String
+  calls       call[]
+  teachEntries teach_order_entry[]
 }
 
 // Alternate names for a call used when parsing pasted sequence text.
@@ -42,7 +44,7 @@ model call_formation {
   outFlowRotation  String?             // left | right | none
   outFlowDirection String?             // forward | backward | slideLeft | slideRight
   programEntries   program_call_formation[]
-  teachEntries     teach_order_entry[]
+  teachFasrEntries teach_order_entry_fasr[]
   sequenceSteps    sequence_calls[]
   @@id([callId, startId])
   @@index([startId])
@@ -95,28 +97,45 @@ model teach_order {
   sequences sequence[]
 }
 
-// One row per (call, FASR) pair introduced in this teach order.
-// The same call appears multiple times if valid from multiple starting formations
-// introduced at different points. Family header rows have entryType='family',
-// null callId and startId.
+// Display row for a curriculum slot in a teach order. Mirrors what the caller sees in the
+// curriculum list — one row per Callerlab numbered/lettered position. Per-FASR rows live in
+// teach_order_entry_fasr; siblings sharing the same family appear as separate rows whose
+// displayOrder shares a numeric prefix (e.g. '1', '1a', '1b').
 model teach_order_entry {
-  id            Int             @id @default(autoincrement())
-  teachOrderId  Int
-  teachOrder    teach_order     @relation(fields: [teachOrderId], references: [id])
-  sortOrder     Int             // teaching sequence; unique per teach order; drives safeAfterPosition
-  position      Int             // Callerlab curriculum number
-  subPosition   String?         // Callerlab sub-letter ('a'–'e'); null for top-level entries
-  entryType     String          // family | call
-  label         String?         // family header text; or display override for call rows
-  callId        Int?            // null when entryType = family
-  startId       Int?            // null when entryType = family
-  callFormation call_formation? @relation(fields: [callId, startId], references: [callId, startId])
-  week          Int?            // class night introduced; nullable until scheduled
+  teachOrderId Int
+  teachOrder   teach_order              @relation(fields: [teachOrderId], references: [id])
+  entryOrder   Int                      // monotonic within the teach order; the canonical sort key
+  displayOrder String                   // human label: '1', '1a', '1b', '2', '3a' …
+  entryType    String                   // family | call
+  label        String?                  // family header text; or display override for call rows
+  familyId     Int?                     // set when entryType = family
+  callFamily   call_family?             @relation(fields: [familyId], references: [familyId])
+  callId       Int?                     // set when entryType = call
+  call         call?                    @relation(fields: [callId], references: [callId])
+  week         Int?                     // class night introduced; applies to all FASRs of this entry
+  fasrs        teach_order_entry_fasr[]
 
-  @@unique([teachOrderId, sortOrder])
-  @@unique([teachOrderId, callId, startId])
-  @@index([teachOrderId, position, subPosition])
+  @@id([teachOrderId, entryOrder])
+  @@unique([teachOrderId, displayOrder])
   @@index([teachOrderId, week])
+}
+
+// Per-FASR atomic row under a call-typed teach_order_entry. One row per (call, FASR) the caller
+// teaches. Ordered by (entryOrder, fasrOrder); that ordering drives safeAfterPosition for sequences.
+// Family-typed display entries have no rows here.
+model teach_order_entry_fasr {
+  teachOrderId  Int
+  entryOrder    Int
+  fasrOrder     Int
+  callId        Int
+  startId       Int
+
+  entry         teach_order_entry @relation(fields: [teachOrderId, entryOrder], references: [teachOrderId, entryOrder], onDelete: Cascade)
+  callFormation call_formation    @relation(fields: [callId, startId], references: [callId, startId])
+
+  @@id([teachOrderId, entryOrder, fasrOrder])
+  @@unique([teachOrderId, entryOrder, callId, startId])
+  @@index([callId, startId])
 }
 
 model sequence {
@@ -126,7 +145,8 @@ model sequence {
   startFormation    formation        @relation(fields: [startFormationId], references: [formId])
   teachOrderId      Int?
   teachOrder        teach_order?     @relation(fields: [teachOrderId], references: [id])
-  safeAfterPosition Int?             // max teach_order_entry.position across all call steps; computed on save
+  safeAfterEntryOrder Int?           // max teach_order_entry_fasr.entryOrder across call steps
+  safeAfterFasrOrder  Int?           // tiebreaker within entryOrder; together these locate the latest taught FASR used
   activator         String?          // heads | sides — if set, sequence can be swapped at render time
   rating            String?          // excellent | good | acceptable | poor
   notes             String?

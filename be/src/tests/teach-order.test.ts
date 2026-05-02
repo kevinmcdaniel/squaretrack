@@ -7,7 +7,6 @@ import { T, cleanupTestData } from './setup.js';
 beforeAll(async () => { await cleanupTestData(); });
 afterAll(async () => { await cleanupTestData(); });
 
-// Shared test fixtures — uid on every record prevents unique constraint collisions across invocations
 let _seq = 0;
 async function createTestFixtures() {
   const uid = ++_seq;
@@ -53,7 +52,7 @@ describe('GET /api/teach-order/list', () => {
 // ── GET /api/teach-order/:id ────────────────────────────────────────────────
 
 describe('GET /api/teach-order/:id', () => {
-  it('returns teach order with entries ordered by sortOrder', async () => {
+  it('returns teach order with entries and fasrs ordered correctly', async () => {
     const { program, call, startForm } = await createTestFixtures();
     const to = await prisma.teach_order.create({
       data: {
@@ -61,8 +60,24 @@ describe('GET /api/teach-order/:id', () => {
         programId: program.programId,
         entries: {
           create: [
-            { sortOrder: 1, position: 1, entryType: 'family', label: 'Test Family' },
-            { sortOrder: 2, position: 1, subPosition: 'a', entryType: 'call', callId: call.callId, startId: startForm.formId, week: 1 },
+            {
+              entryOrder: 1,
+              displayOrder: '1',
+              entryType: 'family',
+              label: 'Test Family',
+            },
+            {
+              entryOrder: 2,
+              displayOrder: '1a',
+              entryType: 'call',
+              callId: call.callId,
+              week: 1,
+              fasrs: {
+                create: [
+                  { fasrOrder: 1, callId: call.callId, startId: startForm.formId },
+                ],
+              },
+            },
           ],
         },
       },
@@ -72,13 +87,18 @@ describe('GET /api/teach-order/:id', () => {
     expect(res.status).toBe(200);
     expect(res.body.data.id).toBe(to.id);
     expect(res.body.data.entries).toHaveLength(2);
-    expect(res.body.data.entries[0].sortOrder).toBe(1);
+    expect(res.body.data.entries[0].entryOrder).toBe(1);
+    expect(res.body.data.entries[0].displayOrder).toBe('1');
     expect(res.body.data.entries[0].entryType).toBe('family');
-    expect(res.body.data.entries[1].sortOrder).toBe(2);
+    expect(res.body.data.entries[0].fasrs).toHaveLength(0);
+    expect(res.body.data.entries[1].entryOrder).toBe(2);
+    expect(res.body.data.entries[1].displayOrder).toBe('1a');
     expect(res.body.data.entries[1].callId).toBe(call.callId);
-    expect(res.body.data.entries[1].startId).toBe(startForm.formId);
-    expect(res.body.data.entries[1].subPosition).toBe('a');
     expect(res.body.data.entries[1].week).toBe(1);
+    expect(res.body.data.entries[1].fasrs).toHaveLength(1);
+    expect(res.body.data.entries[1].fasrs[0].callId).toBe(call.callId);
+    expect(res.body.data.entries[1].fasrs[0].startId).toBe(startForm.formId);
+    expect(res.body.data.entries[1].fasrs[0].fasrOrder).toBe(1);
   });
 
   it('returns 200 null for nonexistent id', async () => {
@@ -103,8 +123,15 @@ describe('POST /api/teach-order', () => {
       name: `${T}TO Create`,
       programId: program.programId,
       entries: [
-        { sortOrder: 1, position: 1, entryType: 'family', label: 'Circle Family' },
-        { sortOrder: 2, position: 1, subPosition: 'a', entryType: 'call', callId: call.callId, startId: startForm.formId, week: 1 },
+        { entryOrder: 1, displayOrder: '1', entryType: 'family', label: 'Circle Family' },
+        {
+          entryOrder: 2,
+          displayOrder: '1a',
+          entryType: 'call',
+          callId: call.callId,
+          week: 1,
+          fasrs: [{ fasrOrder: 1, callId: call.callId, startId: startForm.formId }],
+        },
       ],
     });
 
@@ -116,6 +143,8 @@ describe('POST /api/teach-order', () => {
     expect(res.body.data.entries[0].label).toBe('Circle Family');
     expect(res.body.data.entries[1].callId).toBe(call.callId);
     expect(res.body.data.entries[1].week).toBe(1);
+    expect(res.body.data.entries[1].fasrs).toHaveLength(1);
+    expect(res.body.data.entries[1].fasrs[0].startId).toBe(startForm.formId);
   });
 
   it('creates a call entry with null week (week is optional)', async () => {
@@ -125,7 +154,13 @@ describe('POST /api/teach-order', () => {
       name: `${T}TO No Week`,
       programId: program.programId,
       entries: [
-        { sortOrder: 1, position: 1, entryType: 'call', callId: call.callId, startId: startForm.formId },
+        {
+          entryOrder: 1,
+          displayOrder: '1',
+          entryType: 'call',
+          callId: call.callId,
+          fasrs: [{ fasrOrder: 1, callId: call.callId, startId: startForm.formId }],
+        },
       ],
     });
 
@@ -172,29 +207,72 @@ describe('POST /api/teach-order', () => {
   });
 
   it('returns 406 when call entry is missing callId', async () => {
-    const { program, startForm } = await createTestFixtures();
+    const { program, call, startForm } = await createTestFixtures();
     const res = await request(app).post('/api/teach-order').send({
       name: `${T}TO Missing CallId`,
       programId: program.programId,
       entries: [
-        { sortOrder: 1, position: 1, entryType: 'call', startId: startForm.formId },
+        {
+          entryOrder: 1,
+          displayOrder: '1',
+          entryType: 'call',
+          fasrs: [{ fasrOrder: 1, callId: call.callId, startId: startForm.formId }],
+        },
       ],
     });
     expect(res.status).toBe(406);
     expect(res.body.message).toMatch(/callId/i);
   });
 
-  it('returns 406 when call entry is missing startId', async () => {
+  it('returns 406 when call entry is missing fasrs', async () => {
+    const { program, call } = await createTestFixtures();
+    const res = await request(app).post('/api/teach-order').send({
+      name: `${T}TO Missing Fasrs`,
+      programId: program.programId,
+      entries: [
+        { entryOrder: 1, displayOrder: '1', entryType: 'call', callId: call.callId },
+      ],
+    });
+    expect(res.status).toBe(406);
+    expect(res.body.message).toMatch(/fasr/i);
+  });
+
+  it('returns 406 when fasr is missing startId', async () => {
     const { program, call } = await createTestFixtures();
     const res = await request(app).post('/api/teach-order').send({
       name: `${T}TO Missing StartId`,
       programId: program.programId,
       entries: [
-        { sortOrder: 1, position: 1, entryType: 'call', callId: call.callId },
+        {
+          entryOrder: 1,
+          displayOrder: '1',
+          entryType: 'call',
+          callId: call.callId,
+          fasrs: [{ fasrOrder: 1, callId: call.callId }],
+        },
       ],
     });
     expect(res.status).toBe(406);
     expect(res.body.message).toMatch(/startId/i);
+  });
+
+  it('returns 406 when fasr callId does not match entry callId', async () => {
+    const { program, call, startForm } = await createTestFixtures();
+    const res = await request(app).post('/api/teach-order').send({
+      name: `${T}TO Mismatched CallId`,
+      programId: program.programId,
+      entries: [
+        {
+          entryOrder: 1,
+          displayOrder: '1',
+          entryType: 'call',
+          callId: call.callId,
+          fasrs: [{ fasrOrder: 1, callId: call.callId + 9999, startId: startForm.formId }],
+        },
+      ],
+    });
+    expect(res.status).toBe(406);
+    expect(res.body.message).toMatch(/does not match/i);
   });
 
   it('returns 409 when call_formation is not in the program', async () => {
@@ -205,30 +283,91 @@ describe('POST /api/teach-order', () => {
     await prisma.call_formation.create({
       data: { callId: call.callId, startId: startForm.formId, endId: endForm.formId },
     });
-    // call_formation exists but is NOT in program_call_formation for this program
 
     const res = await request(app).post('/api/teach-order').send({
       name: `${T}TO Not In Program`,
       programId: program.programId,
       entries: [
-        { sortOrder: 1, position: 1, entryType: 'call', callId: call.callId, startId: startForm.formId },
+        {
+          entryOrder: 1,
+          displayOrder: '1',
+          entryType: 'call',
+          callId: call.callId,
+          fasrs: [{ fasrOrder: 1, callId: call.callId, startId: startForm.formId }],
+        },
       ],
     });
     expect(res.status).toBe(409);
     expect(res.body.message).toMatch(/not valid for this program/i);
   });
 
-  it('returns 409 on duplicate sortOrder within a teach order', async () => {
+  it('returns 409 on duplicate entryOrder within a teach order', async () => {
     const { program, call, startForm } = await createTestFixtures();
     const res = await request(app).post('/api/teach-order').send({
-      name: `${T}TO Dup SortOrder`,
+      name: `${T}TO Dup EntryOrder`,
       programId: program.programId,
       entries: [
-        { sortOrder: 1, position: 1, entryType: 'family', label: 'Family A' },
-        { sortOrder: 1, position: 2, entryType: 'call', callId: call.callId, startId: startForm.formId },
+        { entryOrder: 1, displayOrder: '1', entryType: 'family', label: 'Family A' },
+        {
+          entryOrder: 1,
+          displayOrder: '2',
+          entryType: 'call',
+          callId: call.callId,
+          fasrs: [{ fasrOrder: 1, callId: call.callId, startId: startForm.formId }],
+        },
       ],
     });
     expect(res.status).toBe(409);
+  });
+
+  it('returns 409 on duplicate displayOrder within a teach order', async () => {
+    const { program, call, startForm } = await createTestFixtures();
+    const res = await request(app).post('/api/teach-order').send({
+      name: `${T}TO Dup DisplayOrder`,
+      programId: program.programId,
+      entries: [
+        { entryOrder: 1, displayOrder: '1', entryType: 'family', label: 'Family A' },
+        {
+          entryOrder: 2,
+          displayOrder: '1',
+          entryType: 'call',
+          callId: call.callId,
+          fasrs: [{ fasrOrder: 1, callId: call.callId, startId: startForm.formId }],
+        },
+      ],
+    });
+    expect(res.status).toBe(409);
+  });
+
+  it('creates an entry with multiple fasrs', async () => {
+    const { program, call, startForm } = await createTestFixtures();
+    const startForm2 = await prisma.formation.create({ data: { name: `${T}Multi Start2` } });
+    const endForm2 = await prisma.formation.create({ data: { name: `${T}Multi End2` } });
+    await prisma.call_formation.create({
+      data: { callId: call.callId, startId: startForm2.formId, endId: endForm2.formId },
+    });
+    await prisma.program_call_formation.create({
+      data: { programId: program.programId, callId: call.callId, startId: startForm2.formId, difficulty: 'hard' },
+    });
+
+    const res = await request(app).post('/api/teach-order').send({
+      name: `${T}TO Multi Fasr`,
+      programId: program.programId,
+      entries: [
+        {
+          entryOrder: 1,
+          displayOrder: '1',
+          entryType: 'call',
+          callId: call.callId,
+          fasrs: [
+            { fasrOrder: 1, callId: call.callId, startId: startForm.formId },
+            { fasrOrder: 2, callId: call.callId, startId: startForm2.formId },
+          ],
+        },
+      ],
+    });
+    expect(res.status).toBe(201);
+    expect(res.body.data.entries[0].fasrs).toHaveLength(2);
   });
 });
 
@@ -236,13 +375,13 @@ describe('POST /api/teach-order', () => {
 
 describe('PUT /api/teach-order/:id', () => {
   it('replaces entries and returns updated teach order', async () => {
-    const { program, call, startForm } = await createTestFixtures();
+    const { program } = await createTestFixtures();
     const to = await prisma.teach_order.create({
       data: {
         name: `${T}TO Update`,
         programId: program.programId,
         entries: {
-          create: [{ sortOrder: 1, position: 1, entryType: 'family', label: 'Old Family' }],
+          create: [{ entryOrder: 1, displayOrder: '1', entryType: 'family', label: 'Old Family' }],
         },
       },
     });
@@ -259,8 +398,15 @@ describe('PUT /api/teach-order/:id', () => {
 
     const res = await request(app).put(`/api/teach-order/${to.id}`).send({
       entries: [
-        { sortOrder: 1, position: 1, entryType: 'family', label: 'New Family' },
-        { sortOrder: 2, position: 1, subPosition: 'a', entryType: 'call', callId: call2.callId, startId: startForm2.formId, week: 2 },
+        { entryOrder: 1, displayOrder: '1', entryType: 'family', label: 'New Family' },
+        {
+          entryOrder: 2,
+          displayOrder: '1a',
+          entryType: 'call',
+          callId: call2.callId,
+          week: 2,
+          fasrs: [{ fasrOrder: 1, callId: call2.callId, startId: startForm2.formId }],
+        },
       ],
     });
 
@@ -268,6 +414,7 @@ describe('PUT /api/teach-order/:id', () => {
     expect(res.body.data.entries).toHaveLength(2);
     expect(res.body.data.entries[0].label).toBe('New Family');
     expect(res.body.data.entries[1].callId).toBe(call2.callId);
+    expect(res.body.data.entries[1].fasrs[0].startId).toBe(startForm2.formId);
   });
 
   it('returns 404 for nonexistent teach order', async () => {
@@ -287,35 +434,34 @@ describe('POST /api/teach-order/parse', () => {
     });
     expect(res.status).toBe(200);
     const entry = res.body.data[0];
-    expect(entry.position).toBe(1);
-    expect(entry.subPosition).toBeNull();
+    expect(entry.displayOrder).toBe('1');
     expect(entry.entryType).toBe('family');
     expect(entry.label).toMatch(/circle family/i);
     expect(entry.resolution).toBe('resolved');
   });
 
   it('parses numbered call line', async () => {
-    const { program, call, startForm } = await createTestFixtures();
+    const { program, call } = await createTestFixtures();
     const res = await request(app).post('/api/teach-order/parse').send({
       text: `2. ${call.name.replace(T, '')}`,
       programId: program.programId,
     });
     expect(res.status).toBe(200);
-    expect(res.body.data[0].position).toBe(2);
-    expect(res.body.data[0].subPosition).toBeNull();
+    expect(res.body.data[0].displayOrder).toBe('2');
   });
 
-  it('parses lettered sub-entry and strips variant notation', async () => {
+  it('combines numbered position with sub-letter into displayOrder', async () => {
     const { program } = await createTestFixtures();
     const res = await request(app).post('/api/teach-order/parse').send({
-      text: 'a. Circle Left/Right (1/4, 1/2, 3/4, Full)',
+      text: '1. Circle Family\na. Circle Left/Right (1/4, 1/2, 3/4, Full)',
       programId: program.programId,
     });
     expect(res.status).toBe(200);
-    const entry = res.body.data[0];
-    expect(entry.subPosition).toBe('a');
-    // variant notation stripped from label
-    expect(entry.label ?? entry.rawLine).not.toMatch(/1\/4/);
+    const family = res.body.data[0];
+    const sub = res.body.data[1];
+    expect(family.displayOrder).toBe('1');
+    expect(sub.displayOrder).toBe('1a');
+    expect(sub.label ?? sub.rawLine).not.toMatch(/1\/4/);
   });
 
   it('returns unresolved for unknown call', async () => {
