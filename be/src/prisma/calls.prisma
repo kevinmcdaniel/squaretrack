@@ -33,19 +33,23 @@ model call_synonym {
 // Flow fields describe directional momentum entering and exiting the call.
 // Flow compatibility rules are enforced in the service layer, not here.
 model call_formation {
-  callId           Int
-  call             call                @relation(fields: [callId], references: [callId])
-  startId          Int
-  startForm        formation           @relation(name: "startFormation", fields: [startId], references: [formId])
-  endId            Int
-  endForm          formation           @relation(name: "endingFormation", fields: [endId], references: [formId])
-  inFlowRotation   String?             // left | right | none
-  inFlowDirection  String?             // forward | backward | slideLeft | slideRight
-  outFlowRotation  String?             // left | right | none
-  outFlowDirection String?             // forward | backward | slideLeft | slideRight
-  programEntries   program_call_formation[]
-  teachFasrEntries teach_order_entry_fasr[]
-  sequenceSteps    sequence_calls[]
+  callId                Int
+  call                  call                @relation(fields: [callId], references: [callId])
+  startId               Int
+  startForm             formation           @relation(name: "startFormation", fields: [startId], references: [formId])
+  endId                 Int
+  endForm               formation           @relation(name: "endingFormation", fields: [endId], references: [formId])
+  inFlowRotation        String?             // left | right | none
+  inFlowDirection       String?             // forward | backward | slideLeft | slideRight
+  outFlowRotation       String?             // left | right | none
+  outFlowDirection      String?             // forward | backward | slideLeft | slideRight
+  // Animation difficulty as authored by Taminations: 1=easy, 2=medium, 3=hard.
+  // Per-FASR (a call from different formations can have different animation difficulty).
+  // Distinct from program_call_formation.difficulty (Callerlab Standard Position teach difficulty).
+  taminationsDifficulty Int?
+  programEntries        program_call_formation[]
+  teachFasrEntries      teach_order_entry_fasr[]
+  sequenceSteps         sequence_calls[]
   @@id([callId, startId])
   @@index([startId])
   @@index([endId])
@@ -80,6 +84,8 @@ model program_call_formation {
   callId        Int
   startId       Int
   callFormation call_formation @relation(fields: [callId, startId], references: [callId, startId])
+  // Callerlab Standard Position difficulty for this (call, FASR) at this program level.
+  // Distinct from call_formation.taminationsDifficulty (Taminations animation difficulty, 1-3).
   difficulty    String         // easy | hard | challenging
 
   @@id([programId, callId, startId])

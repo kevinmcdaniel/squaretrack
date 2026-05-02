@@ -1,0 +1,66 @@
+[
+  {
+    "abbreviation": "bms",
+    "name": "Basic and Mainstream"
+  },
+  {
+    "abbreviation": "b1",
+    "name": "Basic 1"
+  },
+  {
+    "abbreviation": "b2",
+    "name": "Basic 2"
+  },
+  {
+    "abbreviation": "ms",
+    "name": "Mainstream"
+  },
+  {
+    "abbreviation": "ssd",
+    "name": "SSD"
+  },
+  {
+    "abbreviation": "m26",
+    "name": "Mainstream 2026"
+  },
+  {
+    "abbreviation": "plus",
+    "name": "Plus"
+  },
+  {
+    "abbreviation": "p26",
+    "name": "Plus 2026"
+  },
+  {
+    "abbreviation": "adv",
+    "name": "Advanced"
+  },
+  {
+    "abbreviation": "a1",
+    "name": "A-1"
+  },
+  {
+    "abbreviation": "a2",
+    "name": "A-2"
+  },
+  {
+    "abbreviation": "cha",
+    "name": "Challenge"
+  },
+  {
+    "abbreviation": "c1",
+    "name": "C-1"
+  },
+  {
+    "abbreviation": "c2",
+    "name": "C-2"
+  },
+  {
+    "abbreviation": "c3a",
+    "name": "C-3A"
+  },
+  {
+    "abbreviation": "c3b",
+    "name": "C-3B"
+  }
+]

@@ -1,0 +1,4212 @@
+[
+  {
+    "title": "1/4 Mix",
+    "level": "c3a",
+    "link": "c3a/1_4_mix"
+  },
+  {
+    "title": "1/4 the Deucey",
+    "level": "c3a",
+    "link": "c3a/1_4_the_deucey"
+  },
+  {
+    "title": "1/4 Wheel the Ocean",
+    "level": "c3a",
+    "link": "c3a/1_4_wheel_the_ocean"
+  },
+  {
+    "title": "1/4 Wheel the Sea",
+    "level": "c3a",
+    "link": "c3a/1_4_wheel_the_ocean"
+  },
+  {
+    "title": "2/3 Recycle",
+    "level": "c1",
+    "link": "c1/recycle"
+  },
+  {
+    "title": "3 by 1 Checkmate the Column",
+    "level": "c2",
+    "link": "c2/3_by_1_checkmate_the_column"
+  },
+  {
+    "title": "3 by 1 Transfer the Column",
+    "level": "c2",
+    "link": "c2/3_by_1_transfer_the_column"
+  },
+  {
+    "title": "3 by 1 Triangle Formation",
+    "level": "c2",
+    "link": "c2/3_by_1_triangle_formation"
+  },
+  {
+    "title": "3/4 Mix",
+    "level": "c3a",
+    "link": "c3a/1_4_mix"
+  },
+  {
+    "title": "3/4 the Deucey",
+    "level": "c3a",
+    "link": "c3a/1_4_the_deucey"
+  },
+  {
+    "title": "3/4 Wheel the Ocean",
+    "level": "c3a",
+    "link": "c3a/1_4_wheel_the_ocean"
+  },
+  {
+    "title": "3/4 Wheel the Sea",
+    "level": "c3a",
+    "link": "c3a/1_4_wheel_the_ocean"
+  },
+  {
+    "title": "Acey Deucey",
+    "level": "plus",
+    "link": "plus/acey_deucey"
+  },
+  {
+    "title": "Acey Deucey",
+    "level": "p26",
+    "link": "p26/acey_deucey"
+  },
+  {
+    "title": "Ah So",
+    "level": "c1",
+    "link": "c1/ah_so"
+  },
+  {
+    "title": "Alamo Style",
+    "level": "b2",
+    "link": "b2/alamo_style"
+  },
+  {
+    "title": "Alamo Style",
+    "level": "ssd",
+    "link": "ssd/alamo_style"
+  },
+  {
+    "title": "Alamo Style",
+    "level": "m26",
+    "link": "m26/alamo_style"
+  },
+  {
+    "title": "All 4 Couples / All 8 concepts",
+    "level": "a2",
+    "link": "a2/all_4_all_8"
+  },
+  {
+    "title": "All 8 Spin the Top",
+    "level": "plus",
+    "link": "plus/all_8_spin_the_top"
+  },
+  {
+    "title": "All 8 Spin the Top",
+    "level": "p26",
+    "link": "p26/all_8_spin_the_top"
+  },
+  {
+    "title": "All Eight Recycle",
+    "level": "c1",
+    "link": "c1/recycle"
+  },
+  {
+    "title": "Allemande Left",
+    "level": "b1",
+    "link": "b1/allemande"
+  },
+  {
+    "title": "Allemande Left",
+    "level": "ssd",
+    "link": "ssd/allemande"
+  },
+  {
+    "title": "Allemande Left",
+    "level": "m26",
+    "link": "ssd/allemande"
+  },
+  {
+    "title": "Allemande Thar",
+    "level": "ms",
+    "link": "ms/thar"
+  },
+  {
+    "title": "Allemande Thar",
+    "level": "p26",
+    "link": "p26/thar"
+  },
+  {
+    "title": "Along",
+    "level": "c2",
+    "link": "c2/swing_along"
+  },
+  {
+    "title": "Alter and Circulate",
+    "level": "c2",
+    "link": "c2/alter_and_circulate"
+  },
+  {
+    "title": "Alter the Wave",
+    "level": "c1",
+    "link": "c1/alter_the_wave"
+  },
+  {
+    "title": "Any Hand Concept",
+    "level": "a1",
+    "link": "a1/any_hand_concept"
+  },
+  {
+    "title": "Any Tagging Call and Scatter",
+    "level": "c3b",
+    "link": "c3b/anything_and_scatter"
+  },
+  {
+    "title": "<any tagging call> Your Neighbor",
+    "level": "c2",
+    "link": "c2/any_tagging_call_your_neighbor"
+  },
+  {
+    "title": "Anyone Hop",
+    "level": "c3a",
+    "link": "c3a/anyone_hop"
+  },
+  {
+    "title": "<anything> and Circle",
+    "level": "c2",
+    "link": "c2/anything_and_circle"
+  },
+  {
+    "title": "<anything> and Roll",
+    "level": "plus",
+    "link": "plus/anything_and_roll"
+  },
+  {
+    "title": "<anything> and Roll",
+    "level": "p26",
+    "link": "p26/anything_and_roll"
+  },
+  {
+    "title": "<anything> and Spread",
+    "level": "plus",
+    "link": "plus/anything_and_spread"
+  },
+  {
+    "title": "<anything> and Spread",
+    "level": "p26",
+    "link": "p26/anything_and_spread"
+  },
+  {
+    "title": "<anything> and Spread",
+    "level": "c1",
+    "link": "c1/anything_and_spread"
+  },
+  {
+    "title": "<anything> Chain Thru",
+    "level": "c1",
+    "link": "c1/anything_chain_thru"
+  },
+  {
+    "title": "<anything> Choice",
+    "level": "c3a",
+    "link": "c3a/choice"
+  },
+  {
+    "title": "Anything Concept",
+    "level": "c2",
+    "link": "c2/anything_concept"
+  },
+  {
+    "title": "<anything> Reaction",
+    "level": "c3a",
+    "link": "c3a/anything_reaction"
+  },
+  {
+    "title": "<anything> the K",
+    "level": "c2",
+    "link": "c2/cross_the_k"
+  },
+  {
+    "title": "<anything> the Windmill",
+    "level": "c1",
+    "link": "c1/anything_the_windmill"
+  },
+  {
+    "title": "<anything> to a Wave",
+    "level": "c1",
+    "link": "c1/anything_to_a_wave"
+  },
+  {
+    "title": "<anything>er's Couple Up",
+    "level": "c3a",
+    "link": "c3a/anythingers_couple_up"
+  },
+  {
+    "title": "Arm Turns",
+    "level": "b1",
+    "link": "b1/arm_turns"
+  },
+  {
+    "title": "Arm Turns",
+    "level": "ssd",
+    "link": "ssd/arm_turns"
+  },
+  {
+    "title": "Arm Turns",
+    "level": "m26",
+    "link": "m26/arm_turns"
+  },
+  {
+    "title": "As Couples Concept",
+    "level": "a1",
+    "link": "a1/as_couples"
+  },
+  {
+    "title": "Backtrack",
+    "level": "b1",
+    "link": "b1/turn_back"
+  },
+  {
+    "title": "Backtrack",
+    "level": "ssd",
+    "link": "ssd/turn_back"
+  },
+  {
+    "title": "Backtrack",
+    "level": "m26",
+    "link": "m26/turn_back"
+  },
+  {
+    "title": "Belles and Beaus",
+    "level": "a1",
+    "link": "a1/belles_and_beaus"
+  },
+  {
+    "title": "Bend the Line",
+    "level": "b1",
+    "link": "b1/bend_the_line"
+  },
+  {
+    "title": "Bend the Line",
+    "level": "ssd",
+    "link": "ssd/bend_the_line"
+  },
+  {
+    "title": "Bend the Line",
+    "level": "m26",
+    "link": "m26/bend_the_line"
+  },
+  {
+    "title": "Bias Circulate",
+    "level": "c3a",
+    "link": "c3a/bias_circulate"
+  },
+  {
+    "title": "Big Block Concept",
+    "level": "c3a",
+    "link": "c3a/big_block_concept"
+  },
+  {
+    "title": "Bingo",
+    "level": "c3b",
+    "link": "c3b/bingo"
+  },
+  {
+    "title": "Block Formation",
+    "level": "c1",
+    "link": "c1/block_formation"
+  },
+  {
+    "title": "Boomerang",
+    "level": "c3b",
+    "link": "c3b/boomerang"
+  },
+  {
+    "title": "Bounce the Anyone",
+    "level": "c2",
+    "link": "c2/bounce"
+  },
+  {
+    "title": "Box Counter Rotate",
+    "level": "a2",
+    "link": "a2/box_counter_rotate"
+  },
+  {
+    "title": "Box Recycle",
+    "level": "c1",
+    "link": "c1/recycle"
+  },
+  {
+    "title": "Box the Gnat",
+    "level": "b2",
+    "link": "b2/box_the_gnat"
+  },
+  {
+    "title": "Box the Gnat",
+    "level": "ssd",
+    "link": "ssd/box_the_gnat"
+  },
+  {
+    "title": "Box the Gnat",
+    "level": "m26",
+    "link": "m26/box_the_gnat"
+  },
+  {
+    "title": "Box Transfer",
+    "level": "a2",
+    "link": "a2/box_transfer"
+  },
+  {
+    "title": "Brace Thru",
+    "level": "a1",
+    "link": "a1/brace_thru"
+  },
+  {
+    "title": "Breaker <anything>",
+    "level": "c3a",
+    "link": "c3a/breaker_anything"
+  },
+  {
+    "title": "Busy <anything>",
+    "level": "c3b",
+    "link": "c3b/busy_anything"
+  },
+  {
+    "title": "But",
+    "level": "c1",
+    "link": "c1/but"
+  },
+  {
+    "title": "Butterfly Formation / Concept",
+    "level": "c1",
+    "link": "c1/butterfly_formation"
+  },
+  {
+    "title": "California Twirl",
+    "level": "b1",
+    "link": "b1/california_twirl"
+  },
+  {
+    "title": "California Twirl",
+    "level": "ssd",
+    "link": "ssd/california_twirl"
+  },
+  {
+    "title": "California Twirl",
+    "level": "m26",
+    "link": "m26/california_twirl"
+  },
+  {
+    "title": "Cast a Shadow",
+    "level": "a1",
+    "link": "a1/cast_a_shadow"
+  },
+  {
+    "title": "Cast and Relay",
+    "level": "c3b",
+    "link": "c3b/fraction_cast_and_relay"
+  },
+  {
+    "title": "Cast Back",
+    "level": "c1",
+    "link": "c1/cast_back"
+  },
+  {
+    "title": "Cast Off One Quarter / One Half",
+    "level": "a1",
+    "link": "a1/cast_off_14"
+  },
+  {
+    "title": "Cast Off Three Quarters",
+    "level": "ms",
+    "link": "ms/cast_off_three_quarters"
+  },
+  {
+    "title": "Cast Off Three Quarters",
+    "level": "ssd",
+    "link": "ssd/cast_off_three_quarters"
+  },
+  {
+    "title": "Cast Off Three Quarters",
+    "level": "m26",
+    "link": "m26/cast_off_three_quarters"
+  },
+  {
+    "title": "Catch 1, 2, 3, 4",
+    "level": "c2",
+    "link": "c2/catch"
+  },
+  {
+    "title": "Catch <anything>",
+    "level": "c3a",
+    "link": "c3a/catch_anything_n"
+  },
+  {
+    "title": "Centers In",
+    "level": "ms",
+    "link": "ms/centers_in"
+  },
+  {
+    "title": "Centers In",
+    "level": "ssd",
+    "link": "ssd/centers_in"
+  },
+  {
+    "title": "Centers In",
+    "level": "m26",
+    "link": "m26/centers_in"
+  },
+  {
+    "title": "Central Concept",
+    "level": "c3a",
+    "link": "c3a/central_concept"
+  },
+  {
+    "title": "Chain Down the Line",
+    "level": "b1",
+    "link": "b1/ladies_chain"
+  },
+  {
+    "title": "Chain Down the Line",
+    "level": "ssd",
+    "link": "ssd/ladies_chain"
+  },
+  {
+    "title": "Chain Down the Line",
+    "level": "m26",
+    "link": "m26/ladies_chain"
+  },
+  {
+    "title": "Chain Reaction",
+    "level": "a1",
+    "link": "a1/chain_reaction"
+  },
+  {
+    "title": "Chain Reaction",
+    "level": "c1",
+    "link": "c1/chain_reaction"
+  },
+  {
+    "title": "Chain the Square",
+    "level": "c2",
+    "link": "c2/chain_the_square"
+  },
+  {
+    "title": "Change Lanes",
+    "level": "c3b",
+    "link": "c3b/change_lanes"
+  },
+  {
+    "title": "Change the Centers / Wave",
+    "level": "c3b",
+    "link": "c3b/change_the_centers"
+  },
+  {
+    "title": "Change Your Image",
+    "level": "c3b",
+    "link": "c3b/change_your_image"
+  },
+  {
+    "title": "Chase Right",
+    "level": "plus",
+    "link": "plus/chase_right"
+  },
+  {
+    "title": "Chase Right",
+    "level": "p26",
+    "link": "p26/chase_right"
+  },
+  {
+    "title": "Chase the fraction Tag",
+    "level": "c3a",
+    "link": "c3a/chase_the_fraction_tag"
+  },
+  {
+    "title": "Chase Your Criss Cross Neighbor",
+    "level": "c2",
+    "link": "c2/criss_cross_your_neighbor"
+  },
+  {
+    "title": "Chase Your Cross Neighbor",
+    "level": "c1",
+    "link": "c1/chase_your_cross_neighbor"
+  },
+  {
+    "title": "Chase Your Neighbor",
+    "level": "c1",
+    "link": "c1/chase_your_neighbor"
+  },
+  {
+    "title": "Checkerboard <anything>",
+    "level": "c3a",
+    "link": "c3a/checkerboard_anything"
+  },
+  {
+    "title": "Checkmate",
+    "level": "a2",
+    "link": "a2/checkmate"
+  },
+  {
+    "title": "Checkover",
+    "level": "c1",
+    "link": "c1/checkover"
+  },
+  {
+    "title": "Checkpoint",
+    "level": "c2",
+    "link": "c2/checkpoint"
+  },
+  {
+    "title": "Chisel Thru",
+    "level": "c2",
+    "link": "c2/chisel_thru"
+  },
+  {
+    "title": "Choice",
+    "level": "c3a",
+    "link": "c3a/choice"
+  },
+  {
+    "title": "Chuck-A-Luck",
+    "level": "c3b",
+    "link": "c3b/chuck_a_luck"
+  },
+  {
+    "title": "Circle By",
+    "level": "c1",
+    "link": "c1/circle_by"
+  },
+  {
+    "title": "Circle Left / Right",
+    "level": "b1",
+    "link": "b1/circle"
+  },
+  {
+    "title": "Circle Left / Right",
+    "level": "ssd",
+    "link": "ssd/circle"
+  },
+  {
+    "title": "Circle Left / Right",
+    "level": "m26",
+    "link": "m26/circle"
+  },
+  {
+    "title": "Circle Rule",
+    "level": "b1",
+    "link": "b1/circle_rule"
+  },
+  {
+    "title": "Circle Rule",
+    "level": "ssd",
+    "link": "ssd/circle_rule"
+  },
+  {
+    "title": "Circle Rule",
+    "level": "m26",
+    "link": "m26/circle_rule"
+  },
+  {
+    "title": "Circle to a Line",
+    "level": "b1",
+    "link": "b1/circle_to_a_line"
+  },
+  {
+    "title": "Circle to a Line",
+    "level": "p26",
+    "link": "b1/circle_to_a_line"
+  },
+  {
+    "title": "Circle to a Line",
+    "level": "ssd",
+    "link": "ssd/circle_to_a_line"
+  },
+  {
+    "title": "Circle to a Wave",
+    "level": "c2",
+    "link": "c2/circle_to_a_wave"
+  },
+  {
+    "title": "Circulate",
+    "level": "b1",
+    "link": "b1/circulate"
+  },
+  {
+    "title": "Circulate",
+    "level": "ssd",
+    "link": "ssd/circulate"
+  },
+  {
+    "title": "Circulate",
+    "level": "m26",
+    "link": "m26/circulate"
+  },
+  {
+    "title": "Circulate",
+    "level": "c1",
+    "link": "c1/circulate"
+  },
+  {
+    "title": "Clover and <anything>",
+    "level": "a1",
+    "link": "a1/clover_and_anything"
+  },
+  {
+    "title": "Clover and <anything>",
+    "level": "p26",
+    "link": "p26/clover_and_anything"
+  },
+  {
+    "title": "Cloverleaf",
+    "level": "ms",
+    "link": "ms/cloverleaf"
+  },
+  {
+    "title": "Cloverleaf",
+    "level": "p26",
+    "link": "p26/cloverleaf"
+  },
+  {
+    "title": "Concentric Concept",
+    "level": "c1",
+    "link": "c1/concentric_concept"
+  },
+  {
+    "title": "Contour the Line",
+    "level": "c3b",
+    "link": "c3b/contour_the_line"
+  },
+  {
+    "title": "Coordinate",
+    "level": "plus",
+    "link": "plus/coordinate"
+  },
+  {
+    "title": "Coordinate",
+    "level": "p26",
+    "link": "p26/coordinate"
+  },
+  {
+    "title": "Counter",
+    "level": "c2",
+    "link": "c2/counter"
+  },
+  {
+    "title": "Counterpoint",
+    "level": "c3b",
+    "link": "c3b/counterpoint"
+  },
+  {
+    "title": "Counter Rotate",
+    "level": "c1",
+    "link": "c1/counter_rotate"
+  },
+  {
+    "title": "Couple Up",
+    "level": "c3a",
+    "link": "c3a/couple_up"
+  },
+  {
+    "title": "Courtesy Turn",
+    "level": "b1",
+    "link": "b1/courtesy_turn"
+  },
+  {
+    "title": "Courtesy Turn",
+    "level": "ssd",
+    "link": "ssd/courtesy_turn"
+  },
+  {
+    "title": "Courtesy Turn",
+    "level": "m26",
+    "link": "m26/courtesy_turn"
+  },
+  {
+    "title": "Crazy Concept",
+    "level": "c2",
+    "link": "c2/crazy_concept"
+  },
+  {
+    "title": "Criss Cross the Deucey",
+    "level": "c3b",
+    "link": "c3b/criss_cross_the_deucey"
+  },
+  {
+    "title": "Criss Cross the Shadow",
+    "level": "c2",
+    "link": "c2/criss_cross_the_shadow"
+  },
+  {
+    "title": "Criss Cross Your Neighbor",
+    "level": "c2",
+    "link": "c2/criss_cross_your_neighbor"
+  },
+  {
+    "title": "Cross",
+    "level": "a1",
+    "link": "a1/anything_and_cross"
+  },
+  {
+    "title": "Cross and Turn",
+    "level": "c1",
+    "link": "c1/cross_and_turn"
+  },
+  {
+    "title": "Cross and Wheel",
+    "level": "c2",
+    "link": "c2/cross_and_wheel"
+  },
+  {
+    "title": "Cross Back",
+    "level": "c2",
+    "link": "c2/cross_back"
+  },
+  {
+    "title": "Cross By",
+    "level": "c1",
+    "link": "c1/cross_by"
+  },
+  {
+    "title": "Cross Cast Back",
+    "level": "c1",
+    "link": "c1/cast_back"
+  },
+  {
+    "title": "Cross Chain And Roll",
+    "level": "c1",
+    "link": "c1/cross_chain_thru"
+  },
+  {
+    "title": "Cross Chain Reaction",
+    "level": "c3a",
+    "link": "c3a/cross_chain_reaction"
+  },
+  {
+    "title": "Cross Chain Thru",
+    "level": "c1",
+    "link": "c1/cross_chain_thru"
+  },
+  {
+    "title": "Cross Chuck-A-Luck",
+    "level": "c3b",
+    "link": "c3b/chuck_a_luck"
+  },
+  {
+    "title": "Cross Clover and <anything>",
+    "level": "a1",
+    "link": "a1/clover_and_anything"
+  },
+  {
+    "title": "Cross Concentric Concept",
+    "level": "c2",
+    "link": "c2/cross_concentric_concept"
+  },
+  {
+    "title": "Cross Counter",
+    "level": "c3a",
+    "link": "c3a/cross_counter"
+  },
+  {
+    "title": "Cross Cycle",
+    "level": "c3b",
+    "link": "c3b/cross_cycle"
+  },
+  {
+    "title": "Cross Extend",
+    "level": "c1",
+    "link": "c1/cross_extend"
+  },
+  {
+    "title": "Cross Flip the Line",
+    "level": "c3b",
+    "link": "c3b/cross_flip_the_line"
+  },
+  {
+    "title": "Cross Fold",
+    "level": "ms",
+    "link": "ms/fold"
+  },
+  {
+    "title": "Cross Fold",
+    "level": "ssd",
+    "link": "ssd/fold"
+  },
+  {
+    "title": "Cross Fold",
+    "level": "m26",
+    "link": "m26/fold"
+  },
+  {
+    "title": "Cross Invert the Column",
+    "level": "c2",
+    "link": "c2/invert_the_column"
+  },
+  {
+    "title": "Cross Kick Off",
+    "level": "c2",
+    "link": "c2/kick_off"
+  },
+  {
+    "title": "Cross Lockit",
+    "level": "c3b",
+    "link": "c3b/cross_lockit"
+  },
+  {
+    "title": "Cross Over Circulate",
+    "level": "a1",
+    "link": "a1/cross_over_circulate"
+  },
+  {
+    "title": "Cross Over Circulate",
+    "level": "c1",
+    "link": "c1/cross_over_circulate"
+  },
+  {
+    "title": "Cross Ramble",
+    "level": "c2",
+    "link": "c2/cross_ramble"
+  },
+  {
+    "title": "Cross Roll",
+    "level": "c1",
+    "link": "c1/cross_roll"
+  },
+  {
+    "title": "Cross Run",
+    "level": "b2",
+    "link": "b2/run"
+  },
+  {
+    "title": "Cross Run",
+    "level": "ssd",
+    "link": "ssd/run"
+  },
+  {
+    "title": "Cross Run",
+    "level": "m26",
+    "link": "m26/run"
+  },
+  {
+    "title": "Cross Swap the Top",
+    "level": "c3b",
+    "link": "c3b/swap_the_top"
+  },
+  {
+    "title": "Cross the K",
+    "level": "c2",
+    "link": "c2/cross_the_k"
+  },
+  {
+    "title": "Cross Trade and Wheel",
+    "level": "c2",
+    "link": "c2/cross_and_wheel"
+  },
+  {
+    "title": "Cross Trail Thru",
+    "level": "a1",
+    "link": "a1/cross_trail_thru"
+  },
+  {
+    "title": "Cross Your Neighbor",
+    "level": "c1",
+    "link": "c1/cross_your_neighbor"
+  },
+  {
+    "title": "Crossfire",
+    "level": "plus",
+    "link": "plus/crossfire"
+  },
+  {
+    "title": "Crossfire",
+    "level": "p26",
+    "link": "p26/crossfire"
+  },
+  {
+    "title": "Cut the Diamond",
+    "level": "plus",
+    "link": "plus/cut_the_diamond"
+  },
+  {
+    "title": "Cut the Diamond",
+    "level": "p26",
+    "link": "p26/cut_the_diamond"
+  },
+  {
+    "title": "Cut the Galaxy",
+    "level": "c1",
+    "link": "c1/galaxy_formation"
+  },
+  {
+    "title": "Cut the Hourglass",
+    "level": "a2",
+    "link": "a2/hourglass_circulate"
+  },
+  {
+    "title": "Cut the Interlocked Diamond",
+    "level": "c1",
+    "link": "c1/interlocked_diamond_circulate"
+  },
+  {
+    "title": "Cycle and Wheel",
+    "level": "a1",
+    "link": "a1/cycle_and_wheel"
+  },
+  {
+    "title": "Delete",
+    "level": "c1",
+    "link": "c1/replace"
+  },
+  {
+    "title": "Delight",
+    "level": "c3a",
+    "link": "c3a/delight_dilemma"
+  },
+  {
+    "title": "Detour",
+    "level": "c2",
+    "link": "c2/detour"
+  },
+  {
+    "title": "Diagonal Box Concept",
+    "level": "c3b",
+    "link": "c3b/diagonal_box_concept"
+  },
+  {
+    "title": "Diamond Chain Thru",
+    "level": "a2",
+    "link": "a2/diamond_chain_thru"
+  },
+  {
+    "title": "Diamond Circulate",
+    "level": "plus",
+    "link": "plus/diamond_circulate"
+  },
+  {
+    "title": "Diamond Circulate",
+    "level": "p26",
+    "link": "p26/diamond_circulate"
+  },
+  {
+    "title": "Dilemma",
+    "level": "c3a",
+    "link": "c3a/delight_dilemma"
+  },
+  {
+    "title": "Disband",
+    "level": "c3b",
+    "link": "c3b/disband"
+  },
+  {
+    "title": "Disconnected Concept",
+    "level": "c2",
+    "link": "c2/disconnected_concept"
+  },
+  {
+    "title": "Dive Thru",
+    "level": "b1",
+    "link": "b1/dive_thru"
+  },
+  {
+    "title": "Dive Thru",
+    "level": "ssd",
+    "link": "ssd/dive_thru"
+  },
+  {
+    "title": "Dive Thru",
+    "level": "m26",
+    "link": "m26/dive_thru"
+  },
+  {
+    "title": "Divide the Ocean | Sea <direction> | <anything>",
+    "level": "c3b",
+    "link": "c3b/divide_the_ocean"
+  },
+  {
+    "title": "Dixie Diamond",
+    "level": "c1",
+    "link": "c1/dixie_diamond"
+  },
+  {
+    "title": "Dixie Grand",
+    "level": "plus",
+    "link": "plus/dixie_grand"
+  },
+  {
+    "title": "Dixie Grand",
+    "level": "p26",
+    "link": "p26/dixie_grand"
+  },
+  {
+    "title": "Dixie Sashay",
+    "level": "c1",
+    "link": "c1/dixie_sashay"
+  },
+  {
+    "title": "Dixie Style to a Wave",
+    "level": "ms",
+    "link": "ms/dixie_style"
+  },
+  {
+    "title": "Dixie Style to a Wave",
+    "level": "p26",
+    "link": "p26/dixie_style"
+  },
+  {
+    "title": "Do Paso",
+    "level": "b1",
+    "link": "b1/do_paso"
+  },
+  {
+    "title": "Do Paso",
+    "level": "p26",
+    "link": "b1/do_paso"
+  },
+  {
+    "title": "Do Your Part",
+    "level": "a1",
+    "link": "a1/do_your_part"
+  },
+  {
+    "title": "Dodge <anything>",
+    "level": "c2",
+    "link": "c2/dodge_anything"
+  },
+  {
+    "title": "Dosado",
+    "level": "b1",
+    "link": "b1/dosado"
+  },
+  {
+    "title": "Dosado",
+    "level": "ssd",
+    "link": "ssd/dosado"
+  },
+  {
+    "title": "Dosado",
+    "level": "m26",
+    "link": "m26/dosado"
+  },
+  {
+    "title": "Double Cross",
+    "level": "a1",
+    "link": "a1/triple_cross"
+  },
+  {
+    "title": "Double Pass Thru",
+    "level": "b1",
+    "link": "b1/double_pass_thru"
+  },
+  {
+    "title": "Double Pass Thru",
+    "level": "ssd",
+    "link": "ssd/double_pass_thru"
+  },
+  {
+    "title": "Double Pass Thru",
+    "level": "m26",
+    "link": "m26/double_pass_thru"
+  },
+  {
+    "title": "Double Star Thru",
+    "level": "a1",
+    "link": "a1/double_star_thru"
+  },
+  {
+    "title": "Drift Apart",
+    "level": "c3a",
+    "link": "c3a/drift_apart"
+  },
+  {
+    "title": "Drop In/Out/Right/Left",
+    "level": "c2",
+    "link": "c2/drop_in"
+  },
+  {
+    "title": "Ease Off",
+    "level": "c3a",
+    "link": "c3a/ease_off"
+  },
+  {
+    "title": "Echo Concept",
+    "level": "c3b",
+    "link": "c3b/echo"
+  },
+  {
+    "title": "Eight By <anything>",
+    "level": "c3a",
+    "link": "c3a/eight_by_anything"
+  },
+  {
+    "title": "Eight Chain Thru",
+    "level": "ms",
+    "link": "ms/eight_chain_thru"
+  },
+  {
+    "title": "Eight Chain Thru",
+    "level": "p26",
+    "link": "p26/eight_chain_thru"
+  },
+  {
+    "title": "Ends Bend",
+    "level": "a1",
+    "link": "a1/ends_bend"
+  },
+  {
+    "title": "Exchange the Boxes",
+    "level": "c3a",
+    "link": "c3a/exchange_the_box"
+  },
+  {
+    "title": "Exchange the Diamond",
+    "level": "c2",
+    "link": "c2/exchange_the_diamond"
+  },
+  {
+    "title": "Exchange the Triangles",
+    "level": "c3a",
+    "link": "c3a/exchange_the_box"
+  },
+  {
+    "title": "Expand the Column",
+    "level": "c3a",
+    "link": "c3a/expand_the_column"
+  },
+  {
+    "title": "Explode and <anything>",
+    "level": "plus",
+    "link": "plus/explode_and_anything"
+  },
+  {
+    "title": "Explode and <anything>",
+    "level": "p26",
+    "link": "p26/explode_and_anything"
+  },
+  {
+    "title": "Explode and <anything>",
+    "level": "a1",
+    "link": "a1/explode_and_anything"
+  },
+  {
+    "title": "Explode the Diamond",
+    "level": "c3b",
+    "link": "c3b/explode_the_diamond"
+  },
+  {
+    "title": "Explode the Line",
+    "level": "a1",
+    "link": "a1/explode_the_line"
+  },
+  {
+    "title": "Explode the Top",
+    "level": "c3a",
+    "link": "c3a/explode_the_top"
+  },
+  {
+    "title": "Explode the Wave",
+    "level": "plus",
+    "link": "plus/explode_the_wave"
+  },
+  {
+    "title": "Explode the Wave",
+    "level": "p26",
+    "link": "p26/explode_the_wave"
+  },
+  {
+    "title": "Extend",
+    "level": "b2",
+    "link": "b2/extend"
+  },
+  {
+    "title": "Extend",
+    "level": "ssd",
+    "link": "ssd/extend"
+  },
+  {
+    "title": "Extend",
+    "level": "m26",
+    "link": "m26/extend"
+  },
+  {
+    "title": "Face Left / Right / In / Out",
+    "level": "b1",
+    "link": "b1/face"
+  },
+  {
+    "title": "Face Left / Right / In / Out",
+    "level": "ssd",
+    "link": "ssd/face"
+  },
+  {
+    "title": "Face Left / Right / In / Out",
+    "level": "m26",
+    "link": "m26/face"
+  },
+  {
+    "title": "Facing Couples Rule",
+    "level": "b2",
+    "link": "b2/facing_couples_rule"
+  },
+  {
+    "title": "Facing Couples Rule",
+    "level": "ssd",
+    "link": "ssd/facing_couples_rule"
+  },
+  {
+    "title": "Facing Couples Rule",
+    "level": "m26",
+    "link": "m26/facing_couples_rule"
+  },
+  {
+    "title": "Fan Concept",
+    "level": "c3b",
+    "link": "c3b/fan_concept"
+  },
+  {
+    "title": "Fan the Top",
+    "level": "plus",
+    "link": "plus/fan_the_top"
+  },
+  {
+    "title": "Fan the Top",
+    "level": "p26",
+    "link": "p26/fan_the_top"
+  },
+  {
+    "title": "Fancy",
+    "level": "c3a",
+    "link": "c3a/fancy"
+  },
+  {
+    "title": "Fascinate/Fascinating",
+    "level": "c2",
+    "link": "c2/fascinate"
+  },
+  {
+    "title": "Ferris Wheel",
+    "level": "b2",
+    "link": "b2/ferris_wheel"
+  },
+  {
+    "title": "Ferris Wheel",
+    "level": "ssd",
+    "link": "ssd/ferris_wheel"
+  },
+  {
+    "title": "Ferris Wheel",
+    "level": "m26",
+    "link": "m26/ferris_wheel"
+  },
+  {
+    "title": "File to a Line",
+    "level": "c2",
+    "link": "c2/file_to_a_line"
+  },
+  {
+    "title": "Finally Concept",
+    "level": "c3a",
+    "link": "c3a/finally_concept"
+  },
+  {
+    "title": "Finish",
+    "level": "c1",
+    "link": "c1/finish"
+  },
+  {
+    "title": "First Couple Go Left/Right, Next Couple Go Left/Right",
+    "level": "b1",
+    "link": "b1/first_couple_go"
+  },
+  {
+    "title": "First Couple Go Left/Right, Next Couple Go Left/Right",
+    "level": "ssd",
+    "link": "ssd/first_couple_go"
+  },
+  {
+    "title": "First Couple Go Left/Right, Next Couple Go Left/Right",
+    "level": "m26",
+    "link": "m26/first_couple_go"
+  },
+  {
+    "title": "First Half Concept",
+    "level": "c3b",
+    "link": "c3b/first_last_half_concept"
+  },
+  {
+    "title": "Flare Out to a Line",
+    "level": "c3a",
+    "link": "c3a/flare_out_to_a_line"
+  },
+  {
+    "title": "Flip Back",
+    "level": "c1",
+    "link": "c1/tagging_calls_back_to_a_wave"
+  },
+  {
+    "title": "Flip the Diamond",
+    "level": "plus",
+    "link": "plus/flip_the_diamond"
+  },
+  {
+    "title": "Flip the Diamond",
+    "level": "p26",
+    "link": "p26/flip_the_diamond"
+  },
+  {
+    "title": "Flip the Galaxy",
+    "level": "c1",
+    "link": "c1/galaxy_formation"
+  },
+  {
+    "title": "Flip the Hourglass",
+    "level": "a2",
+    "link": "a2/hourglass_circulate"
+  },
+  {
+    "title": "Flip the Interlocked Diamond",
+    "level": "c1",
+    "link": "c1/interlocked_diamond_circulate"
+  },
+  {
+    "title": "Flip the Line",
+    "level": "c1",
+    "link": "c1/flip_the_line"
+  },
+  {
+    "title": "Flip Your Lid",
+    "level": "c3b",
+    "link": "c3b/flip_your_lid"
+  },
+  {
+    "title": "Flip Your Neighbor",
+    "level": "c2",
+    "link": "c2/any_tagging_call_your_neighbor"
+  },
+  {
+    "title": "Flutterwheel",
+    "level": "b2",
+    "link": "b2/flutterwheel"
+  },
+  {
+    "title": "Flutterwheel",
+    "level": "ssd",
+    "link": "ssd/flutterwheel"
+  },
+  {
+    "title": "Flutterwheel",
+    "level": "m26",
+    "link": "m26/flutterwheel"
+  },
+  {
+    "title": "Fold",
+    "level": "ms",
+    "link": "ms/fold"
+  },
+  {
+    "title": "Fold",
+    "level": "ssd",
+    "link": "ssd/fold"
+  },
+  {
+    "title": "Fold",
+    "level": "m26",
+    "link": "m26/fold"
+  },
+  {
+    "title": "Follow Thru",
+    "level": "c1",
+    "link": "c1/follow_thru"
+  },
+  {
+    "title": "Follow to a Diamond",
+    "level": "c3a",
+    "link": "c3a/follow_to_a_diamond"
+  },
+  {
+    "title": "Follow Your Leader",
+    "level": "c3a",
+    "link": "c3a/follow_your_leader"
+  },
+  {
+    "title": "Follow Your Neighbor",
+    "level": "plus",
+    "link": "plus/follow_your_neighbor"
+  },
+  {
+    "title": "Follow Your Neighbor",
+    "level": "p26",
+    "link": "p26/follow_your_neighbor"
+  },
+  {
+    "title": "Forward and Back",
+    "level": "b1",
+    "link": "b1/forward_and_back"
+  },
+  {
+    "title": "Forward and Back",
+    "level": "ssd",
+    "link": "ssd/forward_and_back"
+  },
+  {
+    "title": "Forward and Back",
+    "level": "m26",
+    "link": "m26/forward_and_back"
+  },
+  {
+    "title": "Fourthly",
+    "level": "c3b",
+    "link": "c3b/secondly_thirdly_fourthly"
+  },
+  {
+    "title": "Fractional Tops",
+    "level": "a1",
+    "link": "a1/fractional_tops"
+  },
+  {
+    "title": "Funny Concept",
+    "level": "c2",
+    "link": "c2/funny_concept"
+  },
+  {
+    "title": "Galaxy Circulate",
+    "level": "c1",
+    "link": "c1/galaxy_formation"
+  },
+  {
+    "title": "Galaxy Formation",
+    "level": "c1",
+    "link": "c1/galaxy_formation"
+  },
+  {
+    "title": "Gee Whiz",
+    "level": "c3b",
+    "link": "c3b/gee_whiz"
+  },
+  {
+    "title": "Generous",
+    "level": "c3b",
+    "link": "c3b/stingy_generous"
+  },
+  {
+    "title": "Good Show",
+    "level": "c3b",
+    "link": "c3b/good_show"
+  },
+  {
+    "title": "Grand Chain Eight",
+    "level": "c2",
+    "link": "c2/grand_chain_eight"
+  },
+  {
+    "title": "Grand Cross Back",
+    "level": "c2",
+    "link": "c2/cross_back"
+  },
+  {
+    "title": "Grand Cross Trade and Wheel",
+    "level": "c2",
+    "link": "c2/cross_and_wheel"
+  },
+  {
+    "title": "Grand Drop",
+    "level": "c2",
+    "link": "c2/drop_in"
+  },
+  {
+    "title": "Grand Follow Your Neighbor",
+    "level": "a1",
+    "link": "a1/grand_follow_your_neighbor"
+  },
+  {
+    "title": "Grand Mix",
+    "level": "c3a",
+    "link": "c3a/grand_mix"
+  },
+  {
+    "title": "Grand Quarter Thru",
+    "level": "a1",
+    "link": "a1/grand_quarter_thru"
+  },
+  {
+    "title": "Grand Quarter Thru",
+    "level": "p26",
+    "link": "p26/grand_quarter_thru"
+  },
+  {
+    "title": "Grand Remake",
+    "level": "a2",
+    "link": "a2/remake"
+  },
+  {
+    "title": "Grand Single Cross and Wheel",
+    "level": "c2",
+    "link": "c2/cross_and_wheel"
+  },
+  {
+    "title": "Grand Single Cross Trade and Wheel",
+    "level": "c2",
+    "link": "c2/cross_and_wheel"
+  },
+  {
+    "title": "Grand Square",
+    "level": "b1",
+    "link": "b1/grand_square"
+  },
+  {
+    "title": "Grand Square",
+    "level": "ssd",
+    "link": "ssd/grand_square"
+  },
+  {
+    "title": "Grand Square",
+    "level": "m26",
+    "link": "m26/grand_square"
+  },
+  {
+    "title": "Grand Swing Thru",
+    "level": "plus",
+    "link": "plus/grand_swing_thru"
+  },
+  {
+    "title": "Grand Swing Thru",
+    "level": "p26",
+    "link": "p26/grand_swing_thru"
+  },
+  {
+    "title": "Grand Three Quarter Thru",
+    "level": "a1",
+    "link": "a1/grand_quarter_thru"
+  },
+  {
+    "title": "Grand Three Quarter Thru",
+    "level": "p26",
+    "link": "p26/grand_quarter_thru"
+  },
+  {
+    "title": "Half Sashay",
+    "level": "b1",
+    "link": "b1/sashay"
+  },
+  {
+    "title": "Half Sashay",
+    "level": "ssd",
+    "link": "ssd/sashay"
+  },
+  {
+    "title": "Half Sashay",
+    "level": "m26",
+    "link": "m26/sashay"
+  },
+  {
+    "title": "Half Tag",
+    "level": "ms",
+    "link": "ms/fraction_tag"
+  },
+  {
+    "title": "Half Tag",
+    "level": "ssd",
+    "link": "ssd/fraction_tag"
+  },
+  {
+    "title": "Half Tag",
+    "level": "m26",
+    "link": "m26/fraction_tag"
+  },
+  {
+    "title": "Here Comes the Judge",
+    "level": "c2",
+    "link": "c2/sock_it_to_me"
+  },
+  {
+    "title": "Hinge",
+    "level": "ms",
+    "link": "ms/hinge"
+  },
+  {
+    "title": "Hinge",
+    "level": "ssd",
+    "link": "ssd/hinge"
+  },
+  {
+    "title": "Hinge",
+    "level": "m26",
+    "link": "m26/hinge"
+  },
+  {
+    "title": "Hinge the Lock",
+    "level": "c3a",
+    "link": "c3a/lock_the_hinge"
+  },
+  {
+    "title": "Hinge the Top",
+    "level": "c3a",
+    "link": "c3a/lock_the_hinge"
+  },
+  {
+    "title": "Hocus Pocus",
+    "level": "c2",
+    "link": "c2/hocus_pocus"
+  },
+  {
+    "title": "Horseshoe Turn",
+    "level": "a1",
+    "link": "a1/horseshoe_turn"
+  },
+  {
+    "title": "Hourglass Circulate",
+    "level": "a2",
+    "link": "a2/hourglass_circulate"
+  },
+  {
+    "title": "Hubs Trade <anything>",
+    "level": "c2",
+    "link": "c2/rims_trade_anything"
+  },
+  {
+    "title": "Hubs Trade Back",
+    "level": "c2",
+    "link": "c2/rims_trade_back"
+  },
+  {
+    "title": "Ignore",
+    "level": "c1",
+    "link": "c1/ignore"
+  },
+  {
+    "title": "In-Roll Circulate",
+    "level": "a2",
+    "link": "a2/in_roll_circulate"
+  },
+  {
+    "title": "Initially Concept",
+    "level": "c3a",
+    "link": "c3a/initially_concept"
+  },
+  {
+    "title": "Inlet",
+    "level": "c2",
+    "link": "c2/inlet"
+  },
+  {
+    "title": "Interlocked 3 by 1 Triangle Formation",
+    "level": "c2",
+    "link": "c2/3_by_1_triangle_formation"
+  },
+  {
+    "title": "Interlocked Counter",
+    "level": "c3b",
+    "link": "c3b/interlocked_counter"
+  },
+  {
+    "title": "Interlocked Diamond Circulate",
+    "level": "c1",
+    "link": "c1/interlocked_diamond_circulate"
+  },
+  {
+    "title": "Interlocked Extend",
+    "level": "c3a",
+    "link": "c3a/interlocked_extend"
+  },
+  {
+    "title": "Interlocked Little",
+    "level": "c3a",
+    "link": "c3a/interlocked_little"
+  },
+  {
+    "title": "Interlocked Little More",
+    "level": "c3a",
+    "link": "c3a/interlocked_little_more"
+  },
+  {
+    "title": "Interlocked Plenty",
+    "level": "c3a",
+    "link": "c3a/interlocked_plenty"
+  },
+  {
+    "title": "Interlocked Rally",
+    "level": "c3b",
+    "link": "c3b/interlocked_rally"
+  },
+  {
+    "title": "Interlocked Ramble",
+    "level": "c3b",
+    "link": "c3b/interlocked_ramble"
+  },
+  {
+    "title": "Interlocked Scoot Back",
+    "level": "c3a",
+    "link": "c3a/interlocked_scoot_back"
+  },
+  {
+    "title": "Interlocked Scoot Chain Thru",
+    "level": "c3a",
+    "link": "c3a/interlocked_scoot_chain_thru"
+  },
+  {
+    "title": "Interlocked Triangle Formation",
+    "level": "c2",
+    "link": "c2/interlocked_triangle_formation"
+  },
+  {
+    "title": "Interrupt",
+    "level": "c1",
+    "link": "c1/interrupt"
+  },
+  {
+    "title": "Invert the Column",
+    "level": "c2",
+    "link": "c2/invert_the_column"
+  },
+  {
+    "title": "Jay Concept",
+    "level": "c3a",
+    "link": "c3a/jay_concept"
+  },
+  {
+    "title": "Jaywalk",
+    "level": "c1",
+    "link": "c1/jaywalk"
+  },
+  {
+    "title": "Keep Busy",
+    "level": "c3a",
+    "link": "c3a/keep_busy"
+  },
+  {
+    "title": "Kick Off",
+    "level": "c2",
+    "link": "c2/kick_off"
+  },
+  {
+    "title": "Ladies Chain",
+    "level": "b1",
+    "link": "b1/ladies_chain"
+  },
+  {
+    "title": "Ladies Chain",
+    "level": "ssd",
+    "link": "ssd/ladies_chain"
+  },
+  {
+    "title": "Ladies Chain",
+    "level": "m26",
+    "link": "m26/ladies_chain"
+  },
+  {
+    "title": "Ladies In Men Sashay",
+    "level": "b1",
+    "link": "b1/sashay"
+  },
+  {
+    "title": "Ladies In Men Sashay",
+    "level": "ssd",
+    "link": "ssd/sashay"
+  },
+  {
+    "title": "Ladies In Men Sashay",
+    "level": "m26",
+    "link": "ssd/sashay"
+  },
+  {
+    "title": "Latch On",
+    "level": "c3a",
+    "link": "c3a/latch_on"
+  },
+  {
+    "title": "Lateral Substitute",
+    "level": "c2",
+    "link": "c2/lateral_substitute"
+  },
+  {
+    "title": "Lead Right / Left",
+    "level": "b1",
+    "link": "b1/lead_right"
+  },
+  {
+    "title": "Lead Right / Left",
+    "level": "ssd",
+    "link": "ssd/lead_right"
+  },
+  {
+    "title": "Lead Right / Left",
+    "level": "m26",
+    "link": "m26/lead_right"
+  },
+  {
+    "title": "Left",
+    "level": "a1",
+    "link": "a1/left"
+  },
+  {
+    "title": "Left Arm Turn",
+    "level": "b1",
+    "link": "b1/arm_turns"
+  },
+  {
+    "title": "Left Arm Turn",
+    "level": "ssd",
+    "link": "ssd/arm_turns"
+  },
+  {
+    "title": "Left Arm Turn",
+    "level": "m26",
+    "link": "m26/arm_turns"
+  },
+  {
+    "title": "Left Chase",
+    "level": "plus",
+    "link": "plus/chase_right"
+  },
+  {
+    "title": "Left Chase",
+    "level": "p26",
+    "link": "p26/chase_right"
+  },
+  {
+    "title": "Left Roll to a Wave",
+    "level": "a1",
+    "link": "a1/right_roll_to_a_wave"
+  },
+  {
+    "title": "Left Scoot and Counter",
+    "level": "c2",
+    "link": "c2/counter"
+  },
+  {
+    "title": "Left Swing Thru",
+    "level": "b2",
+    "link": "b2/swing_thru"
+  },
+  {
+    "title": "Left Swing Thru",
+    "level": "ssd",
+    "link": "ssd/swing_thru"
+  },
+  {
+    "title": "Left Swing Thru",
+    "level": "m26",
+    "link": "m26/swing_thru"
+  },
+  {
+    "title": "Left Wheel Thru",
+    "level": "a1",
+    "link": "a1/wheel_thru"
+  },
+  {
+    "title": "Lickety Split",
+    "level": "c3b",
+    "link": "c3b/lickety_split"
+  },
+  {
+    "title": "Lift Off",
+    "level": "c3b",
+    "link": "c3b/lift_off"
+  },
+  {
+    "title": "Like a Couple Up",
+    "level": "c3a",
+    "link": "c3a/like_a_couple_up"
+  },
+  {
+    "title": "Like a Ripple",
+    "level": "c2",
+    "link": "c2/ripple_the_wave"
+  },
+  {
+    "title": "Linear Action",
+    "level": "c1",
+    "link": "c1/linear_action"
+  },
+  {
+    "title": "Linear Cycle",
+    "level": "plus",
+    "link": "plus/linear_cycle"
+  },
+  {
+    "title": "Linear Cycle",
+    "level": "p26",
+    "link": "p26/linear_cycle"
+  },
+  {
+    "title": "Linear Cycle",
+    "level": "a1",
+    "link": "a1/linear_cycle"
+  },
+  {
+    "title": "Lines <anything> Thru",
+    "level": "c2",
+    "link": "c2/lines_anything_thru"
+  },
+  {
+    "title": "Link Up",
+    "level": "c3a",
+    "link": "c3a/link_up"
+  },
+  {
+    "title": "Little",
+    "level": "c1",
+    "link": "c1/scoot_and_little"
+  },
+  {
+    "title": "Little More",
+    "level": "c2",
+    "link": "c2/little_more"
+  },
+  {
+    "title": "Load the Boat",
+    "level": "plus",
+    "link": "plus/load_the_boat"
+  },
+  {
+    "title": "Load the Boat",
+    "level": "p26",
+    "link": "p26/load_the_boat"
+  },
+  {
+    "title": "Lock 'Em Up",
+    "level": "c3b",
+    "link": "c3b/lock_em_up"
+  },
+  {
+    "title": "Lock the Hinge",
+    "level": "c3a",
+    "link": "c3a/lock_the_hinge"
+  },
+  {
+    "title": "Lockers Choice",
+    "level": "c3a",
+    "link": "c3a/choice"
+  },
+  {
+    "title": "Lockit",
+    "level": "a1",
+    "link": "a1/lock_it"
+  },
+  {
+    "title": "Loop",
+    "level": "c2",
+    "link": "c2/loop"
+  },
+  {
+    "title": "Loop and Tag",
+    "level": "c3b",
+    "link": "c3b/loop_and_tag"
+  },
+  {
+    "title": "Magic Column Circulate",
+    "level": "c1",
+    "link": "c1/magic_column_formation"
+  },
+  {
+    "title": "Magic Column Formation / Concept",
+    "level": "c1",
+    "link": "c1/magic_column_formation"
+  },
+  {
+    "title": "Make Magic",
+    "level": "c1",
+    "link": "c1/make_magic"
+  },
+  {
+    "title": "Mini-Busy",
+    "level": "a2",
+    "link": "a2/mini_busy"
+  },
+  {
+    "title": "Mini Chase",
+    "level": "c3a",
+    "link": "c3a/mini_chase"
+  },
+  {
+    "title": "Mirror Concept",
+    "level": "c3a",
+    "link": "c3a/mirror_concept"
+  },
+  {
+    "title": "Mix",
+    "level": "a1",
+    "link": "a1/mix"
+  },
+  {
+    "title": "Motivate",
+    "level": "a2",
+    "link": "a2/motivate"
+  },
+  {
+    "title": "Nuclear Reaction",
+    "level": "c3b",
+    "link": "c3b/nuclear_reaction"
+  },
+  {
+    "title": "O Formation / Concept",
+    "level": "c1",
+    "link": "c1/o_formation"
+  },
+  {
+    "title": "Ocean Wave",
+    "level": "b2",
+    "link": "b2/ocean_wave"
+  },
+  {
+    "title": "Ocean Wave",
+    "level": "ssd",
+    "link": "ssd/ocean_wave"
+  },
+  {
+    "title": "Ocean Wave",
+    "level": "m26",
+    "link": "m26/ocean_wave"
+  },
+  {
+    "title": "Ocean Wave Rule",
+    "level": "b2",
+    "link": "b2/ocean_wave_rule"
+  },
+  {
+    "title": "Ocean Wave Rule",
+    "level": "ssd",
+    "link": "ssd/ocean_wave_rule"
+  },
+  {
+    "title": "Ocean Wave Rule",
+    "level": "m26",
+    "link": "m26/ocean_wave_rule"
+  },
+  {
+    "title": "Oddly | Evenly Concept",
+    "level": "c3b",
+    "link": "c3b/oddly_evenly_concept"
+  },
+  {
+    "title": "Offset Concept",
+    "level": "c2",
+    "link": "c2/offset_concept"
+  },
+  {
+    "title": "Once Removed Concept",
+    "level": "c2",
+    "link": "c2/once_removed_concept"
+  },
+  {
+    "title": "Open Up",
+    "level": "c3a",
+    "link": "c3a/open_up_the_column"
+  },
+  {
+    "title": "Out-Roll Circulate",
+    "level": "a2",
+    "link": "a2/in_roll_circulate"
+  },
+  {
+    "title": "Outlet",
+    "level": "c2",
+    "link": "c2/inlet"
+  },
+  {
+    "title": "Own the <anyone> <anything> By <anything>",
+    "level": "c3a",
+    "link": "c3a/own_the_anyone_anything_by_anything"
+  },
+  {
+    "title": "Pair Off",
+    "level": "a1",
+    "link": "a1/pair_off"
+  },
+  {
+    "title": "Pair Off",
+    "level": "p26",
+    "link": "p26/pair_off"
+  },
+  {
+    "title": "Parallelogram Concept",
+    "level": "c2",
+    "link": "c2/parallelogram_concept"
+  },
+  {
+    "title": "Partner Hinge",
+    "level": "a1",
+    "link": "a1/partner_hinge"
+  },
+  {
+    "title": "Partner Hinge",
+    "level": "p26",
+    "link": "p26/partner_hinge"
+  },
+  {
+    "title": "Partner Tag",
+    "level": "a1",
+    "link": "a1/partner_tag"
+  },
+  {
+    "title": "Partner Tag",
+    "level": "p26",
+    "link": "p26/partner_tag"
+  },
+  {
+    "title": "Pass and Roll",
+    "level": "a2",
+    "link": "a2/pass_and_roll"
+  },
+  {
+    "title": "Pass and Roll Your Criss Cross Neighbor",
+    "level": "c2",
+    "link": "c2/criss_cross_your_neighbor"
+  },
+  {
+    "title": "Pass and Roll Your Cross Neighbor",
+    "level": "c1",
+    "link": "c1/cross_your_neighbor"
+  },
+  {
+    "title": "Pass and Roll Your Neighbor",
+    "level": "a2",
+    "link": "a2/pass_and_roll_your_neighbor"
+  },
+  {
+    "title": "Pass In",
+    "level": "a1",
+    "link": "a1/pass_in"
+  },
+  {
+    "title": "Pass Out",
+    "level": "a1",
+    "link": "a1/pass_in"
+  },
+  {
+    "title": "Pass the Axle",
+    "level": "c1",
+    "link": "c1/pass_the_axle"
+  },
+  {
+    "title": "Pass the Ocean",
+    "level": "b2",
+    "link": "b2/pass_the_ocean"
+  },
+  {
+    "title": "Pass the Ocean",
+    "level": "ssd",
+    "link": "ssd/pass_the_ocean"
+  },
+  {
+    "title": "Pass the Ocean",
+    "level": "m26",
+    "link": "m26/pass_the_ocean"
+  },
+  {
+    "title": "Pass the Sea",
+    "level": "a1",
+    "link": "a1/pass_the_sea"
+  },
+  {
+    "title": "Pass the Sea",
+    "level": "p26",
+    "link": "p26/pass_the_sea"
+  },
+  {
+    "title": "Pass Thru",
+    "level": "b1",
+    "link": "b1/pass_thru"
+  },
+  {
+    "title": "Pass Thru",
+    "level": "ssd",
+    "link": "ssd/pass_thru"
+  },
+  {
+    "title": "Pass Thru",
+    "level": "m26",
+    "link": "m26/pass_thru"
+  },
+  {
+    "title": "Pass to the Center",
+    "level": "ms",
+    "link": "ms/pass_to_the_center"
+  },
+  {
+    "title": "Pass to the Center",
+    "level": "p26",
+    "link": "p26/pass_to_the_center"
+  },
+  {
+    "title": "Passing Rule",
+    "level": "b1",
+    "link": "b1/passing_rule"
+  },
+  {
+    "title": "Patch Anyone",
+    "level": "c3a",
+    "link": "c3a/patch_anyone"
+  },
+  {
+    "title": "Peel and Trail",
+    "level": "a2",
+    "link": "a2/peel_and_trail"
+  },
+  {
+    "title": "Peel Chain Thru",
+    "level": "c3a",
+    "link": "c3a/peel_chain_thru"
+  },
+  {
+    "title": "Peel Off",
+    "level": "plus",
+    "link": "plus/peel_off"
+  },
+  {
+    "title": "Peel Off",
+    "level": "p26",
+    "link": "p26/peel_off"
+  },
+  {
+    "title": "Peel the Top",
+    "level": "plus",
+    "link": "plus/peel_the_top"
+  },
+  {
+    "title": "Peel the Top",
+    "level": "p26",
+    "link": "p26/peel_the_top"
+  },
+  {
+    "title": "Peel to a Diamond",
+    "level": "c2",
+    "link": "c2/peel_to_a_diamond"
+  },
+  {
+    "title": "Percolate",
+    "level": "c1",
+    "link": "c1/percolate"
+  },
+  {
+    "title": "Perk Up",
+    "level": "c2",
+    "link": "c2/perk_up"
+  },
+  {
+    "title": "Phantom Columns / Lines / Waves Concept",
+    "level": "c3b",
+    "link": "c3b/phantom_columns_lines_waves"
+  },
+  {
+    "title": "Phantom Formation",
+    "level": "c1",
+    "link": "c1/phantom_formation"
+  },
+  {
+    "title": "Ping Pong Circulate",
+    "level": "plus",
+    "link": "plus/ping_pong_circulate"
+  },
+  {
+    "title": "Ping Pong Circulate",
+    "level": "p26",
+    "link": "p26/ping_pong_circulate"
+  },
+  {
+    "title": "Plan Ahead",
+    "level": "c3a",
+    "link": "c3a/plan_ahead"
+  },
+  {
+    "title": "Plenty",
+    "level": "c1",
+    "link": "c1/scoot_and_plenty"
+  },
+  {
+    "title": "Polly Wally",
+    "level": "c3a",
+    "link": "c3a/polly_wally"
+  },
+  {
+    "title": "Prefer",
+    "level": "c1",
+    "link": "c1/prefer"
+  },
+  {
+    "title": "Press Ahead",
+    "level": "c1",
+    "link": "c1/press"
+  },
+  {
+    "title": "Press In / Out / Left / Right",
+    "level": "c2",
+    "link": "c2/press"
+  },
+  {
+    "title": "Promenade",
+    "level": "b1",
+    "link": "b1/promenade"
+  },
+  {
+    "title": "Promenade",
+    "level": "ssd",
+    "link": "ssd/promenade"
+  },
+  {
+    "title": "Promenade",
+    "level": "m26",
+    "link": "m26/promenade"
+  },
+  {
+    "title": "Pull By",
+    "level": "b1",
+    "link": "b1/pull_by"
+  },
+  {
+    "title": "Pull By",
+    "level": "ssd",
+    "link": "ssd/pull_by"
+  },
+  {
+    "title": "Pull By",
+    "level": "m26",
+    "link": "m26/pull_by"
+  },
+  {
+    "title": "Quadruple Formation Concept",
+    "level": "c3b",
+    "link": "c3b/quadruple_formation"
+  },
+  {
+    "title": "Quarter In",
+    "level": "a1",
+    "link": "a1/quarter_in"
+  },
+  {
+    "title": "Quarter Out",
+    "level": "a1",
+    "link": "a1/quarter_in"
+  },
+  {
+    "title": "Quarter Tag",
+    "level": "ms",
+    "link": "ms/fraction_tag"
+  },
+  {
+    "title": "Quarter Tag",
+    "level": "m26",
+    "link": "m26/fraction_tag"
+  },
+  {
+    "title": "Quarter Thru",
+    "level": "a1",
+    "link": "a1/quarter_thru"
+  },
+  {
+    "title": "Quarter Thru",
+    "level": "p26",
+    "link": "p26/quarter_thru"
+  },
+  {
+    "title": "Quick",
+    "level": "c3a",
+    "link": "c3a/quick"
+  },
+  {
+    "title": "Rally",
+    "level": "c3a",
+    "link": "c3a/rally"
+  },
+  {
+    "title": "Ramble",
+    "level": "c1",
+    "link": "c1/scoot_and_ramble"
+  },
+  {
+    "title": "Reach Out",
+    "level": "c3a",
+    "link": "c3a/reach_out"
+  },
+  {
+    "title": "Reactivate",
+    "level": "c3b",
+    "link": "c3b/reactivate"
+  },
+  {
+    "title": "Recoil",
+    "level": "c3a",
+    "link": "c3a/recoil"
+  },
+  {
+    "title": "Recycle",
+    "level": "ms",
+    "link": "ms/recycle"
+  },
+  {
+    "title": "Recycle",
+    "level": "ssd",
+    "link": "ssd/recycle"
+  },
+  {
+    "title": "Recycle",
+    "level": "m26",
+    "link": "m26/recycle"
+  },
+  {
+    "title": "Recycle",
+    "level": "a2",
+    "link": "a2/recycle"
+  },
+  {
+    "title": "Recycle",
+    "level": "c1",
+    "link": "c1/recycle"
+  },
+  {
+    "title": "Reflected Concept",
+    "level": "c3b",
+    "link": "c3b/reflected_concept"
+  },
+  {
+    "title": "Regroup",
+    "level": "c1",
+    "link": "c1/regroup"
+  },
+  {
+    "title": "Relay the Deucey",
+    "level": "plus",
+    "link": "plus/relay_the_deucey"
+  },
+  {
+    "title": "Relay the Deucey",
+    "level": "p26",
+    "link": "p26/relay_the_deucey"
+  },
+  {
+    "title": "Relay the Shadow",
+    "level": "c1",
+    "link": "c1/relay_the_shadow"
+  },
+  {
+    "title": "Relay the Top",
+    "level": "c1",
+    "link": "c1/relay_the_top"
+  },
+  {
+    "title": "Release <anything>",
+    "level": "c3a",
+    "link": "c3a/release_anything"
+  },
+  {
+    "title": "Relocate the formation",
+    "level": "c2",
+    "link": "c2/relocate_the_setup"
+  },
+  {
+    "title": "Remake",
+    "level": "a2",
+    "link": "a2/remake"
+  },
+  {
+    "title": "Remake the Thar",
+    "level": "a2",
+    "link": "a2/remake"
+  },
+  {
+    "title": "Replace",
+    "level": "c1",
+    "link": "c1/replace"
+  },
+  {
+    "title": "Reset",
+    "level": "c3b",
+    "link": "c3b/reset"
+  },
+  {
+    "title": "Reshape the Triangle",
+    "level": "c2",
+    "link": "c2/reshape_the_triangle"
+  },
+  {
+    "title": "Reverse",
+    "level": "a1",
+    "link": "a1/reverse"
+  },
+  {
+    "title": "Reverse Checkpoint <anything> By <anything>",
+    "level": "c3b",
+    "link": "c3b/reverse_checkpoint"
+  },
+  {
+    "title": "Reverse Crazy Concept",
+    "level": "c2",
+    "link": "c2/crazy_concept"
+  },
+  {
+    "title": "Reverse Cross and Turn",
+    "level": "c1",
+    "link": "c1/cross_and_turn"
+  },
+  {
+    "title": "Reverse Cut/Flip the 3 by 1 Triangle",
+    "level": "c3b",
+    "link": "c3b/reverse_cut_flip_the_3_by_1_triangle"
+  },
+  {
+    "title": "Reverse Cut/Flip the Diamond",
+    "level": "c2",
+    "link": "c2/reverse_cut_the_diamond"
+  },
+  {
+    "title": "Reverse Cut/Flip the Galaxy",
+    "level": "c2",
+    "link": "c2/reverse_cut_the_galaxy"
+  },
+  {
+    "title": "Reverse Cut/Flip the Z",
+    "level": "c3b",
+    "link": "c3b/reverse_cut_flip_the_z"
+  },
+  {
+    "title": "Reverse Echo",
+    "level": "c3b",
+    "link": "c3b/reverse_echo"
+  },
+  {
+    "title": "Reverse Explode",
+    "level": "c1",
+    "link": "c1/reverse_explode"
+  },
+  {
+    "title": "Reverse Flutterwheel",
+    "level": "b2",
+    "link": "b2/flutterwheel"
+  },
+  {
+    "title": "Reverse Flutterwheel",
+    "level": "ssd",
+    "link": "ssd/flutterwheel"
+  },
+  {
+    "title": "Reverse Flutterwheel",
+    "level": "m26",
+    "link": "m26/flutterwheel"
+  },
+  {
+    "title": "Reverse Order Concept",
+    "level": "c3b",
+    "link": "c3b/reverse_order"
+  },
+  {
+    "title": "Reverse Rotate",
+    "level": "c1",
+    "link": "c1/rotate"
+  },
+  {
+    "title": "Reverse Rotate",
+    "level": "c2",
+    "link": "c2/rotate"
+  },
+  {
+    "title": "Reverse Single Rotate",
+    "level": "c1",
+    "link": "c1/rotate"
+  },
+  {
+    "title": "Reverse Single Rotate",
+    "level": "c2",
+    "link": "c2/rotate"
+  },
+  {
+    "title": "Reverse Split Swap Around",
+    "level": "c2",
+    "link": "c2/split_swap_around"
+  },
+  {
+    "title": "Reverse Swap Around",
+    "level": "a1",
+    "link": "a1/swap_around"
+  },
+  {
+    "title": "Reverse the Pass",
+    "level": "c3b",
+    "link": "c3b/reverse_the_pass"
+  },
+  {
+    "title": "Reverse the Top",
+    "level": "c3b",
+    "link": "c3b/reverse_the_top"
+  },
+  {
+    "title": "Reverse Truck",
+    "level": "c2",
+    "link": "c2/truck"
+  },
+  {
+    "title": "Reverse Wheel and <anything>",
+    "level": "c1",
+    "link": "c1/wheel_and_anything"
+  },
+  {
+    "title": "Revolve To A Wave",
+    "level": "c3b",
+    "link": "c3b/revolve_to_a_wave"
+  },
+  {
+    "title": "Right and Left Grand",
+    "level": "b1",
+    "link": "b1/right_and_left_grand"
+  },
+  {
+    "title": "Right and Left Grand",
+    "level": "ssd",
+    "link": "ssd/right_and_left_grand"
+  },
+  {
+    "title": "Right and Left Grand",
+    "level": "m26",
+    "link": "m26/right_and_left_grand"
+  },
+  {
+    "title": "Right and Left Thru",
+    "level": "b1",
+    "link": "b1/right_and_left_thru"
+  },
+  {
+    "title": "Right and Left Thru",
+    "level": "ssd",
+    "link": "ssd/right_and_left_thru"
+  },
+  {
+    "title": "Right and Left Thru",
+    "level": "m26",
+    "link": "m26/right_and_left_thru"
+  },
+  {
+    "title": "Right Arm Turn",
+    "level": "b1",
+    "link": "b1/arm_turns"
+  },
+  {
+    "title": "Right Arm Turn",
+    "level": "ssd",
+    "link": "ssd/arm_turns"
+  },
+  {
+    "title": "Right Arm Turn",
+    "level": "m26",
+    "link": "m26/arm_turns"
+  },
+  {
+    "title": "Right / Left Hand Star",
+    "level": "b1",
+    "link": "b1/star"
+  },
+  {
+    "title": "Right / Left Hand Star",
+    "level": "ssd",
+    "link": "ssd/star"
+  },
+  {
+    "title": "Right / Left Hand Star",
+    "level": "m26",
+    "link": "m26/star"
+  },
+  {
+    "title": "Right Roll to a Wave",
+    "level": "a1",
+    "link": "a1/right_roll_to_a_wave"
+  },
+  {
+    "title": "Rims Trade <anything>",
+    "level": "c2",
+    "link": "c2/rims_trade_anything"
+  },
+  {
+    "title": "Rims Trade Back",
+    "level": "c2",
+    "link": "c2/rims_trade_back"
+  },
+  {
+    "title": "Rip Off",
+    "level": "c3b",
+    "link": "c3b/rip_off"
+  },
+  {
+    "title": "Ripple",
+    "level": "c2",
+    "link": "c2/ripple_the_wave"
+  },
+  {
+    "title": "Rollaway",
+    "level": "b1",
+    "link": "b1/sashay"
+  },
+  {
+    "title": "Rollaway",
+    "level": "ssd",
+    "link": "ssd/sashay"
+  },
+  {
+    "title": "Rollaway",
+    "level": "m26",
+    "link": "m26/sashay"
+  },
+  {
+    "title": "Rotary <anything>",
+    "level": "c2",
+    "link": "c2/rotary"
+  },
+  {
+    "title": "Rotary Spin",
+    "level": "c1",
+    "link": "c1/rotary_spin"
+  },
+  {
+    "title": "Rotate",
+    "level": "c1",
+    "link": "c1/rotate"
+  },
+  {
+    "title": "Rotate",
+    "level": "c3b",
+    "link": "c3b/rotate"
+  },
+  {
+    "title": "Rotate",
+    "level": "c2",
+    "link": "c2/rotate"
+  },
+  {
+    "title": "Run",
+    "level": "b2",
+    "link": "b2/run"
+  },
+  {
+    "title": "Run",
+    "level": "ssd",
+    "link": "ssd/run"
+  },
+  {
+    "title": "Run",
+    "level": "m26",
+    "link": "m26/run"
+  },
+  {
+    "title": "Same Position Rule",
+    "level": "b1",
+    "link": "b1/same_position_rule"
+  },
+  {
+    "title": "Scatter Circulate",
+    "level": "c3a",
+    "link": "c3a/scatter_circulate"
+  },
+  {
+    "title": "Scatter Scoot",
+    "level": "c1",
+    "link": "c1/scatter_scoot"
+  },
+  {
+    "title": "Scatter Scoot Chain Thru",
+    "level": "c1",
+    "link": "c1/scatter_scoot"
+  },
+  {
+    "title": "Scoot and Counter",
+    "level": "c2",
+    "link": "c2/counter"
+  },
+  {
+    "title": "Scoot and Cross Ramble",
+    "level": "c2",
+    "link": "c2/cross_ramble"
+  },
+  {
+    "title": "Scoot and Dodge",
+    "level": "a1",
+    "link": "a1/scoot_and_dodge"
+  },
+  {
+    "title": "Scoot and Dodge",
+    "level": "p26",
+    "link": "p26/scoot_and_dodge"
+  },
+  {
+    "title": "Scoot and Little",
+    "level": "c1",
+    "link": "c1/scoot_and_little"
+  },
+  {
+    "title": "Scoot and Little More",
+    "level": "c2",
+    "link": "c2/little_more"
+  },
+  {
+    "title": "Scoot and Plenty",
+    "level": "c1",
+    "link": "c1/scoot_and_plenty"
+  },
+  {
+    "title": "Scoot and Rally",
+    "level": "c3a",
+    "link": "c3a/rally"
+  },
+  {
+    "title": "Scoot and Ramble",
+    "level": "c1",
+    "link": "c1/scoot_and_ramble"
+  },
+  {
+    "title": "Scoot and Weave",
+    "level": "a2",
+    "link": "a2/scoot_and_weave"
+  },
+  {
+    "title": "Scoot Back",
+    "level": "ms",
+    "link": "ms/scoot_back"
+  },
+  {
+    "title": "Scoot Back",
+    "level": "ssd",
+    "link": "ssd/scoot_back"
+  },
+  {
+    "title": "Scoot Back",
+    "level": "m26",
+    "link": "m26/scoot_back"
+  },
+  {
+    "title": "Scoot Chain Thru",
+    "level": "a2",
+    "link": "a2/scoot_chain_thru"
+  },
+  {
+    "title": "Scoot the Diamond",
+    "level": "c3a",
+    "link": "c3a/scoot_the_diamond"
+  },
+  {
+    "title": "Scoot Reaction",
+    "level": "c3a",
+    "link": "c3a/anything_reaction"
+  },
+  {
+    "title": "Scramble",
+    "level": "c3b",
+    "link": "c3b/scramble"
+  },
+  {
+    "title": "Secondly",
+    "level": "c3b",
+    "link": "c3b/secondly_thirdly_fourthly"
+  },
+  {
+    "title": "See Saw",
+    "level": "b1",
+    "link": "b1/see_saw"
+  },
+  {
+    "title": "See Saw",
+    "level": "p26",
+    "link": "p26/see_saw"
+  },
+  {
+    "title": "Separate",
+    "level": "b1",
+    "link": "b1/separate"
+  },
+  {
+    "title": "Separate",
+    "level": "ssd",
+    "link": "ssd/separate"
+  },
+  {
+    "title": "Separate",
+    "level": "m26",
+    "link": "m26/separate"
+  },
+  {
+    "title": "Sets in Motion",
+    "level": "c2",
+    "link": "c2/sets_in_motion"
+  },
+  {
+    "title": "Shake and Rattle",
+    "level": "c3b",
+    "link": "c3b/shake_and_rattle"
+  },
+  {
+    "title": "Shakedown",
+    "level": "c1",
+    "link": "c1/shakedown"
+  },
+  {
+    "title": "Shazam",
+    "level": "c2",
+    "link": "c2/shazam"
+  },
+  {
+    "title": "Shoot the Star",
+    "level": "ms",
+    "link": "ms/shoot_the_star"
+  },
+  {
+    "title": "Shoot the Star",
+    "level": "p26",
+    "link": "p26/shoot_the_star"
+  },
+  {
+    "title": "Siamese Concept",
+    "level": "c1",
+    "link": "c1/siamese_concept"
+  },
+  {
+    "title": "Sidetrack",
+    "level": "c3b",
+    "link": "c3b/sidetrack"
+  },
+  {
+    "title": "Single Bounce",
+    "level": "c2",
+    "link": "c2/bounce"
+  },
+  {
+    "title": "Single Circle to a Wave",
+    "level": "plus",
+    "link": "plus/single_circle_to_a_wave"
+  },
+  {
+    "title": "Single Circle to a Wave",
+    "level": "m26",
+    "link": "m26/single_circle_to_a_wave"
+  },
+  {
+    "title": "Single Concept",
+    "level": "c3a",
+    "link": "c3a/single_concept"
+  },
+  {
+    "title": "Single Cross and Wheel",
+    "level": "c2",
+    "link": "c2/cross_and_wheel"
+  },
+  {
+    "title": "Single Cross Trade and Wheel",
+    "level": "c2",
+    "link": "c2/cross_and_wheel"
+  },
+  {
+    "title": "Single File Cross Cycle",
+    "level": "c3b",
+    "link": "c3b/single_file_cross_cycle"
+  },
+  {
+    "title": "Single File Recoil",
+    "level": "c3a",
+    "link": "c3a/single_file_recoil"
+  },
+  {
+    "title": "Single File Recycle",
+    "level": "c3a",
+    "link": "c3a/single_file_recycle"
+  },
+  {
+    "title": "Single Rotate",
+    "level": "c1",
+    "link": "c1/rotate"
+  },
+  {
+    "title": "Single Rotate",
+    "level": "c2",
+    "link": "c2/rotate"
+  },
+  {
+    "title": "Single Shake and Rattle",
+    "level": "c3b",
+    "link": "c3b/single_shake_and_rattle"
+  },
+  {
+    "title": "Single Wheel",
+    "level": "a2",
+    "link": "a2/single_wheel"
+  },
+  {
+    "title": "Six-Two Acey Deucey",
+    "level": "a1",
+    "link": "a1/six_two_acey_deucey"
+  },
+  {
+    "title": "Skip",
+    "level": "c1",
+    "link": "c1/replace"
+  },
+  {
+    "title": "Slant",
+    "level": "c3a",
+    "link": "c3a/slant"
+  },
+  {
+    "title": "Slide",
+    "level": "a2",
+    "link": "a2/slip"
+  },
+  {
+    "title": "Slide Thru",
+    "level": "ms",
+    "link": "ms/slide_thru"
+  },
+  {
+    "title": "Slide Thru",
+    "level": "ssd",
+    "link": "ssd/slide_thru"
+  },
+  {
+    "title": "Slide Thru",
+    "level": "m26",
+    "link": "m26/slide_thru"
+  },
+  {
+    "title": "Slip",
+    "level": "a2",
+    "link": "a2/slip"
+  },
+  {
+    "title": "Slip the Clutch",
+    "level": "ms",
+    "link": "ms/slip_the_clutch"
+  },
+  {
+    "title": "Slip the Clutch",
+    "level": "p26",
+    "link": "p26/slip_the_clutch"
+  },
+  {
+    "title": "Slither",
+    "level": "a2",
+    "link": "a2/slip"
+  },
+  {
+    "title": "Snap the Lock",
+    "level": "c3a",
+    "link": "c3a/snap_the_lock"
+  },
+  {
+    "title": "Sock It To Me",
+    "level": "c2",
+    "link": "c2/sock_it_to_me"
+  },
+  {
+    "title": "Solid Concept",
+    "level": "c2",
+    "link": "c2/solid_concept"
+  },
+  {
+    "title": "Something New",
+    "level": "c3a",
+    "link": "c3a/something_new"
+  },
+  {
+    "title": "Spin Chain and Exchange the Gears",
+    "level": "plus",
+    "link": "plus/spin_chain_and_exchange_the_gears"
+  },
+  {
+    "title": "Spin Chain and Exchange the Gears",
+    "level": "p26",
+    "link": "p26/spin_chain_and_exchange_the_gears"
+  },
+  {
+    "title": "Spin Chain the Gears",
+    "level": "plus",
+    "link": "plus/spin_chain_the_gears"
+  },
+  {
+    "title": "Spin Chain the Gears",
+    "level": "p26",
+    "link": "p26/spin_chain_the_gears"
+  },
+  {
+    "title": "Spin Chain the Line",
+    "level": "c3a",
+    "link": "c3a/spin_chain_the_line"
+  },
+  {
+    "title": "Spin Chain Thru",
+    "level": "ms",
+    "link": "ms/spin_chain_thru"
+  },
+  {
+    "title": "Spin Chain Thru",
+    "level": "p26",
+    "link": "p26/spin_chain_thru"
+  },
+  {
+    "title": "Spin the Pulley",
+    "level": "c3a",
+    "link": "c3a/spin_the_pulley"
+  },
+  {
+    "title": "Spin the Top",
+    "level": "ms",
+    "link": "ms/spin_the_top"
+  },
+  {
+    "title": "Spin the Top",
+    "level": "m26",
+    "link": "m26/spin_the_top"
+  },
+  {
+    "title": "Spin the Windmill",
+    "level": "a2",
+    "link": "a2/spin_the_windmill"
+  },
+  {
+    "title": "Split Circulate",
+    "level": "b1",
+    "link": "b1/circulate"
+  },
+  {
+    "title": "Split Counter Rotate",
+    "level": "a2",
+    "link": "a2/box_counter_rotate"
+  },
+  {
+    "title": "Split Counter Rotate",
+    "level": "c1",
+    "link": "c1/split_counter_rotate"
+  },
+  {
+    "title": "Split Dixie Diamond",
+    "level": "c1",
+    "link": "c1/split_square_thru_variations"
+  },
+  {
+    "title": "Split Dixie Sashay",
+    "level": "c1",
+    "link": "c1/split_square_thru_variations"
+  },
+  {
+    "title": "Split Dixie Style to a Wave",
+    "level": "c1",
+    "link": "c1/split_square_thru_variations"
+  },
+  {
+    "title": "Split Phantom Boxes Concept",
+    "level": "c3b",
+    "link": "c3b/split_phantom_boxes"
+  },
+  {
+    "title": "Split Phantom Columns / Lines / Waves Concept",
+    "level": "c3a",
+    "link": "c3a/split_phantom_columns_lines_waves_concept"
+  },
+  {
+    "title": "Split Recycle",
+    "level": "c1",
+    "link": "c1/recycle"
+  },
+  {
+    "title": "Split Square Chain the Top",
+    "level": "c1",
+    "link": "c1/split_square_thru_variations"
+  },
+  {
+    "title": "Split Square Chain Thru",
+    "level": "a1",
+    "link": "a1/split_square_chain_thru"
+  },
+  {
+    "title": "Split Square Thru",
+    "level": "a1",
+    "link": "a1/split_square_thru"
+  },
+  {
+    "title": "Split Swap Around",
+    "level": "c2",
+    "link": "c2/split_swap_around"
+  },
+  {
+    "title": "Split Trade Circulate",
+    "level": "c2",
+    "link": "c2/split_trade_circulate"
+  },
+  {
+    "title": "Split Transfer",
+    "level": "a2",
+    "link": "a2/box_transfer"
+  },
+  {
+    "title": "Split Two",
+    "level": "b1",
+    "link": "b1/split_the_outside_couple"
+  },
+  {
+    "title": "Split Two",
+    "level": "ssd",
+    "link": "ssd/split_the_outside_couple"
+  },
+  {
+    "title": "Split Two",
+    "level": "m26",
+    "link": "m26/split_the_outside_couple"
+  },
+  {
+    "title": "Square Chain the Top",
+    "level": "c1",
+    "link": "c1/square_chain_the_top"
+  },
+  {
+    "title": "Square Chain Thru",
+    "level": "a1",
+    "link": "a1/square_chain_thru"
+  },
+  {
+    "title": "Square the Bases",
+    "level": "c1",
+    "link": "c1/square_the_bases"
+  },
+  {
+    "title": "Square Thru",
+    "level": "b1",
+    "link": "b1/square_thru"
+  },
+  {
+    "title": "Square Thru",
+    "level": "ssd",
+    "link": "ssd/square_thru"
+  },
+  {
+    "title": "Square Thru",
+    "level": "m26",
+    "link": "m26/square_thru"
+  },
+  {
+    "title": "Squared Set Convention",
+    "level": "b1",
+    "link": "b1/squared_set_convention"
+  },
+  {
+    "title": "Squared Set Convention",
+    "level": "ssd",
+    "link": "ssd/squared_set_convention"
+  },
+  {
+    "title": "Squared Set Convention",
+    "level": "m26",
+    "link": "m26/squared_set_convention"
+  },
+  {
+    "title": "Squeeze",
+    "level": "c1",
+    "link": "c1/squeeze"
+  },
+  {
+    "title": "Squeeze the Galaxy",
+    "level": "c1",
+    "link": "c1/squeeze"
+  },
+  {
+    "title": "Squeeze the Hourglass",
+    "level": "c1",
+    "link": "c1/squeeze"
+  },
+  {
+    "title": "Stable Concept",
+    "level": "c3a",
+    "link": "c3a/stable_concept"
+  },
+  {
+    "title": "Stack the Line",
+    "level": "c2",
+    "link": "c2/stack_the_line"
+  },
+  {
+    "title": "Stagger Concept",
+    "level": "c2",
+    "link": "c2/stagger_concept"
+  },
+  {
+    "title": "Stampede",
+    "level": "c3a",
+    "link": "c3a/stampede"
+  },
+  {
+    "title": "Star Promenade",
+    "level": "b1",
+    "link": "b1/promenade"
+  },
+  {
+    "title": "Star Promenade",
+    "level": "ssd",
+    "link": "ssd/promenade"
+  },
+  {
+    "title": "Star Promenade",
+    "level": "m26",
+    "link": "m26/promenade"
+  },
+  {
+    "title": "Star Thru",
+    "level": "b1",
+    "link": "b1/star_thru"
+  },
+  {
+    "title": "Star Thru",
+    "level": "ssd",
+    "link": "ssd/star_thru"
+  },
+  {
+    "title": "Star Thru",
+    "level": "m26",
+    "link": "m26/star_thru"
+  },
+  {
+    "title": "Start",
+    "level": "c1",
+    "link": "c1/start"
+  },
+  {
+    "title": "Step and Flip",
+    "level": "c1",
+    "link": "c1/step_and_flip"
+  },
+  {
+    "title": "Step and Fold",
+    "level": "c1",
+    "link": "c1/step_and_fold"
+  },
+  {
+    "title": "Step and Slide",
+    "level": "a1",
+    "link": "a1/step_and_slide"
+  },
+  {
+    "title": "Step and Squeeze",
+    "level": "c1",
+    "link": "c1/step_and_squeeze"
+  },
+  {
+    "title": "Step Thru",
+    "level": "b1",
+    "link": "b1/step_thru"
+  },
+  {
+    "title": "Step Thru",
+    "level": "ssd",
+    "link": "ssd/step_thru"
+  },
+  {
+    "title": "Step Thru",
+    "level": "m26",
+    "link": "m26/step_thru"
+  },
+  {
+    "title": "Step to a Wave",
+    "level": "b2",
+    "link": "b2/ocean_wave"
+  },
+  {
+    "title": "Step to a Wave",
+    "level": "ssd",
+    "link": "ssd/ocean_wave"
+  },
+  {
+    "title": "Step to a Wave",
+    "level": "m26",
+    "link": "m26/ocean_wave"
+  },
+  {
+    "title": "n Steps At A Time",
+    "level": "c3b",
+    "link": "c3b/n_steps_at_a_time"
+  },
+  {
+    "title": "Stimulate",
+    "level": "c3b",
+    "link": "c3b/stimulate"
+  },
+  {
+    "title": "Stingy",
+    "level": "c3b",
+    "link": "c3b/stingy_generous"
+  },
+  {
+    "title": "Stretch Concept",
+    "level": "c1",
+    "link": "c1/stretch_concept"
+  },
+  {
+    "title": "Stretched Concept",
+    "level": "c2",
+    "link": "c2/stretched_concept"
+  },
+  {
+    "title": "Strip the Diamond / Hourglass",
+    "level": "c3a",
+    "link": "c3a/strip_the_diamond"
+  },
+  {
+    "title": "Strut",
+    "level": "c3b",
+    "link": "c3b/strut"
+  },
+  {
+    "title": "Substitute",
+    "level": "c1",
+    "link": "c1/substitute"
+  },
+  {
+    "title": "Swap Around",
+    "level": "a1",
+    "link": "a1/swap_around"
+  },
+  {
+    "title": "Swap the Top",
+    "level": "c3a",
+    "link": "c3a/swap_the_top"
+  },
+  {
+    "title": "Swap the Wave",
+    "level": "c2",
+    "link": "c2/swap_the_wave"
+  },
+  {
+    "title": "Sweep a Quarter",
+    "level": "b2",
+    "link": "b2/sweep_a_quarter"
+  },
+  {
+    "title": "Sweep a Quarter",
+    "level": "ssd",
+    "link": "ssd/sweep_a_quarter"
+  },
+  {
+    "title": "Sweep a Quarter",
+    "level": "m26",
+    "link": "m26/sweep_a_quarter"
+  },
+  {
+    "title": "Swing",
+    "level": "b1",
+    "link": "b1/swing"
+  },
+  {
+    "title": "Swing",
+    "level": "ssd",
+    "link": "ssd/swing"
+  },
+  {
+    "title": "Swing",
+    "level": "m26",
+    "link": "m26/swing"
+  },
+  {
+    "title": "Swing",
+    "level": "a2",
+    "link": "a2/slip"
+  },
+  {
+    "title": "Swing Along",
+    "level": "c2",
+    "link": "c2/swing_along"
+  },
+  {
+    "title": "Swing and Circle",
+    "level": "c1",
+    "link": "c1/swing_and_circle"
+  },
+  {
+    "title": "Swing and Mix",
+    "level": "a2",
+    "link": "a2/swing_and_mix"
+  },
+  {
+    "title": "Swing Chain Thru",
+    "level": "c3a",
+    "link": "c3a/swing_chain_thru"
+  },
+  {
+    "title": "Swing the Fractions",
+    "level": "c1",
+    "link": "c1/swing_the_fractions"
+  },
+  {
+    "title": "Swing Thru",
+    "level": "b2",
+    "link": "b2/swing_thru"
+  },
+  {
+    "title": "Swing Thru",
+    "level": "ssd",
+    "link": "ssd/swing_thru"
+  },
+  {
+    "title": "Swing Thru",
+    "level": "m26",
+    "link": "m26/swing_thru"
+  },
+  {
+    "title": "Swing-O-Late",
+    "level": "c3b",
+    "link": "c3b/swing_o_late"
+  },
+  {
+    "title": "Switch the Line",
+    "level": "c1",
+    "link": "c1/switch_the_line"
+  },
+  {
+    "title": "Switch the Wave",
+    "level": "a2",
+    "link": "a2/switch_the_wave"
+  },
+  {
+    "title": "Switch to a Diamond",
+    "level": "a2",
+    "link": "a2/switch_to_a_diamond"
+  },
+  {
+    "title": "Switch to a Diamond",
+    "level": "c1",
+    "link": "c1/switch_to_a_diamond"
+  },
+  {
+    "title": "Switch to an Hourglass",
+    "level": "a2",
+    "link": "a2/switch_to_a_diamond"
+  },
+  {
+    "title": "Switch to an Hourglass",
+    "level": "c1",
+    "link": "c1/switch_to_an_hourglass"
+  },
+  {
+    "title": "Switch to an Interlocked Diamond",
+    "level": "c1",
+    "link": "c1/switch_to_an_interlocked_diamond"
+  },
+  {
+    "title": "T-Bone Formation",
+    "level": "c1",
+    "link": "c1/t_bone_formation"
+  },
+  {
+    "title": "Tag Back",
+    "level": "c1",
+    "link": "c1/tagging_calls_back_to_a_wave"
+  },
+  {
+    "title": "Tag Chain Thru",
+    "level": "c3a",
+    "link": "c3a/any_tagging_call_chain_thru"
+  },
+  {
+    "title": "Tag the Line",
+    "level": "ms",
+    "link": "ms/tag"
+  },
+  {
+    "title": "Tag the Line",
+    "level": "ssd",
+    "link": "ssd/tag"
+  },
+  {
+    "title": "Tag the Line",
+    "level": "m26",
+    "link": "m26/tag"
+  },
+  {
+    "title": "Tag the Top",
+    "level": "c3b",
+    "link": "c3b/anything_the_top"
+  },
+  {
+    "title": "Tag Your Neighbor",
+    "level": "c2",
+    "link": "c2/any_tagging_call_your_neighbor"
+  },
+  {
+    "title": "Take {n}",
+    "level": "c3b",
+    "link": "c3b/take_n"
+  },
+  {
+    "title": "Tally Ho",
+    "level": "c1",
+    "link": "c1/tally_ho"
+  },
+  {
+    "title": "Tandem Concept",
+    "level": "c1",
+    "link": "c1/tandem_concept"
+  },
+  {
+    "title": "Tandem-Based Triangle Formation",
+    "level": "c2",
+    "link": "c2/tandem_based_triangle"
+  },
+  {
+    "title": "Teacup Chain",
+    "level": "plus",
+    "link": "plus/teacup_chain"
+  },
+  {
+    "title": "Teacup Chain",
+    "level": "p26",
+    "link": "p26/teacup_chain"
+  },
+  {
+    "title": "Team Up",
+    "level": "c3a",
+    "link": "c3a/team_up"
+  },
+  {
+    "title": "Thar Family",
+    "level": "ms",
+    "link": "ms/thar"
+  },
+  {
+    "title": "Thar Family",
+    "level": "p26",
+    "link": "p26/thar"
+  },
+  {
+    "title": "The Axle",
+    "level": "c1",
+    "link": "c1/pass_the_axle"
+  },
+  {
+    "title": "The Gamut",
+    "level": "c3a",
+    "link": "c3a/the_gamut"
+  },
+  {
+    "title": "The Pulley",
+    "level": "c3a",
+    "link": "c3a/spin_the_pulley"
+  },
+  {
+    "title": "Thirdly",
+    "level": "c3b",
+    "link": "c3b/secondly_thirdly_fourthly"
+  },
+  {
+    "title": "Three by Two Acey Deucey",
+    "level": "c1",
+    "link": "c1/three_by_two_acey_deucey"
+  },
+  {
+    "title": "Three Quarter Tag",
+    "level": "ms",
+    "link": "ms/fraction_tag"
+  },
+  {
+    "title": "Three Quarter Tag",
+    "level": "m26",
+    "link": "m26/fraction_tag"
+  },
+  {
+    "title": "Three Quarter Thru",
+    "level": "a1",
+    "link": "a1/quarter_thru"
+  },
+  {
+    "title": "Three Quarter Thru",
+    "level": "p26",
+    "link": "p26/quarter_thru"
+  },
+  {
+    "title": "Touch a Half / Three Quarters",
+    "level": "a1",
+    "link": "a1/touch_12"
+  },
+  {
+    "title": "Touch a Quarter",
+    "level": "b2",
+    "link": "b2/touch_a_quarter"
+  },
+  {
+    "title": "Touch a Quarter",
+    "level": "ssd",
+    "link": "ssd/touch_a_quarter"
+  },
+  {
+    "title": "Touch a Quarter",
+    "level": "m26",
+    "link": "m26/touch_a_quarter"
+  },
+  {
+    "title": "Touch By",
+    "level": "c3a",
+    "link": "c3a/touch_by"
+  },
+  {
+    "title": "Track (0,1,2,3,4)",
+    "level": "c1",
+    "link": "c1/track_n"
+  },
+  {
+    "title": "Track 2",
+    "level": "plus",
+    "link": "plus/track_ii"
+  },
+  {
+    "title": "Track 2",
+    "level": "p26",
+    "link": "p26/track_ii"
+  },
+  {
+    "title": "Trade",
+    "level": "b2",
+    "link": "b2/trade"
+  },
+  {
+    "title": "Trade",
+    "level": "ssd",
+    "link": "ssd/trade"
+  },
+  {
+    "title": "Trade",
+    "level": "m26",
+    "link": "m26/trade"
+  },
+  {
+    "title": "Trade By",
+    "level": "b2",
+    "link": "b2/trade_by"
+  },
+  {
+    "title": "Trade By",
+    "level": "ssd",
+    "link": "ssd/trade_by"
+  },
+  {
+    "title": "Trade By",
+    "level": "m26",
+    "link": "m26/trade_by"
+  },
+  {
+    "title": "Trade Circulate",
+    "level": "a2",
+    "link": "a2/trade_circulate"
+  },
+  {
+    "title": "Trade the Deucey",
+    "level": "c3a",
+    "link": "c3a/trade_the_deucey"
+  },
+  {
+    "title": "Trade the Diamond",
+    "level": "c3b",
+    "link": "c3b/trade_the_diamond"
+  },
+  {
+    "title": "Trade the Wave",
+    "level": "plus",
+    "link": "plus/trade_the_wave"
+  },
+  {
+    "title": "Trade the Wave",
+    "level": "p26",
+    "link": "p26/trade_the_wave"
+  },
+  {
+    "title": "Trail Off",
+    "level": "a2",
+    "link": "a2/trail_off"
+  },
+  {
+    "title": "Trail to a Diamond",
+    "level": "c2",
+    "link": "c2/peel_to_a_diamond"
+  },
+  {
+    "title": "Transfer and <anything>",
+    "level": "a2",
+    "link": "a2/transfer_and_anything"
+  },
+  {
+    "title": "Transfer the Column",
+    "level": "a1",
+    "link": "a1/transfer_the_column"
+  },
+  {
+    "title": "Trapezoid Formation",
+    "level": "c3b",
+    "link": "c3b/trapezoid_formation"
+  },
+  {
+    "title": "Travel Thru",
+    "level": "c3a",
+    "link": "c3a/travel_thru"
+  },
+  {
+    "title": "Triangle Circulate",
+    "level": "c1",
+    "link": "c1/triangle_formation"
+  },
+  {
+    "title": "Trip the Set",
+    "level": "c3a",
+    "link": "c3a/trip_the_set"
+  },
+  {
+    "title": "Triple Box / Column / Line / Wave Concept",
+    "level": "c1",
+    "link": "c1/triple_box_concept"
+  },
+  {
+    "title": "Triple Cross",
+    "level": "a1",
+    "link": "a1/triple_cross"
+  },
+  {
+    "title": "Triple Diamond Concept",
+    "level": "c3a",
+    "link": "c3a/triple_diamond_concept"
+  },
+  {
+    "title": "Triple Formations",
+    "level": "c3b",
+    "link": "c3b/triple_formations"
+  },
+  {
+    "title": "Triple Play",
+    "level": "c3a",
+    "link": "c3a/triple_play"
+  },
+  {
+    "title": "Triple Scoot",
+    "level": "plus",
+    "link": "plus/triple_scoot"
+  },
+  {
+    "title": "Triple Scoot",
+    "level": "p26",
+    "link": "p26/triple_scoot"
+  },
+  {
+    "title": "Triple Star Thru",
+    "level": "a1",
+    "link": "a1/double_star_thru"
+  },
+  {
+    "title": "Triple Trade",
+    "level": "a1",
+    "link": "a1/triple_trade"
+  },
+  {
+    "title": "Triple Trade",
+    "level": "p26",
+    "link": "p26/triple_trade"
+  },
+  {
+    "title": "Truck",
+    "level": "c2",
+    "link": "c2/truck"
+  },
+  {
+    "title": "Turn and Deal",
+    "level": "a1",
+    "link": "a1/turn_and_deal"
+  },
+  {
+    "title": "Turn Back",
+    "level": "b1",
+    "link": "b1/turn_back"
+  },
+  {
+    "title": "Turn Back",
+    "level": "ssd",
+    "link": "ssd/turn_back"
+  },
+  {
+    "title": "Turn Back",
+    "level": "m26",
+    "link": "m26/turn_back"
+  },
+  {
+    "title": "Turn the Key",
+    "level": "c3b",
+    "link": "c3b/turn_the_key"
+  },
+  {
+    "title": "Turn Thru",
+    "level": "ms",
+    "link": "ms/turn_thru"
+  },
+  {
+    "title": "Turn Thru",
+    "level": "p26",
+    "link": "p26/turn_thru"
+  },
+  {
+    "title": "Turn to a Line",
+    "level": "c2",
+    "link": "c2/turn_to_a_line"
+  },
+  {
+    "title": "Turnstyle",
+    "level": "c3b",
+    "link": "c3b/turnstyle"
+  },
+  {
+    "title": "Twist and <anything>",
+    "level": "c1",
+    "link": "c1/twist_the_line"
+  },
+  {
+    "title": "Twist the Line",
+    "level": "c1",
+    "link": "c1/twist_the_line"
+  },
+  {
+    "title": "Two-Faced Concept",
+    "level": "c3b",
+    "link": "c3b/two_faced_concept"
+  },
+  {
+    "title": "Two-Thirds Recycle",
+    "level": "c1",
+    "link": "c1/recycle"
+  },
+  {
+    "title": "Twosome Concept",
+    "level": "c3a",
+    "link": "c3a/twosome_concept"
+  },
+  {
+    "title": "Unwrap Family",
+    "level": "c2",
+    "link": "c2/unwrap"
+  },
+  {
+    "title": "Veer Left / Right",
+    "level": "b1",
+    "link": "b1/veer"
+  },
+  {
+    "title": "Veer Left / Right",
+    "level": "ssd",
+    "link": "ssd/veer"
+  },
+  {
+    "title": "Veer Left / Right",
+    "level": "m26",
+    "link": "m26/veer"
+  },
+  {
+    "title": "Vertical <anything>",
+    "level": "c2",
+    "link": "c2/vertical_anything"
+  },
+  {
+    "title": "Vertical Tag",
+    "level": "c1",
+    "link": "c1/vertical_tag"
+  },
+  {
+    "title": "Vertical Tag Back",
+    "level": "c1",
+    "link": "c1/tagging_calls_back_to_a_wave"
+  },
+  {
+    "title": "Vertical Tag Your Neighbor",
+    "level": "c2",
+    "link": "c2/any_tagging_call_your_neighbor"
+  },
+  {
+    "title": "Walk and Dodge",
+    "level": "ms",
+    "link": "ms/walk_and_dodge"
+  },
+  {
+    "title": "Walk and Dodge",
+    "level": "p26",
+    "link": "p26/walk_and_dodge"
+  },
+  {
+    "title": "Walk Around the Corner",
+    "level": "b1",
+    "link": "b1/all_around_the_corner"
+  },
+  {
+    "title": "Walk Around",
+    "level": "p26",
+    "link": "p26/all_around_the_corner"
+  },
+  {
+    "title": "Walk Out to a Wave",
+    "level": "c2",
+    "link": "c2/walk_out_to_a_wave"
+  },
+  {
+    "title": "Wave the anyone",
+    "level": "c3b",
+    "link": "c3b/wave_the_anyone"
+  },
+  {
+    "title": "Weave",
+    "level": "c1",
+    "link": "c1/anything_and_weave"
+  },
+  {
+    "title": "Weave the Ring",
+    "level": "b1",
+    "link": "b1/right_and_left_grand"
+  },
+  {
+    "title": "Weave the Ring",
+    "level": "ssd",
+    "link": "ssd/right_and_left_grand"
+  },
+  {
+    "title": "Weave the Ring",
+    "level": "m26",
+    "link": "m26/right_and_left_grand"
+  },
+  {
+    "title": "Wheel and <anything>",
+    "level": "c1",
+    "link": "c1/wheel_and_anything"
+  },
+  {
+    "title": "Wheel and Deal",
+    "level": "b2",
+    "link": "b2/wheel_and_deal"
+  },
+  {
+    "title": "Wheel and Deal",
+    "level": "ssd",
+    "link": "ssd/wheel_and_deal"
+  },
+  {
+    "title": "Wheel and Deal",
+    "level": "m26",
+    "link": "m26/wheel_and_deal"
+  },
+  {
+    "title": "Wheel Around",
+    "level": "b2",
+    "link": "b2/wheel_around"
+  },
+  {
+    "title": "Wheel Around",
+    "level": "ssd",
+    "link": "ssd/wheel_around"
+  },
+  {
+    "title": "Wheel Around",
+    "level": "m26",
+    "link": "m26/wheel_around"
+  },
+  {
+    "title": "Wheel Fan Thru",
+    "level": "c1",
+    "link": "c1/wheel_fan_thru"
+  },
+  {
+    "title": "Wheel the Ocean",
+    "level": "c2",
+    "link": "c2/wheel_the_ocean"
+  },
+  {
+    "title": "Wheel the Sea",
+    "level": "c2",
+    "link": "c2/wheel_the_ocean"
+  },
+  {
+    "title": "Wheel Thru",
+    "level": "a1",
+    "link": "a1/wheel_thru"
+  },
+  {
+    "title": "Wind the Bobbin",
+    "level": "c3a",
+    "link": "c3a/wind_the_bobbin"
+  },
+  {
+    "title": "With Confidence",
+    "level": "c3b",
+    "link": "c3b/with_confidence"
+  },
+  {
+    "title": "With the Flow",
+    "level": "c1",
+    "link": "c1/with_the_flow"
+  },
+  {
+    "title": "Wrap To a Formation",
+    "level": "c3a",
+    "link": "c3a/wrap_to_a_formation"
+  },
+  {
+    "title": "Wrong Way Grand",
+    "level": "b1",
+    "link": "b1/right_and_left_grand"
+  },
+  {
+    "title": "Wrong Way Grand",
+    "level": "ssd",
+    "link": "ssd/right_and_left_grand"
+  },
+  {
+    "title": "Wrong Way Grand",
+    "level": "m26",
+    "link": "m26/right_and_left_grand"
+  },
+  {
+    "title": "Wrong Way Promenade",
+    "level": "b1",
+    "link": "b1/promenade"
+  },
+  {
+    "title": "Wrong Way Promenade",
+    "level": "ssd",
+    "link": "ssd/promenade"
+  },
+  {
+    "title": "Wrong Way Promenade",
+    "level": "m26",
+    "link": "m26/promenade"
+  },
+  {
+    "title": "Wrong Way Thar",
+    "level": "ms",
+    "link": "ms/thar"
+  },
+  {
+    "title": "Wrong Way Thar",
+    "level": "p26",
+    "link": "p26/thar"
+  },
+  {
+    "title": "Z Axle",
+    "level": "c3b",
+    "link": "c3b/z_axle"
+  },
+  {
+    "title": "Z Concept",
+    "level": "c3b",
+    "link": "c3b/z_concept"
+  },
+  {
+    "title": "Zig and Zag",
+    "level": "a2",
+    "link": "a2/zig_and_zag"
+  },
+  {
+    "title": "Zing",
+    "level": "c1",
+    "link": "c1/zing"
+  },
+  {
+    "title": "Zip Code",
+    "level": "c2",
+    "link": "c2/zip_code"
+  },
+  {
+    "title": "Zoom",
+    "level": "b2",
+    "link": "b2/zoom"
+  },
+  {
+    "title": "Zoom",
+    "level": "ssd",
+    "link": "ssd/zoom"
+  },
+  {
+    "title": "Zoom",
+    "level": "m26",
+    "link": "m26/zoom"
+  }
+]
