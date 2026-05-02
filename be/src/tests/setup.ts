@@ -5,6 +5,7 @@ import { prisma } from '../database.js';
 export const T = '_TEST_';
 
 export async function cleanupTestData() {
+  await prisma.teach_order_entry_fasr.deleteMany({ where: { entry: { teachOrder: { name: { startsWith: T } } } } });
   await prisma.teach_order_entry.deleteMany({ where: { teachOrder: { name: { startsWith: T } } } });
   await prisma.teach_order.deleteMany({ where: { name: { startsWith: T } } });
   await prisma.program_call_formation.deleteMany({ where: { program: { name: { startsWith: T } } } });
