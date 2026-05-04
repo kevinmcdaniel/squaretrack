@@ -1,0 +1,9 @@
+$kind: http-request
+url: "{{api-url}}/api/group/list/{{groupId}}"
+method: GET
+order: 2000
+description: |-
+  GET /api/group/list/:groupId — single group by UUID.
+  - 200 found.
+  - 404 not found.
+  Group IDs are UUIDs, not integers — set {{groupId}} in the local environment.

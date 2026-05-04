@@ -1,0 +1,6 @@
+$kind: http-request
+url: "{{api-url}}/api/formation/list/{{formationId}}"
+method: GET
+order: 2000
+description: |-
+  GET /api/formation/list/:formationId — 200 found, 404 not found, 406 invalid ID.

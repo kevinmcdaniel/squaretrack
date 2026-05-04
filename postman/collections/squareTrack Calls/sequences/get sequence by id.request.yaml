@@ -1,0 +1,9 @@
+$kind: http-request
+url: "{{api-url}}/api/sequence/list/{{sequenceId}}"
+method: GET
+order: 2000
+description: |-
+  GET /api/sequence/list/:seqId — sequence with all steps.
+  - 200 found.
+  - 404 not found.
+  - 406 invalid ID.

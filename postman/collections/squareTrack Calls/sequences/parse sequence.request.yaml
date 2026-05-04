@@ -1,0 +1,19 @@
+$kind: http-request
+url: "{{api-url}}/api/sequence/parse"
+method: POST
+order: 4000
+description: |-
+  POST /api/sequence/parse — preview parse, no persistence.
+  Returns per-line resolution: resolved | unresolved | ambiguous.
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  mode: raw
+  raw: |-
+    {
+      "text": "heads square thru 4\ndo sa do\n// note for caller"
+    }
+  options:
+    raw:
+      language: json

@@ -1,0 +1,8 @@
+$kind: http-request
+url: "{{api-url}}/api/call/list/999999"
+method: GET
+order: 3000
+description: |-
+  Demonstrates the issue 37 single-resource not-found convention:
+  - HTTP 404
+  - body: { data: null, message: "Not Found: Call id:999999 not found!", status: 404 }

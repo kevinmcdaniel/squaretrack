@@ -1,0 +1,22 @@
+$kind: http-request
+url: "{{api-url}}/api/call/{{callId}}/synonym"
+method: POST
+order: 1000
+description: |-
+  POST /api/call/:callId/synonym — add a parser alias.
+  - 201 on success.
+  - 406 missing alias.
+  - 409 duplicate alias (aliases are globally unique).
+  - 404 callId does not exist.
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  mode: raw
+  raw: |-
+    {
+      "alias": "sq thru"
+    }
+  options:
+    raw:
+      language: json

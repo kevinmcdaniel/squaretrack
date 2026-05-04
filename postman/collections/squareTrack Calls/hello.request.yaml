@@ -1,0 +1,6 @@
+$kind: http-request
+url: "{{api-url}}/api"
+method: GET
+order: 100
+description: |-
+  Health check / root. Returns: { "message": "Hello World 🌍🚀" }.

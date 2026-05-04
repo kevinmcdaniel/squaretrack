@@ -1,0 +1,21 @@
+$kind: http-request
+url: "{{api-url}}/api/formation"
+method: POST
+order: 6000
+description: |-
+  POST /api/formation — 201 on success, 406 missing name.
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  mode: raw
+  raw: |-
+    {
+      "name": "Right-Hand Wave",
+      "description": null,
+      "clCode": null,
+      "sdCode": null
+    }
+  options:
+    raw:
+      language: json

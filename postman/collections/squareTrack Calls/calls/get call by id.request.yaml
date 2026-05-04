@@ -1,0 +1,8 @@
+$kind: http-request
+url: "{{api-url}}/api/call/list/{{callId}}"
+method: GET
+order: 2000
+description: |-
+  GET /api/call/list/:callId — single-resource convention.
+  - 200 with data: <object> when found.
+  - 404 with data: null when missing.

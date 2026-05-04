@@ -1,0 +1,7 @@
+$kind: http-request
+url: "{{api-url}}/api/formation?callId={{callId}}"
+method: GET
+order: 5000
+description: |-
+  GET /api/formation?callId= — valid start formations for a call (drives FormationPicker).
+  Empty result returns 200 with data: [].

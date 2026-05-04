@@ -1,0 +1,7 @@
+$kind: http-request
+url: "{{api-url}}/api/teach-order/list"
+method: GET
+order: 1000
+description: |-
+  GET /api/teach-order/list — summary list (no entries).
+  200 with data: array (empty = []).

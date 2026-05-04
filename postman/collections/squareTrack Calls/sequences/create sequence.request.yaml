@@ -1,0 +1,40 @@
+$kind: http-request
+url: "{{api-url}}/api/sequence"
+method: POST
+order: 5000
+description: |-
+  POST /api/sequence — create sequence + all steps in a single transaction.
+  - 201 on success (isValid is computed server-side).
+  - 406 missing required fields.
+  - 409 startFormationId does not exist.
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  mode: raw
+  raw: |-
+    {
+      "name": "Heads Square Thru opener",
+      "startFormationId": 1,
+      "activator": "heads",
+      "rating": null,
+      "notes": null,
+      "isVerified": false,
+      "sourceText": null,
+      "teachOrderId": null,
+      "steps": [
+        {
+          "order": 1,
+          "type": "call",
+          "callId": 5,
+          "startId": 1,
+          "designator": "heads",
+          "count": null,
+          "text": null,
+          "helperText": null
+        }
+      ]
+    }
+  options:
+    raw:
+      language: json
