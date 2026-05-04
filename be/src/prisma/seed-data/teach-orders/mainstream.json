@@ -1,0 +1,118 @@
+{
+  "name": "Callerlab New Mainstream Suggested Teaching Order (2026-09-01)",
+  "programAbbreviation": "m26",
+  "source": "CALLERLAB Mainstream26 Teaching Order, December 2025; effective September 1, 2026",
+  "entries": [
+    { "displayOrder": "1",  "type": "family", "familyName": "Circle Family",   "label": "Circle Family" },
+    { "displayOrder": "1a", "type": "call", "callName": "Circle Left / Right", "label": "Circle Left/Right (1/4, 1/2, 3/4, Full)" },
+    { "displayOrder": "1b", "type": "call", "callName": null,                  "label": "Circle of 4 Left/Right (1/4, 1/2, 3/4, Full)" },
+    { "displayOrder": "1c", "type": "call", "callName": null,                  "label": "Single Circle Left/Right (1/4, 1/2, 3/4, Full)" },
+
+    { "displayOrder": "2",  "type": "call", "callName": "Dosado",              "label": "Dosado" },
+
+    { "displayOrder": "3",  "type": "family", "familyName": "Promenade Family", "label": "Promenade Family" },
+    { "displayOrder": "3a", "type": "call", "callName": "Promenade",           "label": "Couples Promenade" },
+    { "displayOrder": "3b", "type": "call", "callName": "Single File Promenade", "label": "Single File Promenade", "delayed": true },
+    { "displayOrder": "3c", "type": "call", "callName": "Star Promenade",      "label": "Star Promenade", "delayed": true },
+    { "displayOrder": "3d", "type": "call", "callName": "Wrong Way Promenade", "label": "Wrong Way Promenade", "delayed": true },
+
+    { "displayOrder": "4",  "type": "family", "familyName": null,              "label": "Arm Turn Family" },
+    { "displayOrder": "4a", "type": "call", "callName": "Right Arm Turn",      "label": "Right/Left Arm Turn" },
+    { "displayOrder": "4b", "type": "call", "callName": "Allemande Left",      "label": "Allemande Left/Right" },
+
+    { "displayOrder": "5",  "type": "call", "callName": null,                  "label": "Star Right/Left" },
+
+    { "displayOrder": "6",  "type": "family", "familyName": "Right and Left Grand Family", "label": "Right and Left Grand Family" },
+    { "displayOrder": "6a", "type": "call", "callName": "Right and Left Grand", "label": "Right and Left Grand" },
+    { "displayOrder": "6b", "type": "call", "callName": "Weave the Ring",      "label": "Weave the Ring", "delayed": true },
+    { "displayOrder": "6c", "type": "call", "callName": "Wrong Way Grand",     "label": "Wrong Way Grand", "delayed": true },
+
+    { "displayOrder": "7",  "type": "call", "callName": "Pass Thru",           "label": "Pass Thru" },
+    { "displayOrder": "8",  "type": "call", "callName": "Wheel Around",        "label": "Wheel Around / Reverse Wheel Around" },
+    { "displayOrder": "9",  "type": "call", "callName": "Courtesy Turn",       "label": "Courtesy Turn" },
+    { "displayOrder": "10", "type": "call", "callName": "Right and Left Thru", "label": "Right and Left Thru" },
+    { "displayOrder": "11", "type": "call", "callName": "Swing",               "label": "Swing" },
+
+    { "displayOrder": "12",  "type": "family", "familyName": "Ladies Chain Family", "label": "Ladies Chain Family" },
+    { "displayOrder": "12a", "type": "call", "callName": "Ladies Chain",       "label": "Ladies Chain, (Ladies Chain 3/4)", "delayed": true },
+    { "displayOrder": "12b", "type": "call", "callName": "Four Ladies Chain",  "label": "Four Ladies Chain, (Chain 3/4)", "delayed": true },
+    { "displayOrder": "12c", "type": "call", "callName": "Chain Down the Line", "label": "Chain Down the Line", "delayed": true },
+
+    { "displayOrder": "13",  "type": "family", "familyName": "Half Sashay Family", "label": "Half Sashay Family" },
+    { "displayOrder": "13a", "type": "call", "callName": "Half Sashay",         "label": "Half Sashay", "delayed": true },
+    { "displayOrder": "13b", "type": "call", "callName": "Rollaway",            "label": "Rollaway", "delayed": true },
+    { "displayOrder": "13c", "type": "call", "callName": "Ladies In Men Sashay", "label": "Ladies In, Men Sashay" },
+
+    { "displayOrder": "14",  "type": "family", "familyName": "Turn Back Family", "label": "Turn Back Family" },
+    { "displayOrder": "14a", "type": "call", "callName": "Turn Back",           "label": "U-Turn Back" },
+    { "displayOrder": "14b", "type": "call", "callName": "Backtrack",           "label": "Backtrack" },
+
+    { "displayOrder": "15",  "type": "family", "familyName": null,              "label": "Separate Family" },
+    { "displayOrder": "15a", "type": "call", "callName": "Separate",            "label": "Separate", "delayed": true },
+    { "displayOrder": "15b", "type": "call", "callName": null,                  "label": "Separate Around 1 or 2 to a Line" },
+    { "displayOrder": "15c", "type": "call", "callName": null,                  "label": "Separate Around 1 or 2 into the middle", "delayed": true },
+
+    { "displayOrder": "16", "type": "call", "callName": "Lead Right / Left",   "label": "Lead Right / Lead Left" },
+    { "displayOrder": "17", "type": "call", "callName": "Veer Left / Right",   "label": "Veer Left / Veer Right" },
+    { "displayOrder": "18", "type": "call", "callName": "Star Thru",           "label": "Star Thru" },
+
+    { "displayOrder": "19",  "type": "family", "familyName": "Circulate Family", "label": "Circulate Family" },
+    { "displayOrder": "19a", "type": "call", "callName": "Circulate",           "label": "Couples Circulate" },
+    { "displayOrder": "19b", "type": "call", "callName": null,                  "label": "(Named Dancers) Circulate" },
+    { "displayOrder": "19c", "type": "call", "callName": null,                  "label": "All Eight Circulate", "delayed": true },
+    { "displayOrder": "19d", "type": "call", "callName": null,                  "label": "Single File (Column) Circulate", "delayed": true },
+    { "displayOrder": "19e", "type": "call", "callName": "Split Circulate",     "label": "Box/Split Circulate", "delayed": true },
+
+    { "displayOrder": "20", "type": "call", "callName": "Bend the Line",        "label": "Bend the Line" },
+    { "displayOrder": "21", "type": "call", "callName": "Square Thru",          "label": "Square Thru / Left Square Thru" },
+    { "displayOrder": "22", "type": "call", "callName": "Split Two",            "label": "Split Two" },
+    { "displayOrder": "23", "type": "call", "callName": "Grand Square",         "label": "Grand Square" },
+    { "displayOrder": "24", "type": "call", "callName": "Double Pass Thru",     "label": "Double Pass Thru" },
+    { "displayOrder": "25", "type": "call", "callName": "First Couple Go Left/Right, Next Couple Go Left/Right", "label": "First Couple Go Left/Right, Next Couple Go Right/Left" },
+    { "displayOrder": "26", "type": "call", "callName": "Wheel and Deal",       "label": "Wheel and Deal", "delayed": true },
+    { "displayOrder": "27", "type": "call", "callName": "California Twirl",     "label": "California Twirl" },
+    { "displayOrder": "28", "type": "call", "callName": "Slide Thru",           "label": "Slide Thru" },
+    { "displayOrder": "29", "type": "call", "callName": "Dive Thru",            "label": "Dive Thru" },
+    { "displayOrder": "30", "type": "call", "callName": "Box the Gnat",         "label": "Box the Gnat" },
+
+    { "displayOrder": "31",  "type": "family", "familyName": "Ocean Wave Family", "label": "Ocean Wave Family" },
+    { "displayOrder": "31a", "type": "call", "callName": "Alamo Style",         "label": "Alamo Style" },
+    { "displayOrder": "31b", "type": "call", "callName": "Balance",             "label": "Balance" },
+    { "displayOrder": "31c", "type": "call", "callName": "Step to a Wave",      "label": "Step to a Wave" },
+    { "displayOrder": "31d", "type": "call", "callName": null,                  "label": "Dosado to a Wave", "delayed": true },
+    { "displayOrder": "31e", "type": "call", "callName": "Single Circle to a Wave", "label": "Single Circle to a Wave", "delayed": true },
+
+    { "displayOrder": "32",  "type": "family", "familyName": "Trade Family",    "label": "Trade Family" },
+    { "displayOrder": "32a", "type": "call", "callName": null,                  "label": "Couples Trade" },
+    { "displayOrder": "32b", "type": "call", "callName": null,                  "label": "(Named Dancers) Trade" },
+    { "displayOrder": "32c", "type": "call", "callName": null,                  "label": "Right/Left Hand Trade" },
+    { "displayOrder": "32d", "type": "call", "callName": null,                  "label": "Partner Trade" },
+
+    { "displayOrder": "33", "type": "call", "callName": "Swing Thru",           "label": "Swing Thru / Left Swing Thru", "delayed": true },
+    { "displayOrder": "34", "type": "call", "callName": "Run",                  "label": "Run / Cross Run", "delayed": true },
+    { "displayOrder": "35", "type": "call", "callName": "Pass the Ocean",       "label": "Pass the Ocean" },
+    { "displayOrder": "36", "type": "call", "callName": "Extend",               "label": "Extend" },
+    { "displayOrder": "37", "type": "call", "callName": "Flutterwheel",         "label": "Flutterwheel / Reverse Flutterwheel" },
+    { "displayOrder": "38", "type": "call", "callName": "Sweep a Quarter",      "label": "Sweep a Quarter" },
+    { "displayOrder": "39", "type": "call", "callName": "Trade By",             "label": "Trade By" },
+    { "displayOrder": "40", "type": "call", "callName": "Ferris Wheel",         "label": "Ferris Wheel" },
+    { "displayOrder": "41", "type": "call", "callName": "Zoom",                 "label": "Zoom" },
+    { "displayOrder": "42", "type": "call", "callName": "Touch a Quarter",      "label": "Touch a Quarter" },
+
+    { "displayOrder": "43",  "type": "family", "familyName": "Hinge Family",    "label": "Hinge Family" },
+    { "displayOrder": "43a", "type": "call", "callName": "Hinge",               "label": "Single Hinge" },
+    { "displayOrder": "43b", "type": "call", "callName": null,                  "label": "Couples Hinge" },
+
+    { "displayOrder": "44", "type": "call", "callName": "Centers In",           "label": "Centers In" },
+    { "displayOrder": "45", "type": "call", "callName": "Cast Off Three Quarters", "label": "Cast Off Three-Quarters" },
+    { "displayOrder": "46", "type": "call", "callName": "Spin the Top",         "label": "Spin the Top" },
+    { "displayOrder": "47", "type": "call", "callName": "Scoot Back",           "label": "Scoot Back" },
+    { "displayOrder": "48", "type": "call", "callName": "Fold",                 "label": "Fold / Cross Fold" },
+
+    { "displayOrder": "49",  "type": "family", "familyName": "Tag Family",      "label": "Tag the Line Family" },
+    { "displayOrder": "49a", "type": "call", "callName": "Tag the Line",        "label": "Tag the Line (In / Out / Left / Right)" },
+    { "displayOrder": "49b", "type": "call", "callName": null,                  "label": "Fraction (1/4, 1/2, 3/4) Tag" },
+
+    { "displayOrder": "50", "type": "call", "callName": "Recycle",              "label": "Recycle (from Waves only)" }
+  ]
+}
