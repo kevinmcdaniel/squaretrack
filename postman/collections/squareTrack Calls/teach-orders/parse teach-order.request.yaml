@@ -1,0 +1,20 @@
+$kind: http-request
+url: "{{api-url}}/api/teach-order/parse"
+method: POST
+order: 4000
+description: |-
+  POST /api/teach-order/parse — preview parse, no persistence.
+  Returns per-line resolution: resolved | unresolved | ambiguous.
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  mode: raw
+  raw: |-
+    {
+      "programId": 1,
+      "text": "1. Circle Family\na. Circle Left/Right (1/4, 1/2, 3/4, Full)\n2. Dosado"
+    }
+  options:
+    raw:
+      language: json

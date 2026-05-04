@@ -1,0 +1,6 @@
+$kind: http-request
+url: "{{api-url}}/api/group/list/00000000-0000-0000-0000-000000000000"
+method: GET
+order: 3000
+description: |-
+  Demonstrates 404 + data: null for missing group.

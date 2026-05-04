@@ -40,7 +40,7 @@ async function validateEntries(programId: number, entries: any[]) {
 export const listTeachOrders = async (req: Request, res: Response, next: any) => {
   try {
     const records = await listTeachOrdersService();
-    res.json({ data: records.length ? records : null, message: 'List of all teach orders' });
+    res.json({ data: records, message: 'List of all teach orders' });
   } catch (error) {
     next(error);
   }
@@ -53,7 +53,8 @@ export const getTeachOrder = async (req: Request, res: Response, next: any) => {
     }
     const id = parseInt(req.params.id, 10);
     const record = await getTeachOrderService(id);
-    res.json({ data: record ?? null, message: 'Teach order with entries' });
+    if (!record) throw new notFoundError(`Teach order id:${id} not found!`);
+    res.json({ data: record, message: 'Teach order with entries' });
   } catch (error) {
     next(error);
   }

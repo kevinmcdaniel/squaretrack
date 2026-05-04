@@ -13,7 +13,7 @@ const VALID_DIFFICULTIES = ['easy', 'hard', 'challenging'];
 export const listPrograms = async (req: Request, res: Response, next: any) => {
   try {
     const records = await listProgramsService();
-    res.json({ data: records.length ? records : null, message: 'List of all programs' });
+    res.json({ data: records, message: 'List of all programs' });
   } catch (error) {
     next(error);
   }

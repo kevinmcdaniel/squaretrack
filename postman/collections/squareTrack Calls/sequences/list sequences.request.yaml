@@ -1,0 +1,6 @@
+$kind: http-request
+url: "{{api-url}}/api/sequence/list"
+method: GET
+order: 1000
+description: |-
+  GET /api/sequence/list — summary list (no steps). 200 with data: array.

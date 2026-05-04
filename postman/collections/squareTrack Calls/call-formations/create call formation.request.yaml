@@ -1,0 +1,28 @@
+$kind: http-request
+url: "{{api-url}}/api/call-formation"
+method: POST
+order: 1000
+description: |-
+  POST /api/call-formation — link a call to (start, end) formation pair.
+  PK is (callId, startId).
+  - 201 on success.
+  - 406 missing required fields.
+  - 409 duplicate (callId, startId) or invalid FK.
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  mode: raw
+  raw: |-
+    {
+      "callId": 1,
+      "startId": 1,
+      "endId": 3,
+      "inFlowRotation": null,
+      "inFlowDirection": null,
+      "outFlowRotation": null,
+      "outFlowDirection": null
+    }
+  options:
+    raw:
+      language: json

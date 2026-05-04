@@ -1,0 +1,6 @@
+$kind: http-request
+url: "{{api-url}}/api/call/list/abc"
+method: GET
+order: 4000
+description: |-
+  Validation error — non-numeric ID. Returns 406 with data: {}.

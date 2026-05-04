@@ -1,0 +1,23 @@
+$kind: http-request
+url: "{{api-url}}/api/program/{{programId}}/call-formation"
+method: POST
+order: 4000
+description: |-
+  POST /api/program/:programId/call-formation — add a FASR to a program with difficulty.
+  - 201 on success.
+  - 406 missing/invalid fields (difficulty must be easy|hard|challenging).
+  - 409 duplicate or unknown call_formation.
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  mode: raw
+  raw: |-
+    {
+      "callId": 5,
+      "startId": 1,
+      "difficulty": "easy"
+    }
+  options:
+    raw:
+      language: json

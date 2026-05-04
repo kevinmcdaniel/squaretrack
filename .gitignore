@@ -43,3 +43,4 @@ be/src/generated/
 # trivy logs
 trivy*.log
 /.claude
+/postman/environments

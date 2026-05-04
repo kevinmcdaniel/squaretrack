@@ -1,0 +1,7 @@
+$kind: http-request
+url: "{{api-url}}/api/program/{{programId}}/call-formations"
+method: GET
+order: 3000
+description: |-
+  GET /api/program/:programId/call-formations — FASRs valid at this program with difficulty.
+  200 with data: array (empty = []).

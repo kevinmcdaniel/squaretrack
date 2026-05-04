@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { emptyError, validationError, conflictError } from '../common/errorHandler.js';
+import { validationError, conflictError, notFoundError } from '../common/errorHandler.js';
 import { isNumeric } from '../common/utils.js';
 import { listSequencesService, getSequenceService, createSequenceService } from '../service/sequence/index.js';
 import { parseSequenceText } from '../service/parser.js';
@@ -11,7 +11,7 @@ export const listSequence = async (req: Request, res: Response, next: any) => {
     }
     const id = parseInt(req.params.seqId ?? req.params.sequenceId, 10);
     const record = await getSequenceService(id);
-    if (!record) throw new emptyError(`Sequence id:${id} not found!`);
+    if (!record) throw new notFoundError(`Sequence id:${id} not found!`);
     res.json({ message: 'Sequence by id', data: record });
   } catch (error) {
     next(error);
@@ -21,7 +21,6 @@ export const listSequence = async (req: Request, res: Response, next: any) => {
 export const listSequences = async (req: Request, res: Response, next: any) => {
   try {
     const records = await listSequencesService();
-    if (records.length === 0) throw new emptyError('No sequences found!');
     res.json({ message: 'List of all sequences', data: records });
   } catch (error) {
     next(error);

@@ -1,0 +1,8 @@
+$kind: http-request
+url: "{{api-url}}/api/call/list"
+method: GET
+order: 1000
+description: |-
+  GET /api/call/list — list endpoint convention.
+  - 200 always.
+  - data is an array; empty collection is `[]`, never null.

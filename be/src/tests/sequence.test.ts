@@ -18,12 +18,12 @@ describe('GET /api/sequence/list', () => {
     expect(res.body.data).toBeInstanceOf(Array);
   });
 
-  it('returns empty result when no sequences', async () => {
+  it('returns 200 array (possibly empty) when no T-prefixed sequences remain', async () => {
     await prisma.sequence_calls.deleteMany({ where: { sequence: { name: { startsWith: T } } } });
     await prisma.sequence.deleteMany({ where: { name: { startsWith: T } } });
     const res = await request(app).get('/api/sequence/list');
     expect(res.status).toBe(200);
-    expect(res.body.data).toBeNull();
+    expect(Array.isArray(res.body.data)).toBe(true);
   });
 });
 
@@ -55,9 +55,9 @@ describe('GET /api/sequence/:seqId', () => {
     expect(res.body.data.calls.length).toBe(2);
   });
 
-  it('returns 200 empty for nonexistent id', async () => {
+  it('returns 404 for nonexistent id', async () => {
     const res = await request(app).get('/api/sequence/999999');
-    expect(res.status).toBe(200);
+    expect(res.status).toBe(404);
     expect(res.body.data).toBeNull();
   });
 

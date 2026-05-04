@@ -53,3 +53,12 @@ The README has instructions for initializing PostgreSQL with user `squaretrack` 
 
 ### Prisma setup
 The backend uses `@prisma/adapter-pg` (not the default Prisma driver). Schema is split across multiple `.prisma` files referenced from `schema.prisma`. After any schema change, run `npm run migrate` in `be/`.
+
+## API conventions
+
+When adding or changing API endpoints, follow the response conventions in [`docs/api/README.md`](docs/api/README.md). Summary:
+
+- **List endpoints** always return `data: <array>` — empty collection is `[]`, never `null`. HTTP 200 in both cases.
+- **Single-resource endpoints** (`/:id`) return `data: <object>` with HTTP 200 when found, `data: null` with HTTP **404** when not found. Use `notFoundError`, never the (now-removed) `emptyError`.
+
+Tests assert these shapes; FE consumers depend on them. If you find an endpoint that doesn't follow the convention, fix it as part of your change rather than copying the deviation.

@@ -1,0 +1,46 @@
+$kind: http-request
+url: "{{api-url}}/api/teach-order"
+method: POST
+order: 5000
+description: |-
+  POST /api/teach-order — create teach order with all entries (and FASRs) in one transaction.
+  - 201 on success.
+  - 406 missing/invalid fields, fasr/entry callId mismatch.
+  - 409 invalid programId, duplicate entryOrder/displayOrder, call_formation not in program.
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  mode: raw
+  raw: |-
+    {
+      "name": "Callerlab MS26",
+      "programId": 1,
+      "entries": [
+        {
+          "entryOrder": 1,
+          "displayOrder": "1",
+          "entryType": "family",
+          "label": "Circle Family",
+          "familyId": 12,
+          "callId": null,
+          "week": null,
+          "fasrs": []
+        },
+        {
+          "entryOrder": 2,
+          "displayOrder": "1a",
+          "entryType": "call",
+          "label": null,
+          "familyId": null,
+          "callId": 5,
+          "week": 1,
+          "fasrs": [
+            { "fasrOrder": 1, "callId": 5, "startId": 1 }
+          ]
+        }
+      ]
+    }
+  options:
+    raw:
+      language: json

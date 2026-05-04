@@ -1,0 +1,7 @@
+$kind: http-request
+url: "{{api-url}}/api/formation?search=square"
+method: GET
+order: 4000
+description: |-
+  GET /api/formation?search= — autocomplete used by the sequence editor.
+  Empty result returns 200 with data: [].

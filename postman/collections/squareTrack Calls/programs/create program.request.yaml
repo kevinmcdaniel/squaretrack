@@ -1,0 +1,23 @@
+$kind: http-request
+url: "{{api-url}}/api/program"
+method: POST
+order: 2000
+description: |-
+  POST /api/program.
+  - 201 on success.
+  - 406 missing fields.
+  - 409 duplicate abbreviation.
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  mode: raw
+  raw: |-
+    {
+      "name": "Mainstream 26",
+      "abbreviation": "ms26",
+      "order": 1
+    }
+  options:
+    raw:
+      language: json

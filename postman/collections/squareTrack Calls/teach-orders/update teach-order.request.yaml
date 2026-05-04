@@ -1,0 +1,34 @@
+$kind: http-request
+url: "{{api-url}}/api/teach-order/{{teachOrderId}}"
+method: PUT
+order: 6000
+description: |-
+  PUT /api/teach-order/:id — replace all entries (cascades FASR delete) in one transaction.
+  Same validation as POST. 200 on success, 404 not found.
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  mode: raw
+  raw: |-
+    {
+      "name": "Callerlab MS26 (revised)",
+      "programId": 1,
+      "entries": [
+        {
+          "entryOrder": 1,
+          "displayOrder": "1",
+          "entryType": "call",
+          "label": null,
+          "familyId": null,
+          "callId": 5,
+          "week": 1,
+          "fasrs": [
+            { "fasrOrder": 1, "callId": 5, "startId": 1 }
+          ]
+        }
+      ]
+    }
+  options:
+    raw:
+      language: json

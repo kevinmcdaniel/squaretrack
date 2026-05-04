@@ -33,21 +33,8 @@ No parameters.
 }
 ```
 
-- `data` is a non-empty array.
+- `data` is an array — possibly empty (`[]`) when no calls exist.
 - Each item includes `callId`, `name`, and all optional fields (`tamSeq`, `sdSeq`, `preferredDisplay`, `familyId`). Optional fields are `null` when not set.
-
-#### Empty — no calls exist
-
-```json
-{
-  "data": null,
-  "message": "Empty result: No calls found!",
-  "status": 200
-}
-```
-
-- HTTP status is still **200**.
-- `data` is `null`.
 
 ---
 
@@ -84,12 +71,12 @@ Returns a single call by its numeric ID.
 ```json
 {
   "data": null,
-  "message": "Empty result: Call id:999 not found!",
-  "status": 200
+  "message": "Not Found: Call id:999 not found!",
+  "status": 404
 }
 ```
 
-- HTTP status is **200**, not 404. Absence of a record is not an error.
+- HTTP status is **404**. Single-resource endpoints return 404 when the record does not exist.
 
 #### Invalid ID (non-numeric)
 
