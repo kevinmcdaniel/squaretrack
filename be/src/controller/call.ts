@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { emptyError, validationError, conflictError, notFoundError } from '../common/errorHandler.js';
+import { validationError, conflictError, notFoundError } from '../common/errorHandler.js';
 import { isNumeric } from '../common/utils.js';
 import { listCallService, listCallsService } from '../service/call/list.js';
 import { createCallService, createCallSynonymService } from '../service/call/create.js';
@@ -11,7 +11,7 @@ export const listCall = async (req: Request, res: Response, next: any) => {
     }
     const record = await listCallService(parseInt(req.params.callId, 10));
     if (!record) {
-      throw new emptyError(`Call id:${req.params.callId} not found!`);
+      throw new notFoundError(`Call id:${req.params.callId} not found!`);
     }
     res.json({ message: 'Unique call by id', data: record });
   } catch (error) {
@@ -22,8 +22,7 @@ export const listCall = async (req: Request, res: Response, next: any) => {
 export const listCalls = async (req: Request, res: Response, next: any) => {
   try {
     const records = await listCallsService();
-    if (records.length === 0) throw new emptyError('No calls found!');
-    res.json({ data: records, message: 'List of all calls', status: 200 });
+    res.json({ data: records, message: 'List of all calls' });
   } catch (error) {
     next(error);
   }

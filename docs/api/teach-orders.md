@@ -66,7 +66,7 @@ HTTP **200**
 
 #### Empty
 
-HTTP **200**, `data: null`
+HTTP **200**, `data: []`
 
 ---
 
@@ -126,7 +126,7 @@ HTTP **200**
 
 #### Not found
 
-HTTP **200**, `data: null`
+HTTP **404**, `data: null`
 
 #### Invalid ID
 

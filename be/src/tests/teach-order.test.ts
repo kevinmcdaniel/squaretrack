@@ -41,13 +41,11 @@ describe('GET /api/teach-order/list', () => {
     expect(to.programId).toBe(program.programId);
   });
 
-  it('returns 200 array even when no T-prefixed teach orders remain', async () => {
-    // Seeded Callerlab teach orders always populate the table; the endpoint should never
-    // return null after seed. Verify shape stays an array (or null on a truly empty DB).
+  it('returns 200 array (possibly empty) when no T-prefixed teach orders remain', async () => {
     await prisma.teach_order.deleteMany({ where: { name: { startsWith: T } } });
     const res = await request(app).get('/api/teach-order/list');
     expect(res.status).toBe(200);
-    expect(Array.isArray(res.body.data) || res.body.data === null).toBe(true);
+    expect(Array.isArray(res.body.data)).toBe(true);
   });
 });
 
@@ -103,9 +101,9 @@ describe('GET /api/teach-order/:id', () => {
     expect(res.body.data.entries[1].fasrs[0].fasrOrder).toBe(1);
   });
 
-  it('returns 200 null for nonexistent id', async () => {
+  it('returns 404 for nonexistent id', async () => {
     const res = await request(app).get('/api/teach-order/999999');
-    expect(res.status).toBe(200);
+    expect(res.status).toBe(404);
     expect(res.body.data).toBeNull();
   });
 

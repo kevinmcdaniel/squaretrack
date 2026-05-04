@@ -37,7 +37,7 @@ HTTP **200**
 
 #### Empty
 
-HTTP **200**, `data: null`
+HTTP **200**, `data: []`
 
 ---
 
@@ -137,9 +137,9 @@ HTTP **200**
 }
 ```
 
-#### Not found
+#### Empty
 
-HTTP **200**, `data: null`
+HTTP **200**, `data: []`
 
 #### Invalid programId
 

@@ -18,13 +18,11 @@ describe('GET /api/call/list', () => {
     expect(res.body.data.length).toBeGreaterThan(0);
   });
 
-  it('returns 200 array even when no T-prefixed calls remain', async () => {
-    // Seeded taminations calls always populate the table; the endpoint should never
-    // return null after seed. Verify shape stays an array regardless of test data.
+  it('returns 200 array (possibly empty) when no T-prefixed calls remain', async () => {
     await prisma.call.deleteMany({ where: { name: { startsWith: T } } });
     const res = await request(app).get('/api/call/list');
     expect(res.status).toBe(200);
-    expect(Array.isArray(res.body.data) || res.body.data === null).toBe(true);
+    expect(Array.isArray(res.body.data)).toBe(true);
   });
 });
 
@@ -39,9 +37,9 @@ describe('GET /api/call/list/:callId', () => {
     expect(res.body.data.name).toBe(`${T}GetById`);
   });
 
-  it('returns 200 empty result for nonexistent id', async () => {
+  it('returns 404 for nonexistent id', async () => {
     const res = await request(app).get('/api/call/list/999999');
-    expect(res.status).toBe(200);
+    expect(res.status).toBe(404);
     expect(res.body.data).toBeNull();
   });
 

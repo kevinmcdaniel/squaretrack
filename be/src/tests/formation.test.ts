@@ -30,9 +30,9 @@ describe('GET /api/formation/list/:formationId', () => {
     expect(res.body.data.name).toBe(`${T}GetById`);
   });
 
-  it('returns 200 empty result for nonexistent id', async () => {
+  it('returns 404 for nonexistent id', async () => {
     const res = await request(app).get('/api/formation/list/999999');
-    expect(res.status).toBe(200);
+    expect(res.status).toBe(404);
     expect(res.body.data).toBeNull();
   });
 
