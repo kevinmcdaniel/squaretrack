@@ -2,6 +2,18 @@
 ###
 ###  Your Square Dance Track Everything System.
 
+## Environment
+
+Copy [`.env.example`](.env.example) to `.env` at the repo root and fill in the
+secret values (anything marked `change-me`). Every service in
+`docker-compose.yml` mounts that file via `env_file:`, so a single `.env` is
+sufficient for the whole stack.
+
+```bash
+cp .env.example .env
+$EDITOR .env
+```
+
 ## DB Initialization
 
 - database uses default user of postgres with provided password.
