@@ -24,7 +24,7 @@ services:
     container_name: square.be
     command: npm run dev
     depends_on:
-      migrate:
+      seed:
         condition: service_completed_successfully
 
   migrate:
@@ -48,6 +48,28 @@ services:
     depends_on:
       db:
         condition: service_healthy
+
+  seed:
+    image: squarebe
+    build:
+      dockerfile: Dockerfile.be
+    environment:
+      DATABASE_URL: ${DB_SQUARETRACK_URL}
+    env_file:
+      - path: .env
+        required: true
+    volumes:
+      - ./be:/app/
+      - /app/node_modules
+    networks:
+      - default
+      - squarenet
+    container_name: square.seed
+    command: npx prisma db seed
+    restart: "no"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
 
   db:
     image: postgres:17-alpine
@@ -124,7 +146,7 @@ services:
     container_name: square.studio
     command: npx prisma studio -p ${STUDIO_PORT_INT} -b none
     depends_on:
-      migrate:
+      seed:
         condition: service_completed_successfully
 
   pgadmin:

@@ -30,16 +30,22 @@ docker compose up
 ```
 
 That brings up Postgres (5004), the BE API (5002), the FE (5001), and Prisma
-Studio (5003). The boot sequence is gated:
+Studio (5003). The boot sequence is gated so each stage must succeed before
+the next starts:
 
 1. **db** starts; healthcheck waits for `pg_isready`.
 2. **migrate** (one-shot) runs `prisma migrate deploy` and exits.
-3. **be** / **studio** start only after migrate exits **successfully**.
-4. **fe** starts after **be**.
+3. **seed** (one-shot) runs `prisma db seed` and exits.
+4. **be** / **studio** start only after seed exits **successfully**.
+5. **fe** starts after **be**.
 
-If `migrate` fails, `be`/`fe`/`studio` never start — the stack stays in a known
-state instead of running against a schema that doesn't match the Prisma
-client. On a fresh `squaredb_vol`, the Postgres image also bootstraps the
+Each one-shot stage is its own container, so a failure log is unambiguous —
+`docker logs square.migrate` or `docker logs square.seed` tells you which
+stage broke. If any stage fails, downstream services never start, so the
+stack never runs against a schema or dataset that doesn't match the Prisma
+client.
+
+On a fresh `squaredb_vol`, the Postgres image also bootstraps the
 `squaretrack` user/database from `DB_SQUARETRACK_*` automatically. No manual
 psql steps required.
 
