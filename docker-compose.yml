@@ -24,6 +24,28 @@ services:
     container_name: square.be
     command: npm run dev
     depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+  migrate:
+    image: squarebe
+    build:
+      dockerfile: Dockerfile.be
+    environment:
+      DATABASE_URL: ${DB_SQUARETRACK_URL}
+    env_file:
+      - path: .env
+        required: true
+    volumes:
+      - ./be:/app/
+      - /app/node_modules
+    networks:
+      - default
+      - squarenet
+    container_name: square.migrate
+    command: npx prisma migrate deploy
+    restart: "no"
+    depends_on:
       db:
         condition: service_healthy
 
@@ -77,8 +99,6 @@ services:
     container_name: square.fe
     command: npm run dev
     depends_on:
-      db:
-        condition: service_healthy
       be:
         condition: service_started
 
@@ -104,10 +124,8 @@ services:
     container_name: square.studio
     command: npx prisma studio -p ${STUDIO_PORT_INT} -b none
     depends_on:
-      db:
-        condition: service_healthy
-      be:
-        condition: service_started
+      migrate:
+        condition: service_completed_successfully
 
   pgadmin:
     image: dpage/pgadmin4:latest
@@ -123,6 +141,8 @@ services:
     ports:
       - "${PGADMIN_PORT}:80"
     container_name: square.pgadmin
+    volumes:
+      - pgadmin_vol:/var/lib/pgadmin
     networks:
       - default
       - squarenet
@@ -168,5 +188,6 @@ networks:
 
 volumes:
   squaredb_vol:
+  pgadmin_vol:
   trivy_cache:
 

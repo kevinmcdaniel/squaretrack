@@ -30,10 +30,18 @@ docker compose up
 ```
 
 That brings up Postgres (5004), the BE API (5002), the FE (5001), and Prisma
-Studio (5003). On a fresh checkout the Postgres image bootstraps the
-`squaretrack` user and database from `DB_SQUARETRACK_*` on first run, and the
-`be`, `fe`, and `studio` services wait for `pg_isready` before starting — no
-manual psql steps required.
+Studio (5003). The boot sequence is gated:
+
+1. **db** starts; healthcheck waits for `pg_isready`.
+2. **migrate** (one-shot) runs `prisma migrate deploy` and exits.
+3. **be** / **studio** start only after migrate exits **successfully**.
+4. **fe** starts after **be**.
+
+If `migrate` fails, `be`/`fe`/`studio` never start — the stack stays in a known
+state instead of running against a schema that doesn't match the Prisma
+client. On a fresh `squaredb_vol`, the Postgres image also bootstraps the
+`squaretrack` user/database from `DB_SQUARETRACK_*` automatically. No manual
+psql steps required.
 
 ### Optional: pgAdmin
 
@@ -43,7 +51,9 @@ A pgAdmin sidecar is available behind the `admin` profile:
 docker compose --profile admin up
 ```
 
-Reachable at `http://localhost:${PGADMIN_PORT}` with the credentials in `.env`.
+Reachable at `http://localhost:5005` (or whatever `PGADMIN_PORT` is set to in
+`.env`) with the credentials from `PGADMIN_EMAIL` / `PGADMIN_PW`. Saved server
+connections persist in the `pgadmin_vol` volume across restarts.
 
 ## API conventions
 
