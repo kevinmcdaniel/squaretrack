@@ -23,9 +23,53 @@ services:
       - ${BE_PORT_EXT}:${BE_PORT_INT}
     container_name: square.be
     command: npm run dev
-    # command: npm run dev
     depends_on:
-      - db
+      seed:
+        condition: service_completed_successfully
+
+  migrate:
+    image: squarebe
+    build:
+      dockerfile: Dockerfile.be
+    environment:
+      DATABASE_URL: ${DB_SQUARETRACK_URL}
+    env_file:
+      - path: .env
+        required: true
+    volumes:
+      - ./be:/app/
+      - /app/node_modules
+    networks:
+      - default
+      - squarenet
+    container_name: square.migrate
+    command: npx prisma migrate deploy
+    restart: "no"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  seed:
+    image: squarebe
+    build:
+      dockerfile: Dockerfile.be
+    environment:
+      DATABASE_URL: ${DB_SQUARETRACK_URL}
+    env_file:
+      - path: .env
+        required: true
+    volumes:
+      - ./be:/app/
+      - /app/node_modules
+    networks:
+      - default
+      - squarenet
+    container_name: square.seed
+    command: npx prisma db seed
+    restart: "no"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
 
   db:
     image: postgres:17-alpine
@@ -35,9 +79,9 @@ services:
       - path: .env
         required: true
     environment:
-      POSTGRES_DB: ${DB_POSTGRES_NAME}
-      POSTGRES_USER: ${DB_POSTGRES_USER}
-      POSTGRES_PASSWORD: ${DB_POSTGRES_PW}
+      POSTGRES_DB: ${DB_SQUARETRACK_NAME}
+      POSTGRES_USER: ${DB_SQUARETRACK_USER}
+      POSTGRES_PASSWORD: ${DB_SQUARETRACK_PW}
       PGPORT: ${DB_PORT_INT}
     command: -p ${DB_PORT_INT}
     ports:
@@ -49,11 +93,11 @@ services:
       - default
       - squarenet
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -u ${DB_POSTGRES_USER} -d ${DB_POSTGRES_NAME} -p ${DB_PORT_INT}"]
-      interval: 1m30s
-      timeout: 5s
-      retries: 5
-      start_period: 30s
+      test: ["CMD-SHELL", "pg_isready -U ${DB_SQUARETRACK_USER} -d ${DB_SQUARETRACK_NAME} -p ${DB_PORT_INT}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
 
   fe:
     image: squarefe
@@ -76,10 +120,9 @@ services:
       - ${FE_PORT_EXT}:${FE_PORT_INT}
     container_name: square.fe
     command: npm run dev
-    # command: npm run dev
     depends_on:
-      - be
-      - db
+      be:
+        condition: service_started
 
   studio:
     image: squarestudio
@@ -101,11 +144,33 @@ services:
     ports:
       - ${STUDIO_PORT_EXT}:${STUDIO_PORT_INT}
     container_name: square.studio
-    command: npx prisma studio -p ${STUDIO_PORT_INT}
-    # command: npm run dev
+    command: npx prisma studio -p ${STUDIO_PORT_INT} -b none
     depends_on:
-      - db
-      - be
+      seed:
+        condition: service_completed_successfully
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    profiles: [admin]
+    env_file:
+      - path: .env
+        required: true
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PW}
+      PGADMIN_DISABLE_POSTFIX: "true"
+      PGADMIN_LISTEN_PORT: 80
+    ports:
+      - "${PGADMIN_PORT}:80"
+    container_name: square.pgadmin
+    volumes:
+      - pgadmin_vol:/var/lib/pgadmin
+    networks:
+      - default
+      - squarenet
+    depends_on:
+      db:
+        condition: service_healthy
 
   # trivybe:
   #   image: aquasec/trivy:0.67.0
@@ -145,5 +210,6 @@ networks:
 
 volumes:
   squaredb_vol:
+  pgadmin_vol:
   trivy_cache:
 

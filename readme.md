@@ -2,6 +2,15 @@
 ###
 ###  Your Square Dance Track Everything System.
 
+Key technologies used:
+- Next.js
+- Node.js — https://nodejs.org/en/download
+- PostgreSQL
+- Prisma
+- TailwindCSS
+- Shadcn UI
+- Docker
+
 ## Environment
 
 Copy [`.env.example`](.env.example) to `.env` at the repo root and fill in the
@@ -14,79 +23,47 @@ cp .env.example .env
 $EDITOR .env
 ```
 
-## DB Initialization
+## Quick start
 
-- database uses default user of postgres with provided password.
+```bash
+docker compose up
+```
 
+That brings up Postgres (5004), the BE API (5002), the FE (5001), and Prisma
+Studio (5003). The boot sequence is gated so each stage must succeed before
+the next starts:
 
+1. **db** starts; healthcheck waits for `pg_isready`.
+2. **migrate** (one-shot) runs `prisma migrate deploy` and exits.
+3. **seed** (one-shot) runs `prisma db seed` and exits.
+4. **be** / **studio** start only after seed exits **successfully**.
+5. **fe** starts after **be**.
 
+Each one-shot stage is its own container, so a failure log is unambiguous —
+`docker logs square.migrate` or `docker logs square.seed` tells you which
+stage broke. If any stage fails, downstream services never start, so the
+stack never runs against a schema or dataset that doesn't match the Prisma
+client.
 
+On a fresh `squaredb_vol`, the Postgres image also bootstraps the
+`squaretrack` user/database from `DB_SQUARETRACK_*` automatically. No manual
+psql steps required.
 
-# sqaureTrack - Your home for all things square...
+### Optional: pgAdmin
 
+A pgAdmin sidecar is available behind the `admin` profile:
 
-Key technoligies used:
-- Next.js
-- Node.js - https://nodejs.org/en/download
-- PostgreSQL
-- Prisma
-- TailwindCSS
-__ Shadcn UI
-- Docker
+```bash
+docker compose --profile admin up
+```
 
-## DB initialization using a postgresql database
+Reachable at `http://localhost:5005` (or whatever `PGADMIN_PORT` is set to in
+`.env`) with the credentials from `PGADMIN_EMAIL` / `PGADMIN_PW`. Saved server
+connections persist in the `pgadmin_vol` volume across restarts.
 
-# connect to postgres.db container
-    * first time you will have to exec into the container and create db and users.
+## API conventions
 
-1. Start the database container
-  a. change .env to only have the db username, db password and db database.  comment out others.
-  b. run `docker compose --profile db up -d`
-  c. follow steps 2-5 below
-
-2. access shell of container and su to postgres user
-  `su - postgres`
-
-3. start postgres process
-  `psql`
-
-4. set postgres password in database.
-  `postgres=# \password <USERNAME>  {enter key}`
-Enter new password for user "<username>":
-Enter it again:
-(no response when done)
-
-5. create database user (not postgres please)
-`postgres=# create user squaretrack login;`
-CREATE ROLE
-`postgres=# \password squaretrack  {enter key}`
-Enter new password for user "<username>":
-Enter it again:
-(no response when done)
-
-6. grant rights to database (should already exist)
-  a. list databases
-  `postgres-# \l`  < will list out databases >
-  b. create db if needed
-  `postgres=# create database squaretrack with owner squaretrack;`
-CREATE DATABASE
-  c. connect to database
-  `postgres=# \c squaretrack`
-You are now connected to database "matrix" as user "postgres".
-  d. grant all rights on database for it's user.
-  `squaredb=# grant all on database squaretrack to squaretrack;`
-GRANT
-  e. grant all rights on public schema so user can create tables.
-  `squaredb=# grant all on schema public to squaretrack;`
-GRANT
-  f. enable create database?  was needed but thought grant all cover it.
-  `squaretrack=# alter user squaretrack createdb;`
-ALTER ROLE
-
-
-
-## Initialize API container
-
-1. un-comment api section of docker compose
-2. verify db user (squarelab) and password are in .env file
-3. `docker compose up`
+When adding endpoints, follow the response shapes in
+[`docs/api/README.md`](docs/api/README.md). Lists return `data: <array>`
+(empty = `[]`); single-resource endpoints return `data: <object>` with 200 or
+`data: null` with 404.
