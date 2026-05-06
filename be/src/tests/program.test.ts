@@ -94,6 +94,16 @@ describe('POST /api/program', () => {
     expect(res.status).toBe(406);
     expect(res.body.message).toMatch(/isActive/i);
   });
+
+  it('returns 406 when order is non-numeric', async () => {
+    const res = await request(app).post('/api/program').send({
+      name: `${T}Bad Order`,
+      abbreviation: `${T}bo`,
+      order: 'abc',
+    });
+    expect(res.status).toBe(406);
+    expect(res.body.message).toMatch(/order/i);
+  });
 });
 
 // ── PATCH /api/program/:programId ───────────────────────────────────────────
@@ -149,6 +159,39 @@ describe('PATCH /api/program/:programId', () => {
       .send({ isActive: 'no' });
     expect(res.status).toBe(406);
     expect(res.body.message).toMatch(/isActive/i);
+  });
+
+  it('returns 406 when name is an empty string', async () => {
+    const created = await prisma.program.create({
+      data: { name: `${T}EmptyName`, abbreviation: `${T}en`, order: 46 },
+    });
+    const res = await request(app)
+      .patch(`/api/program/${created.programId}`)
+      .send({ name: '' });
+    expect(res.status).toBe(406);
+    expect(res.body.message).toMatch(/name/i);
+  });
+
+  it('returns 406 when abbreviation is an empty string', async () => {
+    const created = await prisma.program.create({
+      data: { name: `${T}EmptyAbbrev`, abbreviation: `${T}ea`, order: 47 },
+    });
+    const res = await request(app)
+      .patch(`/api/program/${created.programId}`)
+      .send({ abbreviation: '' });
+    expect(res.status).toBe(406);
+    expect(res.body.message).toMatch(/abbreviation/i);
+  });
+
+  it('returns 406 when order is non-numeric', async () => {
+    const created = await prisma.program.create({
+      data: { name: `${T}BadPatchOrder`, abbreviation: `${T}bpo`, order: 48 },
+    });
+    const res = await request(app)
+      .patch(`/api/program/${created.programId}`)
+      .send({ order: 'abc' });
+    expect(res.status).toBe(406);
+    expect(res.body.message).toMatch(/order/i);
   });
 
   it('returns 406 for non-numeric programId', async () => {

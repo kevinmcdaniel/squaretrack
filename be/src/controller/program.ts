@@ -30,6 +30,9 @@ export const createProgram = async (req: Request, res: Response, next: any) => {
     if (!name || !abbreviation || order == null) {
       throw new validationError('name, abbreviation, and order are required.');
     }
+    if (!Number.isFinite(Number(order))) {
+      throw new validationError('order must be a number.');
+    }
     if (isActive !== undefined && typeof isActive !== 'boolean') {
       throw new validationError('isActive must be a boolean.');
     }
@@ -61,6 +64,15 @@ export const updateProgram = async (req: Request, res: Response, next: any) => {
       isActive === undefined
     ) {
       throw new validationError('At least one of name, abbreviation, order, or isActive is required.');
+    }
+    if (name !== undefined && !name) {
+      throw new validationError('name cannot be empty.');
+    }
+    if (abbreviation !== undefined && !abbreviation) {
+      throw new validationError('abbreviation cannot be empty.');
+    }
+    if (order !== undefined && !Number.isFinite(Number(order))) {
+      throw new validationError('order must be a number.');
     }
     if (isActive !== undefined && typeof isActive !== 'boolean') {
       throw new validationError('isActive must be a boolean.');

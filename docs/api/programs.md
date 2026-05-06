@@ -119,6 +119,18 @@ HTTP **406**
 }
 ```
 
+#### Non-numeric order
+
+HTTP **406**
+
+```json
+{
+  "data": {},
+  "message": "Validation Error: order must be a number.",
+  "status": 406
+}
+```
+
 #### Duplicate abbreviation
 
 HTTP **409**
@@ -183,6 +195,22 @@ HTTP **406**
   "status": 406
 }
 ```
+
+#### Empty string on `name` or `abbreviation`
+
+HTTP **406** — passing `""` for either field is rejected; omit the field instead.
+
+```json
+{
+  "data": {},
+  "message": "Validation Error: name cannot be empty.",
+  "status": 406
+}
+```
+
+#### Non-numeric order
+
+HTTP **406** — `order` must be coercible to a finite number.
 
 #### Invalid isActive type
 
