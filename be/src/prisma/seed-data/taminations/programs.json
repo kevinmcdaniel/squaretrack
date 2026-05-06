@@ -1,66 +1,82 @@
 [
   {
     "abbreviation": "bms",
-    "name": "Basic and Mainstream"
+    "name": "Basic and Mainstream",
+    "isActive": false
   },
   {
     "abbreviation": "b1",
-    "name": "Basic 1"
+    "name": "Basic 1",
+    "isActive": false
   },
   {
     "abbreviation": "b2",
-    "name": "Basic 2"
+    "name": "Basic 2",
+    "isActive": false
   },
   {
     "abbreviation": "ms",
-    "name": "Mainstream"
+    "name": "Mainstream",
+    "isActive": false
   },
   {
     "abbreviation": "ssd",
-    "name": "SSD"
+    "name": "SSD",
+    "isActive": true
   },
   {
     "abbreviation": "m26",
-    "name": "Mainstream 2026"
+    "name": "Mainstream 2026",
+    "isActive": true
   },
   {
     "abbreviation": "plus",
-    "name": "Plus"
+    "name": "Plus",
+    "isActive": false
   },
   {
     "abbreviation": "p26",
-    "name": "Plus 2026"
+    "name": "Plus 2026",
+    "isActive": true
   },
   {
     "abbreviation": "adv",
-    "name": "Advanced"
+    "name": "Advanced",
+    "isActive": false
   },
   {
     "abbreviation": "a1",
-    "name": "A-1"
+    "name": "A-1",
+    "isActive": true
   },
   {
     "abbreviation": "a2",
-    "name": "A-2"
+    "name": "A-2",
+    "isActive": true
   },
   {
     "abbreviation": "cha",
-    "name": "Challenge"
+    "name": "Challenge",
+    "isActive": false
   },
   {
     "abbreviation": "c1",
-    "name": "C-1"
+    "name": "C-1",
+    "isActive": true
   },
   {
     "abbreviation": "c2",
-    "name": "C-2"
+    "name": "C-2",
+    "isActive": true
   },
   {
     "abbreviation": "c3a",
-    "name": "C-3A"
+    "name": "C-3A",
+    "isActive": true
   },
   {
     "abbreviation": "c3b",
-    "name": "C-3B"
+    "name": "C-3B",
+    "isActive": true
   }
 ]

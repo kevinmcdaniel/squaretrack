@@ -12,32 +12,60 @@ A **program** is a Callerlab dance level (e.g. Mainstream, Plus, A1). It defines
 | name | string | Full name (e.g. `Mainstream 26`) |
 | abbreviation | string | Short unique identifier (e.g. `ms26`) |
 | order | integer | Display sort order |
+| isActive | boolean | When `false`, hidden from default list responses. Used to retire superseded programs (e.g. legacy Basic 1/2) without breaking historical references from teach orders, sequences, or `program_call_formation`. |
 
 ---
 
 ## GET /api/program/list
 
-Returns all programs ordered by `order`.
+Returns programs ordered by `order`. **By default, only active programs are returned** (those with `isActive: true`). Inactive programs remain queryable and continue to resolve via related-resource endpoints (e.g. teach orders that reference them).
+
+### Query Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| showInactive | boolean | no | When `true`, include inactive programs in the response. Any other value is treated as `false`. |
 
 ### Expected Results
 
-#### Success
+#### Success — active only (default)
 
 HTTP **200**
 
 ```json
 {
   "data": [
-    { "programId": 1, "name": "Mainstream 26", "abbreviation": "ms26", "order": 1 },
-    { "programId": 2, "name": "Plus", "abbreviation": "plus", "order": 2 }
+    { "programId": 6, "name": "Mainstream 2026", "abbreviation": "m26", "order": 6, "isActive": true },
+    { "programId": 8, "name": "Plus 2026",       "abbreviation": "p26", "order": 8, "isActive": true }
   ],
   "message": "List of all programs"
+}
+```
+
+#### Success — including inactive
+
+`GET /api/program/list?showInactive=true`
+
+HTTP **200**
+
+```json
+{
+  "data": [
+    { "programId": 1, "name": "Basic and Mainstream", "abbreviation": "bms", "order": 1, "isActive": false },
+    { "programId": 6, "name": "Mainstream 2026",      "abbreviation": "m26", "order": 6, "isActive": true  }
+  ],
+  "message": "List of all programs (including inactive)"
 }
 ```
 
 #### Empty
 
 HTTP **200**, `data: []`
+
+### Business Rules
+
+- The active filter is **only** applied to this list endpoint. `GET /api/program/:programId/call-formations`, teach-order resolution, and `program_call_formation` lookups all return data regardless of `isActive` — historical references must continue to resolve.
+- `isActive` defaults to `true` for newly created programs (schema default). Inactive programs are typically flipped via the seed JSON (`be/src/prisma/seed-data/taminations/programs.json`).
 
 ---
 
@@ -52,6 +80,7 @@ Creates a new program.
 | name | string | **yes** | Full program name |
 | abbreviation | string | **yes** | Short unique identifier |
 | order | integer | **yes** | Display sort order |
+| isActive | boolean | no | Defaults to `true` if omitted. Set to `false` to create a program already retired from list responses. |
 
 ### Expected Results
 
@@ -61,7 +90,7 @@ HTTP **201**
 
 ```json
 {
-  "data": { "programId": 1, "name": "Mainstream 26", "abbreviation": "ms26", "order": 1 },
+  "data": { "programId": 1, "name": "Mainstream 26", "abbreviation": "ms26", "order": 1, "isActive": true },
   "message": "Program created"
 }
 ```
@@ -74,6 +103,30 @@ HTTP **406**
 {
   "data": {},
   "message": "Validation Error: name, abbreviation, and order are required.",
+  "status": 406
+}
+```
+
+#### Invalid isActive type
+
+HTTP **406**
+
+```json
+{
+  "data": {},
+  "message": "Validation Error: isActive must be a boolean.",
+  "status": 406
+}
+```
+
+#### Non-numeric order
+
+HTTP **406**
+
+```json
+{
+  "data": {},
+  "message": "Validation Error: order must be a number.",
   "status": 406
 }
 ```
@@ -94,6 +147,102 @@ HTTP **409**
 
 - `abbreviation` must be unique across all programs.
 - `order` controls the display sequence (lower = first).
+
+---
+
+## PATCH /api/program/:programId
+
+Partial update — change any combination of fields. Most common use is toggling `isActive` to retire or revive a program.
+
+### Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| programId | integer | **yes** | The program's ID |
+
+### Request Body
+
+At least one of the following fields must be present:
+
+| Field | Type | Description |
+|---|---|---|
+| name | string | New full name |
+| abbreviation | string | New short identifier (must remain unique) |
+| order | integer | New display sort order |
+| isActive | boolean | Toggle the active flag |
+
+### Expected Results
+
+#### Success
+
+HTTP **200**
+
+```json
+{
+  "data": { "programId": 3, "name": "Basic 2", "abbreviation": "b2", "order": 3, "isActive": false },
+  "message": "Program updated"
+}
+```
+
+#### No fields provided
+
+HTTP **406**
+
+```json
+{
+  "data": {},
+  "message": "Validation Error: At least one of name, abbreviation, order, or isActive is required.",
+  "status": 406
+}
+```
+
+#### Empty string on `name` or `abbreviation`
+
+HTTP **406** — passing `""` for either field is rejected; omit the field instead.
+
+```json
+{
+  "data": {},
+  "message": "Validation Error: name cannot be empty.",
+  "status": 406
+}
+```
+
+#### Non-numeric order
+
+HTTP **406** — `order` must be coercible to a finite number.
+
+#### Invalid isActive type
+
+HTTP **406**
+
+```json
+{
+  "data": {},
+  "message": "Validation Error: isActive must be a boolean.",
+  "status": 406
+}
+```
+
+#### Invalid programId
+
+HTTP **406** — non-numeric path param.
+
+#### Not found
+
+HTTP **404**
+
+```json
+{
+  "data": null,
+  "message": "Not Found: Program id:999 not found!",
+  "status": 404
+}
+```
+
+#### Duplicate abbreviation
+
+HTTP **409**
 
 ---
 

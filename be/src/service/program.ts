@@ -4,9 +4,24 @@ export const createProgramService = async (data: {
   name: string;
   abbreviation: string;
   order: number;
+  isActive?: boolean;
 }) => prisma.program.create({ data });
 
-export const listProgramsService = async () => prisma.program.findMany({ orderBy: { order: 'asc' } });
+export const updateProgramService = async (
+  programId: number,
+  data: {
+    name?: string;
+    abbreviation?: string;
+    order?: number;
+    isActive?: boolean;
+  },
+) => prisma.program.update({ where: { programId }, data });
+
+export const listProgramsService = async (opts?: { showInactive?: boolean }) =>
+  prisma.program.findMany({
+    where: opts?.showInactive ? undefined : { isActive: true },
+    orderBy: { order: 'asc' },
+  });
 
 export const listProgramCallFormationsService = async (programId: number) =>
   prisma.program_call_formation.findMany({

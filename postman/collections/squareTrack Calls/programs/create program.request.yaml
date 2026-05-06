@@ -5,8 +5,9 @@ order: 2000
 description: |-
   POST /api/program.
   - 201 on success.
-  - 406 missing fields.
+  - 406 missing fields, or isActive is non-boolean.
   - 409 duplicate abbreviation.
+  - isActive is optional; defaults to true. Use PATCH to toggle later.
 headers:
   - key: Content-Type
     value: application/json
@@ -16,7 +17,8 @@ body:
     {
       "name": "Mainstream 26",
       "abbreviation": "ms26",
-      "order": 1
+      "order": 1,
+      "isActive": true
     }
   options:
     raw:
