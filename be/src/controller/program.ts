@@ -12,8 +12,12 @@ const VALID_DIFFICULTIES = ['easy', 'hard', 'challenging'];
 
 export const listPrograms = async (req: Request, res: Response, next: any) => {
   try {
-    const records = await listProgramsService();
-    res.json({ data: records, message: 'List of all programs' });
+    const showInactive = req.query.showInactive === 'true';
+    const records = await listProgramsService({ showInactive });
+    const message = showInactive
+      ? 'List of all programs (including inactive)'
+      : 'List of all programs';
+    res.json({ data: records, message });
   } catch (error) {
     next(error);
   }

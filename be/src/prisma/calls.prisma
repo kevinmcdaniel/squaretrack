@@ -71,6 +71,7 @@ model program {
   name                  String
   abbreviation          String                   @unique  // e.g. ms26, plus, a1
   order                 Int
+  isActive              Boolean                  @default(true)  // hide superseded programs from default list results; flip via seed JSON for known-obsolete entries
   dancers               dance_program[]
   teachOrders           teach_order[]
   programCallFormations program_call_formation[]

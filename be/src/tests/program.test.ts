@@ -67,7 +67,7 @@ describe('POST /api/program', () => {
 // ── GET /api/program/list ───────────────────────────────────────────────────
 
 describe('GET /api/program/list', () => {
-  it('returns 200 with programs including abbreviation', async () => {
+  it('returns 200 with programs including abbreviation and isActive', async () => {
     await prisma.program.create({
       data: { name: `${T}Plus`, abbreviation: `${T}plus`, order: 2 },
     });
@@ -78,6 +78,65 @@ describe('GET /api/program/list', () => {
     expect(prog).toBeDefined();
     expect(prog.name).toBe(`${T}Plus`);
     expect(prog.abbreviation).toBe(`${T}plus`);
+    expect(prog.isActive).toBe(true);
+  });
+
+  it('hides inactive programs by default', async () => {
+    await prisma.program.create({
+      data: { name: `${T}Basic 2`, abbreviation: `${T}b2`, order: 50, isActive: false },
+    });
+    const res = await request(app).get('/api/program/list');
+    expect(res.status).toBe(200);
+    const inactive = res.body.data.find((p: any) => p.abbreviation === `${T}b2`);
+    expect(inactive).toBeUndefined();
+  });
+
+  it('includes inactive programs when showInactive=true', async () => {
+    await prisma.program.create({
+      data: { name: `${T}Basic 1`, abbreviation: `${T}b1`, order: 51, isActive: false },
+    });
+    const res = await request(app).get('/api/program/list?showInactive=true');
+    expect(res.status).toBe(200);
+    expect(res.body.message).toMatch(/including inactive/i);
+    const inactive = res.body.data.find((p: any) => p.abbreviation === `${T}b1`);
+    expect(inactive).toBeDefined();
+    expect(inactive.isActive).toBe(false);
+  });
+
+  it('treats showInactive values other than "true" as false', async () => {
+    await prisma.program.create({
+      data: { name: `${T}Basic Mainstream`, abbreviation: `${T}bms`, order: 52, isActive: false },
+    });
+    for (const value of ['false', '1', 'yes', '']) {
+      const res = await request(app).get(`/api/program/list?showInactive=${value}`);
+      expect(res.status).toBe(200);
+      const inactive = res.body.data.find((p: any) => p.abbreviation === `${T}bms`);
+      expect(inactive, `value=${value!}`).toBeUndefined();
+    }
+  });
+});
+
+// ── /api/program/:programId/call-formations ignores active filter ───────────
+
+describe('related-resource lookups ignore isActive', () => {
+  it('returns call formations for an inactive program', async () => {
+    const prog = await prisma.program.create({
+      data: { name: `${T}Inactive Prog`, abbreviation: `${T}inact`, order: 60, isActive: false },
+    });
+    const formation = await prisma.formation.create({ data: { name: `${T}Inact Start` } });
+    const endFormation = await prisma.formation.create({ data: { name: `${T}Inact End` } });
+    const call = await prisma.call.create({ data: { name: `${T}Inact Call` } });
+    await prisma.call_formation.create({
+      data: { callId: call.callId, startId: formation.formId, endId: endFormation.formId },
+    });
+    await prisma.program_call_formation.create({
+      data: { programId: prog.programId, callId: call.callId, startId: formation.formId, difficulty: 'easy' },
+    });
+
+    const res = await request(app).get(`/api/program/${prog.programId}/call-formations`);
+    expect(res.status).toBe(200);
+    expect(res.body.data).toHaveLength(1);
+    expect(res.body.data[0].callId).toBe(call.callId);
   });
 });
 

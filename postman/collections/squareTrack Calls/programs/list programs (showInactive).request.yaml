@@ -1,0 +1,8 @@
+$kind: http-request
+url: "{{api-url}}/api/program/list?showInactive=true"
+method: GET
+order: 1500
+description: |-
+  GET /api/program/list?showInactive=true — overrides the default active-only
+  filter and returns every program. Each row carries an `isActive` flag.
+  Message reads "List of all programs (including inactive)".

@@ -3,5 +3,7 @@ url: "{{api-url}}/api/program/list"
 method: GET
 order: 1000
 description: |-
-  GET /api/program/list — programs ordered by `order`.
-  200 with data: array (empty = []).
+  GET /api/program/list — active programs ordered by `order`.
+  200 with data: array (empty = []). Each row includes `isActive`.
+  Inactive programs are hidden by default; pass `?showInactive=true`
+  to include them (see sibling request).
