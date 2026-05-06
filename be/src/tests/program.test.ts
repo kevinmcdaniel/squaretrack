@@ -62,6 +62,119 @@ describe('POST /api/program', () => {
     expect(res.status).toBe(409);
     expect(res.body.message).toMatch(/abbreviation/i);
   });
+
+  it('defaults isActive to true when not specified', async () => {
+    const res = await request(app).post('/api/program').send({
+      name: `${T}Default Active`,
+      abbreviation: `${T}da`,
+      order: 30,
+    });
+    expect(res.status).toBe(201);
+    expect(res.body.data.isActive).toBe(true);
+  });
+
+  it('respects isActive: false when provided', async () => {
+    const res = await request(app).post('/api/program').send({
+      name: `${T}Created Inactive`,
+      abbreviation: `${T}ci`,
+      order: 31,
+      isActive: false,
+    });
+    expect(res.status).toBe(201);
+    expect(res.body.data.isActive).toBe(false);
+  });
+
+  it('returns 406 when isActive is not a boolean', async () => {
+    const res = await request(app).post('/api/program').send({
+      name: `${T}Bad Active`,
+      abbreviation: `${T}ba`,
+      order: 32,
+      isActive: 'true',
+    });
+    expect(res.status).toBe(406);
+    expect(res.body.message).toMatch(/isActive/i);
+  });
+});
+
+// ── PATCH /api/program/:programId ───────────────────────────────────────────
+
+describe('PATCH /api/program/:programId', () => {
+  it('toggles isActive and returns the updated row', async () => {
+    const created = await prisma.program.create({
+      data: { name: `${T}Toggle`, abbreviation: `${T}tog`, order: 40 },
+    });
+    expect(created.isActive).toBe(true);
+
+    const off = await request(app)
+      .patch(`/api/program/${created.programId}`)
+      .send({ isActive: false });
+    expect(off.status).toBe(200);
+    expect(off.body.data.isActive).toBe(false);
+    expect(off.body.data.programId).toBe(created.programId);
+
+    const on = await request(app)
+      .patch(`/api/program/${created.programId}`)
+      .send({ isActive: true });
+    expect(on.status).toBe(200);
+    expect(on.body.data.isActive).toBe(true);
+  });
+
+  it('updates name without touching isActive', async () => {
+    const created = await prisma.program.create({
+      data: { name: `${T}Rename`, abbreviation: `${T}ren`, order: 41, isActive: false },
+    });
+    const res = await request(app)
+      .patch(`/api/program/${created.programId}`)
+      .send({ name: `${T}Renamed` });
+    expect(res.status).toBe(200);
+    expect(res.body.data.name).toBe(`${T}Renamed`);
+    expect(res.body.data.isActive).toBe(false);
+  });
+
+  it('returns 406 when no fields are provided', async () => {
+    const created = await prisma.program.create({
+      data: { name: `${T}NoFields`, abbreviation: `${T}nf`, order: 42 },
+    });
+    const res = await request(app).patch(`/api/program/${created.programId}`).send({});
+    expect(res.status).toBe(406);
+    expect(res.body.message).toMatch(/at least one/i);
+  });
+
+  it('returns 406 when isActive is not a boolean', async () => {
+    const created = await prisma.program.create({
+      data: { name: `${T}BadPatch`, abbreviation: `${T}bp`, order: 43 },
+    });
+    const res = await request(app)
+      .patch(`/api/program/${created.programId}`)
+      .send({ isActive: 'no' });
+    expect(res.status).toBe(406);
+    expect(res.body.message).toMatch(/isActive/i);
+  });
+
+  it('returns 406 for non-numeric programId', async () => {
+    const res = await request(app).patch('/api/program/abc').send({ isActive: false });
+    expect(res.status).toBe(406);
+  });
+
+  it('returns 404 when programId does not exist', async () => {
+    const res = await request(app).patch('/api/program/999999').send({ isActive: false });
+    expect(res.status).toBe(404);
+    expect(res.body.message).toMatch(/not found/i);
+  });
+
+  it('returns 409 on duplicate abbreviation', async () => {
+    await prisma.program.create({
+      data: { name: `${T}Dup A`, abbreviation: `${T}dupA`, order: 44 },
+    });
+    const target = await prisma.program.create({
+      data: { name: `${T}Dup B`, abbreviation: `${T}dupB`, order: 45 },
+    });
+    const res = await request(app)
+      .patch(`/api/program/${target.programId}`)
+      .send({ abbreviation: `${T}dupA` });
+    expect(res.status).toBe(409);
+    expect(res.body.message).toMatch(/abbreviation/i);
+  });
 });
 
 // ── GET /api/program/list ───────────────────────────────────────────────────

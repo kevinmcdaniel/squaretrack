@@ -80,6 +80,7 @@ Creates a new program.
 | name | string | **yes** | Full program name |
 | abbreviation | string | **yes** | Short unique identifier |
 | order | integer | **yes** | Display sort order |
+| isActive | boolean | no | Defaults to `true` if omitted. Set to `false` to create a program already retired from list responses. |
 
 ### Expected Results
 
@@ -89,7 +90,7 @@ HTTP **201**
 
 ```json
 {
-  "data": { "programId": 1, "name": "Mainstream 26", "abbreviation": "ms26", "order": 1 },
+  "data": { "programId": 1, "name": "Mainstream 26", "abbreviation": "ms26", "order": 1, "isActive": true },
   "message": "Program created"
 }
 ```
@@ -102,6 +103,18 @@ HTTP **406**
 {
   "data": {},
   "message": "Validation Error: name, abbreviation, and order are required.",
+  "status": 406
+}
+```
+
+#### Invalid isActive type
+
+HTTP **406**
+
+```json
+{
+  "data": {},
+  "message": "Validation Error: isActive must be a boolean.",
   "status": 406
 }
 ```
@@ -122,6 +135,86 @@ HTTP **409**
 
 - `abbreviation` must be unique across all programs.
 - `order` controls the display sequence (lower = first).
+
+---
+
+## PATCH /api/program/:programId
+
+Partial update — change any combination of fields. Most common use is toggling `isActive` to retire or revive a program.
+
+### Path Parameters
+
+| Parameter | Type | Required | Description |
+|---|---|---|---|
+| programId | integer | **yes** | The program's ID |
+
+### Request Body
+
+At least one of the following fields must be present:
+
+| Field | Type | Description |
+|---|---|---|
+| name | string | New full name |
+| abbreviation | string | New short identifier (must remain unique) |
+| order | integer | New display sort order |
+| isActive | boolean | Toggle the active flag |
+
+### Expected Results
+
+#### Success
+
+HTTP **200**
+
+```json
+{
+  "data": { "programId": 3, "name": "Basic 2", "abbreviation": "b2", "order": 3, "isActive": false },
+  "message": "Program updated"
+}
+```
+
+#### No fields provided
+
+HTTP **406**
+
+```json
+{
+  "data": {},
+  "message": "Validation Error: At least one of name, abbreviation, order, or isActive is required.",
+  "status": 406
+}
+```
+
+#### Invalid isActive type
+
+HTTP **406**
+
+```json
+{
+  "data": {},
+  "message": "Validation Error: isActive must be a boolean.",
+  "status": 406
+}
+```
+
+#### Invalid programId
+
+HTTP **406** — non-numeric path param.
+
+#### Not found
+
+HTTP **404**
+
+```json
+{
+  "data": null,
+  "message": "Not Found: Program id:999 not found!",
+  "status": 404
+}
+```
+
+#### Duplicate abbreviation
+
+HTTP **409**
 
 ---
 

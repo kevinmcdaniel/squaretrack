@@ -15,7 +15,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { prisma } from '../database.js';
 
-type ProgramRow = { abbreviation: string; name: string; active?: boolean };
+type ProgramRow = { abbreviation: string; name: string; isActive?: boolean };
 type CallEntryRow = { title: string; level: string; link: string };
 type FamilyRow = { name: string; link: string };
 
@@ -35,16 +35,15 @@ function programOrder(programs: ProgramRow[]): Map<string, number> {
 export async function importPrograms(programs: ProgramRow[]) {
   const order = programOrder(programs);
   for (const p of programs) {
-    const isActive = p.active ?? true;
     await prisma.program.upsert({
       where: { abbreviation: p.abbreviation },
       create: {
         abbreviation: p.abbreviation,
         name: p.name,
         order: order.get(p.abbreviation)!,
-        isActive,
+        isActive: p.isActive,
       },
-      update: { name: p.name, order: order.get(p.abbreviation)!, isActive },
+      update: { name: p.name, order: order.get(p.abbreviation)!, isActive: p.isActive },
     });
   }
   return programs.length;

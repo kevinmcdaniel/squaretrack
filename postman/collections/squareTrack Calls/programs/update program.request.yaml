@@ -1,0 +1,24 @@
+$kind: http-request
+url: "{{api-url}}/api/program/{{programId}}"
+method: PATCH
+order: 2500
+description: |-
+  PATCH /api/program/:programId — partial update. Most common use is
+  toggling `isActive` to retire or revive a program.
+  - 200 on success.
+  - 406 when no fields provided, isActive is not boolean, or programId
+    is non-numeric.
+  - 404 when programId does not exist.
+  - 409 on duplicate abbreviation.
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  mode: raw
+  raw: |-
+    {
+      "isActive": false
+    }
+  options:
+    raw:
+      language: json

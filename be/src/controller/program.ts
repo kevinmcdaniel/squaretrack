@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
-import { validationError, conflictError } from '../common/errorHandler.js';
+import { validationError, conflictError, notFoundError } from '../common/errorHandler.js';
 import { isNumeric } from '../common/utils.js';
 import {
   createProgramService,
+  updateProgramService,
   listProgramsService,
   listProgramCallFormationsService,
   createProgramCallFormationService,
@@ -25,14 +26,56 @@ export const listPrograms = async (req: Request, res: Response, next: any) => {
 
 export const createProgram = async (req: Request, res: Response, next: any) => {
   try {
-    const { name, abbreviation, order } = req.body;
+    const { name, abbreviation, order, isActive } = req.body;
     if (!name || !abbreviation || order == null) {
       throw new validationError('name, abbreviation, and order are required.');
     }
-    const record = await createProgramService({ name, abbreviation, order: Number(order) });
+    if (isActive !== undefined && typeof isActive !== 'boolean') {
+      throw new validationError('isActive must be a boolean.');
+    }
+    const record = await createProgramService({
+      name,
+      abbreviation,
+      order: Number(order),
+      ...(isActive !== undefined ? { isActive } : {}),
+    });
     res.status(201).json({ message: 'Program created', data: record });
   } catch (error: any) {
     if (error?.code === 'P2002') return next(new conflictError('Program abbreviation already exists.'));
+    next(error);
+  }
+};
+
+export const updateProgram = async (req: Request, res: Response, next: any) => {
+  try {
+    if (!isNumeric(req.params.programId)) {
+      throw new validationError(`Program ID is an integer. Invalid value:${req.params.programId}.`);
+    }
+    const programId = parseInt(req.params.programId, 10);
+    const { name, abbreviation, order, isActive } = req.body;
+
+    if (
+      name === undefined &&
+      abbreviation === undefined &&
+      order === undefined &&
+      isActive === undefined
+    ) {
+      throw new validationError('At least one of name, abbreviation, order, or isActive is required.');
+    }
+    if (isActive !== undefined && typeof isActive !== 'boolean') {
+      throw new validationError('isActive must be a boolean.');
+    }
+
+    const record = await updateProgramService(programId, {
+      ...(name !== undefined ? { name } : {}),
+      ...(abbreviation !== undefined ? { abbreviation } : {}),
+      ...(order !== undefined ? { order: Number(order) } : {}),
+      ...(isActive !== undefined ? { isActive } : {}),
+    });
+    res.json({ message: 'Program updated', data: record });
+  } catch (error: any) {
+    if (error?.code === 'P2002') return next(new conflictError('Program abbreviation already exists.'));
+    if (error?.code === 'P2025') return next(new notFoundError(`Program id:${req.params.programId} not found!`));
     next(error);
   }
 };
