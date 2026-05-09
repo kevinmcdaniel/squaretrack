@@ -2,6 +2,14 @@
 
 A **formation** describes a physical arrangement of dancers (e.g. "Squared Set", "Two-Faced Line", "Ocean Wave"). Formations are the starting and ending state of a call execution. They are referenced by `call_formation` mappings and by sequences.
 
+## Canonical source
+
+Names and pictogram identifiers come from Callerlab's [**Formation Pictograms** (2025-06-17)](https://www.callerlab.org/). The seed JSON is at [`be/src/prisma/seed-data/callerlab/formations.json`](../../be/src/prisma/seed-data/callerlab/formations.json) and the importer is [`be/src/scripts/import-callerlab-formations.ts`](../../be/src/scripts/import-callerlab-formations.ts) — runs as part of the `seed` compose service.
+
+The `formation.clCode` column carries the pictogram number from the PDF (e.g. `clCode: "10"` for Right-Hand Ocean Wave). This is how teach orders, parsers, and call definitions trace back to the official reference.
+
+The current seed covers Basic/Mainstream/SSD, Plus, and Advanced (~128 rows). Challenge formations (C-1, C-2, C-3A) are tracked in a follow-up issue.
+
 ---
 
 ## GET /api/formation/list

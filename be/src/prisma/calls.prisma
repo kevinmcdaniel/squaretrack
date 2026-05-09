@@ -47,6 +47,11 @@ model call_formation {
   // Per-FASR (a call from different formations can have different animation difficulty).
   // Distinct from program_call_formation.difficulty (Callerlab Standard Position teach difficulty).
   taminationsDifficulty Int?
+  // Beats to execute this call from this start formation. Per-FASR — same call from a
+  // different start formation can have a different beat count. Authoritative source:
+  // Callerlab program-specific Timing docs (e.g. Plus-Timing-21-11-03). Taminations
+  // animations are a fallback approximation when no Callerlab document exists yet.
+  timing                Int?
   programEntries        program_call_formation[]
   teachFasrEntries      teach_order_entry_fasr[]
   sequenceSteps         sequence_calls[]
