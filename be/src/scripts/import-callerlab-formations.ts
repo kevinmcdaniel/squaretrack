@@ -20,7 +20,14 @@ import { prisma } from '../database.js';
 type FormationRow = {
   name: string;
   alternateNames: string[];
-  program: 'bms' | 'plus' | 'adv' | 'c1' | 'c2' | 'c3a';
+  // Metadata only: the program section in the PDF where this formation is first
+  // introduced. Formations are NOT structurally linked to programs — that
+  // relationship is derived from the call → call_formation → program_call_formation
+  // chain. The string here is purely for documentation and traceability.
+  introducedAt: 'bms' | 'plus' | 'adv' | 'c1' | 'c2' | 'c3a';
+  // Pictogram identifier from the source PDF. IDs in the 1000+ range are
+  // synthesized for left-hand mirrors that are not explicitly drawn in the
+  // PDF appendix; convention is `1000 + RH-id` (e.g. 1021 = LH mirror of #21).
   pictogramId: number;
   handedness: 'right' | 'left' | 'facing' | 'general';
   description: string;

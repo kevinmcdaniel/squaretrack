@@ -14,7 +14,7 @@ const SEED_PATH = join(process.cwd(), 'src/prisma/seed-data/callerlab/formations
 type FormationRow = {
   name: string;
   alternateNames: string[];
-  program: string;
+  introducedAt: string;
   pictogramId: number;
   handedness: string;
   description: string;
@@ -46,7 +46,7 @@ describe('formations.json source file', () => {
       expect(r.name, `name on pictogram ${r.pictogramId}`).toBeTypeOf('string');
       expect(r.name.length, `name on pictogram ${r.pictogramId}`).toBeGreaterThan(0);
       expect(r.pictogramId).toBeTypeOf('number');
-      expect(['bms', 'plus', 'adv', 'c1', 'c2', 'c3a']).toContain(r.program);
+      expect(['bms', 'plus', 'adv', 'c1', 'c2', 'c3a']).toContain(r.introducedAt);
       expect(['right', 'left', 'facing', 'general']).toContain(r.handedness);
       expect(r.description.length).toBeGreaterThan(0);
       expect(Array.isArray(r.alternateNames)).toBe(true);
@@ -54,16 +54,33 @@ describe('formations.json source file', () => {
   });
 
   it('has at least one row in each of bms / plus / adv', () => {
-    const programs = new Set(rows.map((r) => r.program));
+    const programs = new Set(rows.map((r) => r.introducedAt));
     expect(programs.has('bms')).toBe(true);
     expect(programs.has('plus')).toBe(true);
     expect(programs.has('adv')).toBe(true);
   });
 
-  it('has both right-hand and left-hand mirror rows', () => {
-    const handedness = new Set(rows.map((r) => r.handedness));
-    expect(handedness.has('right')).toBe(true);
-    expect(handedness.has('left')).toBe(true);
+  it('every Right-Hand formation has a Left-Hand mirror', () => {
+    const lhNames = new Set(rows.filter((r) => r.handedness === 'left').map((r) => r.name));
+    const missing: string[] = [];
+    for (const r of rows) {
+      if (r.handedness !== 'right') continue;
+      if (!r.name.startsWith('Right-Hand')) continue;
+      const expectedLh = r.name.replace('Right-Hand', 'Left-Hand');
+      if (!lhNames.has(expectedLh)) missing.push(`${r.name} (#${r.pictogramId})`);
+    }
+    expect(missing, `missing LH mirrors: ${missing.join(', ')}`).toHaveLength(0);
+  });
+
+  it('synthesized LH mirrors use pictogramId 1000+RH', () => {
+    const byName = new Map(rows.map((r) => [r.name, r] as const));
+    for (const r of rows) {
+      if (r.pictogramId < 1000) continue;
+      const rhName = r.name.replace('Left-Hand', 'Right-Hand');
+      const rh = byName.get(rhName);
+      expect(rh, `synthesized LH ${r.name} should mirror an RH row`).toBeDefined();
+      expect(r.pictogramId).toBe(1000 + rh!.pictogramId);
+    }
   });
 });
 
