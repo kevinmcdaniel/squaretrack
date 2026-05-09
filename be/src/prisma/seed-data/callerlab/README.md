@@ -14,8 +14,8 @@ Authoritative reference data transcribed from official Callerlab publications. T
 type FormationRow = {
   name: string;                                       // primary name
   alternateNames: string[];                           // names listed on the same pictogram
-  program: 'bms' | 'plus' | 'adv' | 'c1' | 'c2' | 'c3a';
-  pictogramId: number;                                // PDF pictogram identifier (also stored as clCode)
+  introducedAt: 'bms' | 'plus' | 'adv' | 'c1' | 'c2' | 'c3a';
+  pictogramId: number;
   handedness: 'right' | 'left' | 'facing' | 'general';
   description: string;
 };
@@ -26,7 +26,27 @@ Stored on the `formation` table:
 - `description` → `formation.description`
 - `pictogramId` → `formation.clCode` (string-encoded)
 
-`alternateNames`, `program`, and `handedness` are kept in the seed JSON for traceability but are not stored on the row today. A future migration can promote them (alternates likely become a `formation_alias` table parallel to `call_synonym`).
+`alternateNames`, `introducedAt`, and `handedness` are kept in the seed JSON for traceability but are not stored on the row today. A future migration can promote them (alternates likely become a `formation_alias` table parallel to `call_synonym`).
+
+### `introducedAt` is metadata, not a relationship
+
+Formations are **not** structurally linked to programs. The program a formation belongs to is derived from `formation` ← `call_formation` ← `call` → `program_call_formation` → `program`. The `introducedAt` field here only records the program section in the source PDF where the formation first appears — it's a documentation breadcrumb, not a foreign key.
+
+### Right-hand and left-hand are distinct rows
+
+Every handed formation has its left-hand mirror as a separate row. They cannot be one row with a handedness flag because:
+
+- **Hand flow** differs (right shoulder vs left shoulder adjacent at the centers).
+- **Standard Position** difficulty for a given call can differ between the two variants.
+- `call_formation` carries per-FASR `inFlowRotation` / `outFlowRotation` values that depend on which hand is in play at the start formation.
+
+### `pictogramId` numbering
+
+| Range | Source |
+|---|---|
+| 1–621 | Main body of the PDF (numbered pictograms, primarily right-hand variants) |
+| 800–990 | Appendix mirrors explicitly drawn in the PDF |
+| 1000+ | **Synthesized** left-hand mirrors of right-hand formations that the PDF does not draw in its appendix. Convention: `1000 + RH-id`, so 1021 is the LH mirror of pictogram #21. These are real formations that exist by Callerlab's right/left convention; they're absent from the PDF only because the PDF chose not to draw a mirror for every handed formation. |
 
 ## Why separate from taminations
 
