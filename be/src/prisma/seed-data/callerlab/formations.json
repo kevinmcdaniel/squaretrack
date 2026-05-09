@@ -1,132 +1,1274 @@
 [
-  { "name": "Couple", "alternateNames": [], "program": "bms", "pictogramId": 1, "handedness": "general", "description": "Two dancers side by side, both facing the same direction." },
-  { "name": "Right-Hand Mini-Wave", "alternateNames": [], "program": "bms", "pictogramId": 2, "handedness": "right", "description": "Two dancers side by side facing opposite directions, with right shoulders adjacent." },
-  { "name": "Left-Hand Mini-Wave", "alternateNames": [], "program": "bms", "pictogramId": 802, "handedness": "left", "description": "Two dancers side by side facing opposite directions, with left shoulders adjacent." },
-  { "name": "Facing Dancers", "alternateNames": ["Circle of 2"], "program": "bms", "pictogramId": 3, "handedness": "facing", "description": "Two dancers facing each other." },
-  { "name": "Back-to-Back Dancers", "alternateNames": [], "program": "bms", "pictogramId": 4, "handedness": "general", "description": "Two dancers back to back." },
-  { "name": "Tandem", "alternateNames": [], "program": "bms", "pictogramId": 5, "handedness": "general", "description": "Two dancers, one directly behind the other, both facing the same direction." },
-  { "name": "General Line", "alternateNames": ["Line of 4"], "program": "bms", "pictogramId": 7, "handedness": "general", "description": "Four dancers in a line; facing directions unspecified." },
-  { "name": "Line", "alternateNames": ["One-Faced Line"], "program": "bms", "pictogramId": 8, "handedness": "general", "description": "Four dancers in a line, all facing the same direction." },
-  { "name": "Right-Hand Two-Faced Line", "alternateNames": [], "program": "bms", "pictogramId": 9, "handedness": "right", "description": "Four dancers in a line forming two right-hand couples back-to-back at the centers." },
-  { "name": "Left-Hand Two-Faced Line", "alternateNames": [], "program": "bms", "pictogramId": 809, "handedness": "left", "description": "Four dancers in a line forming two left-hand couples back-to-back at the centers." },
-  { "name": "Right-Hand Ocean Wave", "alternateNames": ["Right-Hand Wave"], "program": "bms", "pictogramId": 10, "handedness": "right", "description": "Four dancers in a line with alternating facing directions; centers have right hands." },
-  { "name": "Left-Hand Ocean Wave", "alternateNames": ["Left-Hand Wave"], "program": "bms", "pictogramId": 811, "handedness": "left", "description": "Four dancers in a line with alternating facing directions; centers have left hands." },
-  { "name": "General Column", "alternateNames": ["Column of 4"], "program": "bms", "pictogramId": 11, "handedness": "general", "description": "Four dancers in a column; facing directions unspecified." },
-  { "name": "Single Eight Chain Thru", "alternateNames": [], "program": "bms", "pictogramId": 12, "handedness": "general", "description": "Two facing pairs of tandem dancers, one tandem behind the other facing in opposite directions." },
-  { "name": "Single Double Pass Thru", "alternateNames": ["Facing Tandems", "Single Zero Tag"], "program": "bms", "pictogramId": 13, "handedness": "general", "description": "Two pairs of facing tandems, the centers facing the outsides." },
-  { "name": "Single Completed Double Pass Thru", "alternateNames": ["Back-to-Back Tandems", "Single Full Tag"], "program": "bms", "pictogramId": 14, "handedness": "general", "description": "Two pairs of back-to-back tandems." },
-  { "name": "Box", "alternateNames": ["General Box", "Box of 4"], "program": "bms", "pictogramId": 15, "handedness": "general", "description": "Four dancers in a 2x2 formation; facing directions unspecified." },
-  { "name": "Facing Couples", "alternateNames": [], "program": "bms", "pictogramId": 16, "handedness": "facing", "description": "Two couples facing each other." },
-  { "name": "Back-to-Back Couples", "alternateNames": [], "program": "bms", "pictogramId": 17, "handedness": "general", "description": "Two couples back to back." },
-  { "name": "Tandem Couples", "alternateNames": [], "program": "bms", "pictogramId": 18, "handedness": "general", "description": "Two couples in tandem, both facing the same direction." },
-  { "name": "Right-Hand Box", "alternateNames": ["Right-Hand Box Circulate", "Right-Hand Single 1/2 Tag", "Right-Hand Single Half Tag"], "program": "bms", "pictogramId": 19, "handedness": "right", "description": "2x2 with two right-hand mini-waves, centers facing in opposite directions across diagonals." },
-  { "name": "Left-Hand Box", "alternateNames": ["Left-Hand Box Circulate", "Left-Hand Single 1/2 Tag", "Left-Hand Single Half Tag"], "program": "bms", "pictogramId": 819, "handedness": "left", "description": "2x2 with two left-hand mini-waves." },
-  { "name": "Circle of 4", "alternateNames": [], "program": "bms", "pictogramId": 20, "handedness": "general", "description": "Four dancers in a circle." },
-  { "name": "Right-Hand Star", "alternateNames": [], "program": "bms", "pictogramId": 21, "handedness": "right", "description": "Four dancers with right hands joined in the center forming a star." },
-  { "name": "Right-Hand Stars", "alternateNames": [], "program": "bms", "pictogramId": 22, "handedness": "right", "description": "Two right-hand stars side by side." },
-  { "name": "Squared Set", "alternateNames": ["Static Square"], "program": "bms", "pictogramId": 23, "handedness": "general", "description": "Four couples around the perimeter of a square, each couple facing the center." },
-  { "name": "Squared Set Spots", "alternateNames": [], "program": "bms", "pictogramId": 24, "handedness": "general", "description": "The eight spots of a Squared Set; facing directions unspecified." },
-  { "name": "Circle of 8", "alternateNames": ["Circle"], "program": "bms", "pictogramId": 25, "handedness": "general", "description": "Eight dancers in a circle, all facing the center." },
-  { "name": "Alamo Ring", "alternateNames": [], "program": "bms", "pictogramId": 26, "handedness": "general", "description": "Eight dancers in a ring with alternating facing directions, all hands joined." },
-  { "name": "Right and Left Grand Circle", "alternateNames": [], "program": "bms", "pictogramId": 27, "handedness": "general", "description": "Eight dancers in a circle with alternating facing directions, ready for a Right and Left Grand." },
-  { "name": "Single File Promenade", "alternateNames": [], "program": "bms", "pictogramId": 28, "handedness": "general", "description": "Eight dancers in a circle, all facing counterclockwise in single file." },
-  { "name": "Single File Wrong Way Promenade", "alternateNames": [], "program": "bms", "pictogramId": 29, "handedness": "general", "description": "Eight dancers in a circle, all facing clockwise in single file." },
-  { "name": "Promenade", "alternateNames": [], "program": "bms", "pictogramId": 31, "handedness": "general", "description": "Four couples in a circle promenading counterclockwise." },
-  { "name": "Wrong Way Promenade", "alternateNames": [], "program": "bms", "pictogramId": 32, "handedness": "general", "description": "Four couples in a circle promenading clockwise." },
-  { "name": "Thar Star", "alternateNames": ["Thar"], "program": "bms", "pictogramId": 33, "handedness": "general", "description": "Inside dancers form a back-up right-hand star, outside dancers face counterclockwise." },
-  { "name": "Wrong Way Thar", "alternateNames": [], "program": "bms", "pictogramId": 34, "handedness": "general", "description": "Inside dancers form a back-up left-hand star, outside dancers face clockwise." },
-  { "name": "Facing Lines", "alternateNames": ["Lines Facing In"], "program": "bms", "pictogramId": 35, "handedness": "facing", "description": "Two parallel lines of four facing each other." },
-  { "name": "Lines Facing Out", "alternateNames": ["Back-to-Back Lines"], "program": "bms", "pictogramId": 36, "handedness": "general", "description": "Two parallel lines of four with backs toward each other." },
-  { "name": "Right-Hand Two-Faced Lines", "alternateNames": ["Right-Hand Parallel Two-Faced Lines"], "program": "bms", "pictogramId": 37, "handedness": "right", "description": "Two parallel right-hand two-faced lines." },
-  { "name": "Left-Hand Two-Faced Lines", "alternateNames": ["Left-Hand Parallel Two-Faced Lines"], "program": "bms", "pictogramId": 835, "handedness": "left", "description": "Two parallel left-hand two-faced lines." },
-  { "name": "Right-Hand Ocean Waves", "alternateNames": ["Right-Hand Parallel Ocean Waves", "Right-Hand Waves", "Right-Hand 1/2 Tag", "Right-Hand Half Tag"], "program": "bms", "pictogramId": 38, "handedness": "right", "description": "Two parallel right-hand ocean waves." },
-  { "name": "Left-Hand Ocean Waves", "alternateNames": ["Left-Hand Parallel Ocean Waves", "Left-Hand Waves", "Left-Hand 1/2 Tag", "Left-Hand Half Tag"], "program": "bms", "pictogramId": 837, "handedness": "left", "description": "Two parallel left-hand ocean waves." },
-  { "name": "General Lines", "alternateNames": ["General Parallel Lines", "Some Kind of Lines"], "program": "bms", "pictogramId": 39, "handedness": "general", "description": "Two parallel lines of four; facing directions unspecified." },
-  { "name": "Eight Chain Thru", "alternateNames": [], "program": "bms", "pictogramId": 40, "handedness": "general", "description": "2x4 formation with two facing-couples at each end." },
-  { "name": "Trade By", "alternateNames": [], "program": "bms", "pictogramId": 41, "handedness": "general", "description": "2x4 formation with facing-couples at the centers and back-to-back couples at the ends." },
-  { "name": "Double Pass Thru", "alternateNames": ["Starting Double Pass Thru", "Beginning Double Pass Thru", "Zero Tag"], "program": "bms", "pictogramId": 42, "handedness": "general", "description": "2x4 column of facing tandems." },
-  { "name": "Completed Double Pass Thru", "alternateNames": ["Full Tag"], "program": "bms", "pictogramId": 43, "handedness": "general", "description": "2x4 column of back-to-back tandems." },
-  { "name": "Right-Hand Columns", "alternateNames": ["Right-Hand Column"], "program": "bms", "pictogramId": 44, "handedness": "right", "description": "Two parallel right-hand columns of four." },
-  { "name": "Left-Hand Columns", "alternateNames": ["Left-Hand Column"], "program": "bms", "pictogramId": 843, "handedness": "left", "description": "Two parallel left-hand columns of four." },
-  { "name": "General Columns", "alternateNames": ["General Parallel Columns", "Some Kind of Columns"], "program": "bms", "pictogramId": 45, "handedness": "general", "description": "Two parallel columns of four; facing directions unspecified." },
-  { "name": "Right-Hand 1/4 Tag", "alternateNames": ["Right-Hand Quarter Tag"], "program": "bms", "pictogramId": 46, "handedness": "right", "description": "Outside facing-couples flanking a right-hand center wave." },
-  { "name": "Left-Hand 1/4 Tag", "alternateNames": ["Left-Hand Quarter Tag"], "program": "bms", "pictogramId": 846, "handedness": "left", "description": "Outside facing-couples flanking a left-hand center wave." },
-  { "name": "Right-Hand 3/4 Tag", "alternateNames": ["Right-Hand Three-Quarter Tag"], "program": "bms", "pictogramId": 47, "handedness": "right", "description": "Outside back-to-back couples flanking a right-hand center wave." },
-  { "name": "Left-Hand 3/4 Tag", "alternateNames": ["Left-Hand Three-Quarter Tag"], "program": "bms", "pictogramId": 848, "handedness": "left", "description": "Outside back-to-back couples flanking a left-hand center wave." },
-  { "name": "Right-Hand Tidal Wave", "alternateNames": [], "program": "bms", "pictogramId": 48, "handedness": "right", "description": "Eight dancers in a single line forming a right-hand tidal wave." },
-  { "name": "Left-Hand Tidal Wave", "alternateNames": [], "program": "bms", "pictogramId": 823, "handedness": "left", "description": "Eight dancers in a single line forming a left-hand tidal wave." },
-  { "name": "Right-Hand Tidal Two-Faced Line", "alternateNames": [], "program": "bms", "pictogramId": 49, "handedness": "right", "description": "Eight dancers in a single line forming a right-hand tidal two-faced line." },
-  { "name": "Left-Hand Tidal Two-Faced Line", "alternateNames": [], "program": "bms", "pictogramId": 825, "handedness": "left", "description": "Eight dancers in a single line forming a left-hand tidal two-faced line." },
-  { "name": "Right-Hand Tidal One-Faced Line", "alternateNames": ["Right-Hand Tidal Line"], "program": "bms", "pictogramId": 50, "handedness": "right", "description": "Eight dancers in a single line all facing the same direction." },
-  { "name": "Left-Hand Tidal One-Faced Line", "alternateNames": ["Left-Hand Tidal Line"], "program": "bms", "pictogramId": 827, "handedness": "left", "description": "Eight dancers in a single line, mirror form." },
-  { "name": "General Tidal Line", "alternateNames": ["Line of 8", "Some Kind of Tidal Line"], "program": "bms", "pictogramId": 51, "handedness": "general", "description": "Eight dancers in a single line; facing directions unspecified." },
-
-  { "name": "Right-Hand Diamond", "alternateNames": [], "program": "plus", "pictogramId": 101, "handedness": "right", "description": "Four dancers in a diamond shape with the centers having right hands." },
-  { "name": "Left-Hand Diamond", "alternateNames": [], "program": "plus", "pictogramId": 901, "handedness": "left", "description": "Four dancers in a diamond shape with the centers having left hands." },
-  { "name": "Facing Diamond (centers have right hands)", "alternateNames": [], "program": "plus", "pictogramId": 102, "handedness": "facing", "description": "Diamond with centers facing each other; right hands meeting at the center." },
-  { "name": "Facing Diamond (centers have left hands)", "alternateNames": [], "program": "plus", "pictogramId": 903, "handedness": "facing", "description": "Diamond with centers facing each other; left hands meeting at the center." },
-  { "name": "Right-Hand Z (centers are leaders)", "alternateNames": [], "program": "plus", "pictogramId": 103, "handedness": "right", "description": "Four-dancer Z formation with right-hand center mini-wave; centers are leaders." },
-  { "name": "Left-Hand Z (centers are leaders)", "alternateNames": [], "program": "plus", "pictogramId": 905, "handedness": "left", "description": "Mirror of Right-Hand Z (centers are leaders)." },
-  { "name": "Right-Hand Z (centers are trailers)", "alternateNames": [], "program": "plus", "pictogramId": 104, "handedness": "right", "description": "Four-dancer Z formation with right-hand center mini-wave; centers are trailers." },
-  { "name": "Left-Hand Z (centers are trailers)", "alternateNames": [], "program": "plus", "pictogramId": 907, "handedness": "left", "description": "Mirror of Right-Hand Z (centers are trailers)." },
-  { "name": "Right-Hand Single 1/4 Tag", "alternateNames": ["Right-Hand Single Quarter Tag"], "program": "plus", "pictogramId": 105, "handedness": "right", "description": "Single 1/4 Tag with right-hand center mini-wave." },
-  { "name": "Right-Hand Single 3/4 Tag", "alternateNames": ["Right-Hand Single Three-Quarter Tag"], "program": "plus", "pictogramId": 106, "handedness": "right", "description": "Single 3/4 Tag with right-hand center mini-wave." },
-  { "name": "Right-Hand Star (aligned to walls)", "alternateNames": ["Gear"], "program": "plus", "pictogramId": 107, "handedness": "right", "description": "Right-hand four-dancer star aligned with the walls of the hall." },
-  { "name": "Right-Hand Stars (aligned to walls)", "alternateNames": ["Gears"], "program": "plus", "pictogramId": 108, "handedness": "right", "description": "Two right-hand stars side by side, aligned to the walls." },
-  { "name": "Right-Hand Twin Diamonds", "alternateNames": ["Right-Hand Diamonds"], "program": "plus", "pictogramId": 109, "handedness": "right", "description": "Two right-hand diamonds side by side." },
-  { "name": "Left-Hand Twin Diamonds", "alternateNames": ["Left-Hand Diamonds"], "program": "plus", "pictogramId": 909, "handedness": "left", "description": "Two left-hand diamonds side by side." },
-  { "name": "Facing Twin Diamonds (centers have right hands)", "alternateNames": ["Facing Diamonds (centers have right hands)"], "program": "plus", "pictogramId": 110, "handedness": "facing", "description": "Two facing diamonds side by side with the centers of each having right hands." },
-  { "name": "Facing Twin Diamonds (centers have left hands)", "alternateNames": ["Facing Diamonds (centers have left hands)"], "program": "plus", "pictogramId": 911, "handedness": "facing", "description": "Two facing diamonds side by side with the centers of each having left hands." },
-  { "name": "General Twin Diamonds", "alternateNames": ["General Diamonds"], "program": "plus", "pictogramId": 111, "handedness": "general", "description": "Two diamonds side by side; facing directions unspecified." },
-  { "name": "General Point-to-Point Diamonds", "alternateNames": [], "program": "plus", "pictogramId": 112, "handedness": "general", "description": "Two diamonds with their points touching; facing unspecified." },
-  { "name": "Right-Hand Point-to-Point Diamonds", "alternateNames": [], "program": "plus", "pictogramId": 113, "handedness": "right", "description": "Two right-hand diamonds with their points touching." },
-  { "name": "Left-Hand Point-to-Point Diamonds", "alternateNames": [], "program": "plus", "pictogramId": 917, "handedness": "left", "description": "Two left-hand diamonds with their points touching." },
-  { "name": "Facing Point-to-Point Diamonds (centers have right hands)", "alternateNames": [], "program": "plus", "pictogramId": 114, "handedness": "facing", "description": "Two facing diamonds with points touching; centers have right hands." },
-  { "name": "Facing Point-to-Point Diamonds (centers have left hands)", "alternateNames": [], "program": "plus", "pictogramId": 921, "handedness": "facing", "description": "Two facing diamonds with points touching; centers have left hands." },
-  { "name": "Right-Hand End-to-End Single 1/4 Tags", "alternateNames": ["Right-Hand End-to-End Single Quarter Tags"], "program": "plus", "pictogramId": 115, "handedness": "right", "description": "Two right-hand single 1/4 tags placed end to end." },
-  { "name": "Right-Hand End-to-End Single 3/4 Tags", "alternateNames": ["Right-Hand End-to-End Single Three-Quarter Tags"], "program": "plus", "pictogramId": 116, "handedness": "right", "description": "Two right-hand single 3/4 tags placed end to end." },
-  { "name": "Right-Hand Side-by-Side Z's (centers are leaders)", "alternateNames": [], "program": "plus", "pictogramId": 117, "handedness": "right", "description": "Two right-hand Z formations side by side; centers are leaders." },
-  { "name": "Left-Hand Side-by-Side Z's (centers are leaders)", "alternateNames": [], "program": "plus", "pictogramId": 913, "handedness": "left", "description": "Mirror of Right-Hand Side-by-Side Z's (centers are leaders)." },
-  { "name": "Right-Hand Side-by-Side Z's (centers are trailers)", "alternateNames": [], "program": "plus", "pictogramId": 118, "handedness": "right", "description": "Two right-hand Z formations side by side; centers are trailers." },
-  { "name": "Left-Hand Side-by-Side Z's (centers are trailers)", "alternateNames": [], "program": "plus", "pictogramId": 915, "handedness": "left", "description": "Mirror of Right-Hand Side-by-Side Z's (centers are trailers)." },
-  { "name": "Right-Hand End-to-End Z's (centers are leaders)", "alternateNames": [], "program": "plus", "pictogramId": 119, "handedness": "right", "description": "Two right-hand Z formations placed end to end; centers are leaders." },
-  { "name": "Right-Hand End-to-End Z's (centers are trailers)", "alternateNames": [], "program": "plus", "pictogramId": 120, "handedness": "right", "description": "Two right-hand Z formations placed end to end; centers are trailers." },
-  { "name": "Dixie Grand Circle", "alternateNames": [], "program": "plus", "pictogramId": 121, "handedness": "general", "description": "Eight dancers in a circle ready for Dixie Grand; alternating facing." },
-  { "name": "Right-Hand 1/4 Box", "alternateNames": ["Right-Hand Quarter Box"], "program": "plus", "pictogramId": 122, "handedness": "right", "description": "2x2 mini-wave-style box with right-hand handholds; same as pictogram 429." },
-  { "name": "Left-Hand 1/4 Box", "alternateNames": ["Left-Hand Quarter Box"], "program": "plus", "pictogramId": 919, "handedness": "left", "description": "Mirror of Right-Hand 1/4 Box." },
-  { "name": "General Crossed Lines (aligned to walls)", "alternateNames": [], "program": "plus", "pictogramId": 123, "handedness": "general", "description": "Eight dancers in two crossed lines aligned with the walls; used in (Anything) and Spread." },
-
-  { "name": "3-and-1 Line (ends facing same way, centers have right hands)", "alternateNames": ["Three-and-One Line"], "program": "adv", "pictogramId": 201, "handedness": "right", "description": "Line of 4 with three dancers facing one way and one facing the other; ends face same way, centers have right hands." },
-  { "name": "3-and-1 Line (ends facing same way, centers have left hands)", "alternateNames": ["Three-and-One Line"], "program": "adv", "pictogramId": 941, "handedness": "left", "description": "Mirror of pictogram 201." },
-  { "name": "3-and-1 Line (centers facing same way, ends are beaus)", "alternateNames": ["Three-and-One Line"], "program": "adv", "pictogramId": 202, "handedness": "general", "description": "Line of 4 where centers face the same direction; ends are beaus." },
-  { "name": "3-and-1 Line (centers facing same way, ends are belles)", "alternateNames": ["Three-and-One Line"], "program": "adv", "pictogramId": 943, "handedness": "general", "description": "Mirror of pictogram 202; ends are belles." },
-  { "name": "Inverted Line", "alternateNames": [], "program": "adv", "pictogramId": 203, "handedness": "general", "description": "Line of 4 with the ends facing each other and the centers facing out, or vice versa." },
-  { "name": "Inverted Box", "alternateNames": [], "program": "adv", "pictogramId": 204, "handedness": "general", "description": "Box where the centers and ends are inverted relative to a normal box." },
-  { "name": "Split Square Thru Box", "alternateNames": [], "program": "adv", "pictogramId": 205, "handedness": "general", "description": "Box configuration occurring during Split Square Thru." },
-  { "name": "Parallel 3-and-1 Lines (ends facing in, centers have right hands)", "alternateNames": ["Parallel Three-and-One Lines"], "program": "adv", "pictogramId": 206, "handedness": "right", "description": "Two parallel 3-and-1 lines; ends facing in; centers have right hands." },
-  { "name": "Parallel 3-and-1 Lines (ends facing in, centers have left hands)", "alternateNames": ["Parallel Three-and-One Lines"], "program": "adv", "pictogramId": 946, "handedness": "left", "description": "Mirror of pictogram 206." },
-  { "name": "Parallel 3-and-1 Lines (ends facing out, centers have right hands)", "alternateNames": ["Parallel Three-and-One Lines"], "program": "adv", "pictogramId": 207, "handedness": "right", "description": "Two parallel 3-and-1 lines; ends facing out; centers have right hands." },
-  { "name": "Parallel 3-and-1 Lines (ends facing out, centers have left hands)", "alternateNames": ["Parallel Three-and-One Lines"], "program": "adv", "pictogramId": 948, "handedness": "left", "description": "Mirror of pictogram 207." },
-  { "name": "Parallel 3-and-1 Lines (centers facing in, ends are beaus)", "alternateNames": ["Parallel Three-and-One Lines"], "program": "adv", "pictogramId": 208, "handedness": "general", "description": "Two parallel 3-and-1 lines; centers facing in; ends are beaus." },
-  { "name": "Parallel 3-and-1 Lines (centers facing in, ends are belles)", "alternateNames": ["Parallel Three-and-One Lines"], "program": "adv", "pictogramId": 950, "handedness": "general", "description": "Mirror of pictogram 208; ends are belles." },
-  { "name": "Parallel 3-and-1 Lines (centers facing out, ends are beaus)", "alternateNames": ["Parallel Three-and-One Lines"], "program": "adv", "pictogramId": 209, "handedness": "general", "description": "Two parallel 3-and-1 lines; centers facing out; ends are beaus." },
-  { "name": "Parallel 3-and-1 Lines (centers facing out, ends are belles)", "alternateNames": ["Parallel Three-and-One Lines"], "program": "adv", "pictogramId": 952, "handedness": "general", "description": "Mirror of pictogram 209; ends are belles." },
-  { "name": "Parallel Inverted Lines (ends facing in)", "alternateNames": [], "program": "adv", "pictogramId": 210, "handedness": "general", "description": "Two parallel inverted lines with ends facing in." },
-  { "name": "Parallel Inverted Lines (ends facing out)", "alternateNames": [], "program": "adv", "pictogramId": 211, "handedness": "general", "description": "Two parallel inverted lines with ends facing out." },
-  { "name": "Tidal 3-and-1 Line", "alternateNames": ["Tidal Three-and-One Line"], "program": "adv", "pictogramId": 212, "handedness": "general", "description": "Eight-dancer single line formed as a 3-and-1 pattern (typical handedness)." },
-  { "name": "Tidal Inverted Line", "alternateNames": [], "program": "adv", "pictogramId": 213, "handedness": "general", "description": "Eight-dancer single line formed as an inverted line (typical handedness)." },
-  { "name": "Right-Hand As Couples Wave", "alternateNames": [], "program": "adv", "pictogramId": 214, "handedness": "right", "description": "As-couples application of a right-hand wave; same shape as Right-Hand Tidal Wave." },
-  { "name": "Left-Hand As Couples Wave", "alternateNames": [], "program": "adv", "pictogramId": 956, "handedness": "left", "description": "Mirror of Right-Hand As Couples Wave." },
-  { "name": "Right-Hand As Couples Two-Faced Line", "alternateNames": [], "program": "adv", "pictogramId": 215, "handedness": "right", "description": "As-couples application of a right-hand two-faced line; same shape as Right-Hand Tidal Two-Faced Line." },
-  { "name": "Left-Hand As Couples Two-Faced Line", "alternateNames": [], "program": "adv", "pictogramId": 958, "handedness": "left", "description": "Mirror of Right-Hand As Couples Two-Faced Line." },
-  { "name": "General Tidal Column", "alternateNames": ["Column of 8"], "program": "adv", "pictogramId": 216, "handedness": "general", "description": "Eight-dancer column; facing directions unspecified." },
-  { "name": "Right-Hand Hourglass", "alternateNames": [], "program": "adv", "pictogramId": 217, "handedness": "right", "description": "Eight-dancer hourglass with the points of two diamonds at the ends and a center wave." },
-  { "name": "Left-Hand Hourglass", "alternateNames": [], "program": "adv", "pictogramId": 960, "handedness": "left", "description": "Mirror of Right-Hand Hourglass." },
-  { "name": "Facing Hourglass (very centers have right hands)", "alternateNames": [], "program": "adv", "pictogramId": 218, "handedness": "facing", "description": "Hourglass formation with the very centers facing each other; right hands meeting." },
-  { "name": "Facing Hourglass (very centers have left hands)", "alternateNames": [], "program": "adv", "pictogramId": 964, "handedness": "facing", "description": "Mirror of pictogram 218." },
-  { "name": "General Hourglass", "alternateNames": [], "program": "adv", "pictogramId": 219, "handedness": "general", "description": "Hourglass shape; facing directions unspecified." },
-  { "name": "Right-Hand Columns of 3 and 2 Lonesome Dancers", "alternateNames": ["Right-Hand 1/2 In Roll Circulate (formation)"], "program": "adv", "pictogramId": 220, "handedness": "right", "description": "Eight-dancer formation made of two right-hand columns of three plus two outside dancers." },
-  { "name": "Left-Hand Columns of 3 and 2 Lonesome Dancers", "alternateNames": ["Left-Hand 1/2 In Roll Circulate (formation)"], "program": "adv", "pictogramId": 962, "handedness": "left", "description": "Mirror of pictogram 220." },
-  { "name": "Columns of 3 and 2 Lonesome Dancers", "alternateNames": ["1/4 Chain Reaction (formation)"], "program": "adv", "pictogramId": 221, "handedness": "general", "description": "Eight-dancer formation made of two columns of three plus two outside dancers; from Right-Hand 1/4 Tag." },
-  { "name": "Right-Hand Star and Two Mini-Waves", "alternateNames": ["1/2 Chain Reaction (formation)"], "program": "adv", "pictogramId": 222, "handedness": "right", "description": "Eight-dancer formation: a right-hand star at the centers plus two outside mini-waves." }
+  {
+    "name": "Couple",
+    "alternateNames": [],
+    "pictogramId": 1,
+    "handedness": "general",
+    "description": "Two dancers side by side, both facing the same direction.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Right-Hand Mini-Wave",
+    "alternateNames": [],
+    "pictogramId": 2,
+    "handedness": "right",
+    "description": "Two dancers side by side facing opposite directions, with right shoulders adjacent.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Left-Hand Mini-Wave",
+    "alternateNames": [],
+    "pictogramId": 802,
+    "handedness": "left",
+    "description": "Two dancers side by side facing opposite directions, with left shoulders adjacent.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Facing Dancers",
+    "alternateNames": [
+      "Circle of 2"
+    ],
+    "pictogramId": 3,
+    "handedness": "facing",
+    "description": "Two dancers facing each other.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Back-to-Back Dancers",
+    "alternateNames": [],
+    "pictogramId": 4,
+    "handedness": "general",
+    "description": "Two dancers back to back.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Tandem",
+    "alternateNames": [],
+    "pictogramId": 5,
+    "handedness": "general",
+    "description": "Two dancers, one directly behind the other, both facing the same direction.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "General Line",
+    "alternateNames": [
+      "Line of 4"
+    ],
+    "pictogramId": 7,
+    "handedness": "general",
+    "description": "Four dancers in a line; facing directions unspecified.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Line",
+    "alternateNames": [
+      "One-Faced Line"
+    ],
+    "pictogramId": 8,
+    "handedness": "general",
+    "description": "Four dancers in a line, all facing the same direction.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Right-Hand Two-Faced Line",
+    "alternateNames": [],
+    "pictogramId": 9,
+    "handedness": "right",
+    "description": "Four dancers in a line forming two right-hand couples back-to-back at the centers.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Left-Hand Two-Faced Line",
+    "alternateNames": [],
+    "pictogramId": 809,
+    "handedness": "left",
+    "description": "Four dancers in a line forming two left-hand couples back-to-back at the centers.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Right-Hand Ocean Wave",
+    "alternateNames": [
+      "Right-Hand Wave"
+    ],
+    "pictogramId": 10,
+    "handedness": "right",
+    "description": "Four dancers in a line with alternating facing directions; centers have right hands.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Left-Hand Ocean Wave",
+    "alternateNames": [
+      "Left-Hand Wave"
+    ],
+    "pictogramId": 811,
+    "handedness": "left",
+    "description": "Four dancers in a line with alternating facing directions; centers have left hands.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "General Column",
+    "alternateNames": [
+      "Column of 4"
+    ],
+    "pictogramId": 11,
+    "handedness": "general",
+    "description": "Four dancers in a column; facing directions unspecified.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Single Eight Chain Thru",
+    "alternateNames": [],
+    "pictogramId": 12,
+    "handedness": "general",
+    "description": "Two facing pairs of tandem dancers, one tandem behind the other facing in opposite directions.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Single Double Pass Thru",
+    "alternateNames": [
+      "Facing Tandems",
+      "Single Zero Tag"
+    ],
+    "pictogramId": 13,
+    "handedness": "general",
+    "description": "Two pairs of facing tandems, the centers facing the outsides.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Single Completed Double Pass Thru",
+    "alternateNames": [
+      "Back-to-Back Tandems",
+      "Single Full Tag"
+    ],
+    "pictogramId": 14,
+    "handedness": "general",
+    "description": "Two pairs of back-to-back tandems.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Box",
+    "alternateNames": [
+      "General Box",
+      "Box of 4"
+    ],
+    "pictogramId": 15,
+    "handedness": "general",
+    "description": "Four dancers in a 2x2 formation; facing directions unspecified.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Facing Couples",
+    "alternateNames": [],
+    "pictogramId": 16,
+    "handedness": "facing",
+    "description": "Two couples facing each other.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Back-to-Back Couples",
+    "alternateNames": [],
+    "pictogramId": 17,
+    "handedness": "general",
+    "description": "Two couples back to back.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Tandem Couples",
+    "alternateNames": [],
+    "pictogramId": 18,
+    "handedness": "general",
+    "description": "Two couples in tandem, both facing the same direction.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Right-Hand Box",
+    "alternateNames": [
+      "Right-Hand Box Circulate",
+      "Right-Hand Single 1/2 Tag",
+      "Right-Hand Single Half Tag"
+    ],
+    "pictogramId": 19,
+    "handedness": "right",
+    "description": "2x2 with two right-hand mini-waves, centers facing in opposite directions across diagonals.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Left-Hand Box",
+    "alternateNames": [
+      "Left-Hand Box Circulate",
+      "Left-Hand Single 1/2 Tag",
+      "Left-Hand Single Half Tag"
+    ],
+    "pictogramId": 819,
+    "handedness": "left",
+    "description": "2x2 with two left-hand mini-waves.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Circle of 4",
+    "alternateNames": [],
+    "pictogramId": 20,
+    "handedness": "general",
+    "description": "Four dancers in a circle.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Right-Hand Star",
+    "alternateNames": [],
+    "pictogramId": 21,
+    "handedness": "right",
+    "description": "Four dancers with right hands joined in the center forming a star.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Right-Hand Stars",
+    "alternateNames": [],
+    "pictogramId": 22,
+    "handedness": "right",
+    "description": "Two right-hand stars side by side.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Squared Set",
+    "alternateNames": [
+      "Static Square"
+    ],
+    "pictogramId": 23,
+    "handedness": "general",
+    "description": "Four couples around the perimeter of a square, each couple facing the center.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Squared Set Spots",
+    "alternateNames": [],
+    "pictogramId": 24,
+    "handedness": "general",
+    "description": "The eight spots of a Squared Set; facing directions unspecified.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Circle of 8",
+    "alternateNames": [
+      "Circle"
+    ],
+    "pictogramId": 25,
+    "handedness": "general",
+    "description": "Eight dancers in a circle, all facing the center.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Alamo Ring",
+    "alternateNames": [],
+    "pictogramId": 26,
+    "handedness": "general",
+    "description": "Eight dancers in a ring with alternating facing directions, all hands joined.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Right and Left Grand Circle",
+    "alternateNames": [],
+    "pictogramId": 27,
+    "handedness": "general",
+    "description": "Eight dancers in a circle with alternating facing directions, ready for a Right and Left Grand.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Single File Promenade",
+    "alternateNames": [],
+    "pictogramId": 28,
+    "handedness": "general",
+    "description": "Eight dancers in a circle, all facing counterclockwise in single file.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Single File Wrong Way Promenade",
+    "alternateNames": [],
+    "pictogramId": 29,
+    "handedness": "general",
+    "description": "Eight dancers in a circle, all facing clockwise in single file.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Promenade",
+    "alternateNames": [],
+    "pictogramId": 31,
+    "handedness": "general",
+    "description": "Four couples in a circle promenading counterclockwise.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Wrong Way Promenade",
+    "alternateNames": [],
+    "pictogramId": 32,
+    "handedness": "general",
+    "description": "Four couples in a circle promenading clockwise.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Thar Star",
+    "alternateNames": [
+      "Thar"
+    ],
+    "pictogramId": 33,
+    "handedness": "general",
+    "description": "Inside dancers form a back-up right-hand star, outside dancers face counterclockwise.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Wrong Way Thar",
+    "alternateNames": [],
+    "pictogramId": 34,
+    "handedness": "general",
+    "description": "Inside dancers form a back-up left-hand star, outside dancers face clockwise.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Facing Lines",
+    "alternateNames": [
+      "Lines Facing In"
+    ],
+    "pictogramId": 35,
+    "handedness": "facing",
+    "description": "Two parallel lines of four facing each other.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Lines Facing Out",
+    "alternateNames": [
+      "Back-to-Back Lines"
+    ],
+    "pictogramId": 36,
+    "handedness": "general",
+    "description": "Two parallel lines of four with backs toward each other.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Right-Hand Two-Faced Lines",
+    "alternateNames": [
+      "Right-Hand Parallel Two-Faced Lines"
+    ],
+    "pictogramId": 37,
+    "handedness": "right",
+    "description": "Two parallel right-hand two-faced lines.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Left-Hand Two-Faced Lines",
+    "alternateNames": [
+      "Left-Hand Parallel Two-Faced Lines"
+    ],
+    "pictogramId": 835,
+    "handedness": "left",
+    "description": "Two parallel left-hand two-faced lines.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Right-Hand Ocean Waves",
+    "alternateNames": [
+      "Right-Hand Parallel Ocean Waves",
+      "Right-Hand Waves",
+      "Right-Hand 1/2 Tag",
+      "Right-Hand Half Tag"
+    ],
+    "pictogramId": 38,
+    "handedness": "right",
+    "description": "Two parallel right-hand ocean waves.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Left-Hand Ocean Waves",
+    "alternateNames": [
+      "Left-Hand Parallel Ocean Waves",
+      "Left-Hand Waves",
+      "Left-Hand 1/2 Tag",
+      "Left-Hand Half Tag"
+    ],
+    "pictogramId": 837,
+    "handedness": "left",
+    "description": "Two parallel left-hand ocean waves.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "General Lines",
+    "alternateNames": [
+      "General Parallel Lines",
+      "Some Kind of Lines"
+    ],
+    "pictogramId": 39,
+    "handedness": "general",
+    "description": "Two parallel lines of four; facing directions unspecified.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Eight Chain Thru",
+    "alternateNames": [],
+    "pictogramId": 40,
+    "handedness": "general",
+    "description": "2x4 formation with two facing-couples at each end.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Trade By",
+    "alternateNames": [],
+    "pictogramId": 41,
+    "handedness": "general",
+    "description": "2x4 formation with facing-couples at the centers and back-to-back couples at the ends.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Double Pass Thru",
+    "alternateNames": [
+      "Starting Double Pass Thru",
+      "Beginning Double Pass Thru",
+      "Zero Tag"
+    ],
+    "pictogramId": 42,
+    "handedness": "general",
+    "description": "2x4 column of facing tandems.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Completed Double Pass Thru",
+    "alternateNames": [
+      "Full Tag"
+    ],
+    "pictogramId": 43,
+    "handedness": "general",
+    "description": "2x4 column of back-to-back tandems.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Right-Hand Columns",
+    "alternateNames": [
+      "Right-Hand Column"
+    ],
+    "pictogramId": 44,
+    "handedness": "right",
+    "description": "Two parallel right-hand columns of four.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Left-Hand Columns",
+    "alternateNames": [
+      "Left-Hand Column"
+    ],
+    "pictogramId": 843,
+    "handedness": "left",
+    "description": "Two parallel left-hand columns of four.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "General Columns",
+    "alternateNames": [
+      "General Parallel Columns",
+      "Some Kind of Columns"
+    ],
+    "pictogramId": 45,
+    "handedness": "general",
+    "description": "Two parallel columns of four; facing directions unspecified.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Right-Hand 1/4 Tag",
+    "alternateNames": [
+      "Right-Hand Quarter Tag"
+    ],
+    "pictogramId": 46,
+    "handedness": "right",
+    "description": "Outside facing-couples flanking a right-hand center wave.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Left-Hand 1/4 Tag",
+    "alternateNames": [
+      "Left-Hand Quarter Tag"
+    ],
+    "pictogramId": 846,
+    "handedness": "left",
+    "description": "Outside facing-couples flanking a left-hand center wave.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Right-Hand 3/4 Tag",
+    "alternateNames": [
+      "Right-Hand Three-Quarter Tag"
+    ],
+    "pictogramId": 47,
+    "handedness": "right",
+    "description": "Outside back-to-back couples flanking a right-hand center wave.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Left-Hand 3/4 Tag",
+    "alternateNames": [
+      "Left-Hand Three-Quarter Tag"
+    ],
+    "pictogramId": 848,
+    "handedness": "left",
+    "description": "Outside back-to-back couples flanking a left-hand center wave.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Right-Hand Tidal Wave",
+    "alternateNames": [],
+    "pictogramId": 48,
+    "handedness": "right",
+    "description": "Eight dancers in a single line forming a right-hand tidal wave.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Left-Hand Tidal Wave",
+    "alternateNames": [],
+    "pictogramId": 823,
+    "handedness": "left",
+    "description": "Eight dancers in a single line forming a left-hand tidal wave.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Right-Hand Tidal Two-Faced Line",
+    "alternateNames": [],
+    "pictogramId": 49,
+    "handedness": "right",
+    "description": "Eight dancers in a single line forming a right-hand tidal two-faced line.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Left-Hand Tidal Two-Faced Line",
+    "alternateNames": [],
+    "pictogramId": 825,
+    "handedness": "left",
+    "description": "Eight dancers in a single line forming a left-hand tidal two-faced line.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Right-Hand Tidal One-Faced Line",
+    "alternateNames": [
+      "Right-Hand Tidal Line"
+    ],
+    "pictogramId": 50,
+    "handedness": "right",
+    "description": "Eight dancers in a single line all facing the same direction.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Left-Hand Tidal One-Faced Line",
+    "alternateNames": [
+      "Left-Hand Tidal Line"
+    ],
+    "pictogramId": 827,
+    "handedness": "left",
+    "description": "Eight dancers in a single line, mirror form.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "General Tidal Line",
+    "alternateNames": [
+      "Line of 8",
+      "Some Kind of Tidal Line"
+    ],
+    "pictogramId": 51,
+    "handedness": "general",
+    "description": "Eight dancers in a single line; facing directions unspecified.",
+    "introducedAt": "bms"
+  },
+  {
+    "name": "Right-Hand Diamond",
+    "alternateNames": [],
+    "pictogramId": 101,
+    "handedness": "right",
+    "description": "Four dancers in a diamond shape with the centers having right hands.",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "Left-Hand Diamond",
+    "alternateNames": [],
+    "pictogramId": 901,
+    "handedness": "left",
+    "description": "Four dancers in a diamond shape with the centers having left hands.",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "Facing Diamond (centers have right hands)",
+    "alternateNames": [],
+    "pictogramId": 102,
+    "handedness": "facing",
+    "description": "Diamond with centers facing each other; right hands meeting at the center.",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "Facing Diamond (centers have left hands)",
+    "alternateNames": [],
+    "pictogramId": 903,
+    "handedness": "facing",
+    "description": "Diamond with centers facing each other; left hands meeting at the center.",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "Right-Hand Z (centers are leaders)",
+    "alternateNames": [],
+    "pictogramId": 103,
+    "handedness": "right",
+    "description": "Four-dancer Z formation with right-hand center mini-wave; centers are leaders.",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "Left-Hand Z (centers are leaders)",
+    "alternateNames": [],
+    "pictogramId": 905,
+    "handedness": "left",
+    "description": "Mirror of Right-Hand Z (centers are leaders).",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "Right-Hand Z (centers are trailers)",
+    "alternateNames": [],
+    "pictogramId": 104,
+    "handedness": "right",
+    "description": "Four-dancer Z formation with right-hand center mini-wave; centers are trailers.",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "Left-Hand Z (centers are trailers)",
+    "alternateNames": [],
+    "pictogramId": 907,
+    "handedness": "left",
+    "description": "Mirror of Right-Hand Z (centers are trailers).",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "Right-Hand Single 1/4 Tag",
+    "alternateNames": [
+      "Right-Hand Single Quarter Tag"
+    ],
+    "pictogramId": 105,
+    "handedness": "right",
+    "description": "Single 1/4 Tag with right-hand center mini-wave.",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "Right-Hand Single 3/4 Tag",
+    "alternateNames": [
+      "Right-Hand Single Three-Quarter Tag"
+    ],
+    "pictogramId": 106,
+    "handedness": "right",
+    "description": "Single 3/4 Tag with right-hand center mini-wave.",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "Right-Hand Star (aligned to walls)",
+    "alternateNames": [
+      "Gear"
+    ],
+    "pictogramId": 107,
+    "handedness": "right",
+    "description": "Right-hand four-dancer star aligned with the walls of the hall.",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "Right-Hand Stars (aligned to walls)",
+    "alternateNames": [
+      "Gears"
+    ],
+    "pictogramId": 108,
+    "handedness": "right",
+    "description": "Two right-hand stars side by side, aligned to the walls.",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "Right-Hand Twin Diamonds",
+    "alternateNames": [
+      "Right-Hand Diamonds"
+    ],
+    "pictogramId": 109,
+    "handedness": "right",
+    "description": "Two right-hand diamonds side by side.",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "Left-Hand Twin Diamonds",
+    "alternateNames": [
+      "Left-Hand Diamonds"
+    ],
+    "pictogramId": 909,
+    "handedness": "left",
+    "description": "Two left-hand diamonds side by side.",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "Facing Twin Diamonds (centers have right hands)",
+    "alternateNames": [
+      "Facing Diamonds (centers have right hands)"
+    ],
+    "pictogramId": 110,
+    "handedness": "facing",
+    "description": "Two facing diamonds side by side with the centers of each having right hands.",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "Facing Twin Diamonds (centers have left hands)",
+    "alternateNames": [
+      "Facing Diamonds (centers have left hands)"
+    ],
+    "pictogramId": 911,
+    "handedness": "facing",
+    "description": "Two facing diamonds side by side with the centers of each having left hands.",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "General Twin Diamonds",
+    "alternateNames": [
+      "General Diamonds"
+    ],
+    "pictogramId": 111,
+    "handedness": "general",
+    "description": "Two diamonds side by side; facing directions unspecified.",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "General Point-to-Point Diamonds",
+    "alternateNames": [],
+    "pictogramId": 112,
+    "handedness": "general",
+    "description": "Two diamonds with their points touching; facing unspecified.",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "Right-Hand Point-to-Point Diamonds",
+    "alternateNames": [],
+    "pictogramId": 113,
+    "handedness": "right",
+    "description": "Two right-hand diamonds with their points touching.",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "Left-Hand Point-to-Point Diamonds",
+    "alternateNames": [],
+    "pictogramId": 917,
+    "handedness": "left",
+    "description": "Two left-hand diamonds with their points touching.",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "Facing Point-to-Point Diamonds (centers have right hands)",
+    "alternateNames": [],
+    "pictogramId": 114,
+    "handedness": "facing",
+    "description": "Two facing diamonds with points touching; centers have right hands.",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "Facing Point-to-Point Diamonds (centers have left hands)",
+    "alternateNames": [],
+    "pictogramId": 921,
+    "handedness": "facing",
+    "description": "Two facing diamonds with points touching; centers have left hands.",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "Right-Hand End-to-End Single 1/4 Tags",
+    "alternateNames": [
+      "Right-Hand End-to-End Single Quarter Tags"
+    ],
+    "pictogramId": 115,
+    "handedness": "right",
+    "description": "Two right-hand single 1/4 tags placed end to end.",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "Right-Hand End-to-End Single 3/4 Tags",
+    "alternateNames": [
+      "Right-Hand End-to-End Single Three-Quarter Tags"
+    ],
+    "pictogramId": 116,
+    "handedness": "right",
+    "description": "Two right-hand single 3/4 tags placed end to end.",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "Right-Hand Side-by-Side Z's (centers are leaders)",
+    "alternateNames": [],
+    "pictogramId": 117,
+    "handedness": "right",
+    "description": "Two right-hand Z formations side by side; centers are leaders.",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "Left-Hand Side-by-Side Z's (centers are leaders)",
+    "alternateNames": [],
+    "pictogramId": 913,
+    "handedness": "left",
+    "description": "Mirror of Right-Hand Side-by-Side Z's (centers are leaders).",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "Right-Hand Side-by-Side Z's (centers are trailers)",
+    "alternateNames": [],
+    "pictogramId": 118,
+    "handedness": "right",
+    "description": "Two right-hand Z formations side by side; centers are trailers.",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "Left-Hand Side-by-Side Z's (centers are trailers)",
+    "alternateNames": [],
+    "pictogramId": 915,
+    "handedness": "left",
+    "description": "Mirror of Right-Hand Side-by-Side Z's (centers are trailers).",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "Right-Hand End-to-End Z's (centers are leaders)",
+    "alternateNames": [],
+    "pictogramId": 119,
+    "handedness": "right",
+    "description": "Two right-hand Z formations placed end to end; centers are leaders.",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "Right-Hand End-to-End Z's (centers are trailers)",
+    "alternateNames": [],
+    "pictogramId": 120,
+    "handedness": "right",
+    "description": "Two right-hand Z formations placed end to end; centers are trailers.",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "Dixie Grand Circle",
+    "alternateNames": [],
+    "pictogramId": 121,
+    "handedness": "general",
+    "description": "Eight dancers in a circle ready for Dixie Grand; alternating facing.",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "Right-Hand 1/4 Box",
+    "alternateNames": [
+      "Right-Hand Quarter Box"
+    ],
+    "pictogramId": 122,
+    "handedness": "right",
+    "description": "2x2 mini-wave-style box with right-hand handholds; same as pictogram 429.",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "Left-Hand 1/4 Box",
+    "alternateNames": [
+      "Left-Hand Quarter Box"
+    ],
+    "pictogramId": 919,
+    "handedness": "left",
+    "description": "Mirror of Right-Hand 1/4 Box.",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "General Crossed Lines (aligned to walls)",
+    "alternateNames": [],
+    "pictogramId": 123,
+    "handedness": "general",
+    "description": "Eight dancers in two crossed lines aligned with the walls; used in (Anything) and Spread.",
+    "introducedAt": "plus"
+  },
+  {
+    "name": "3-and-1 Line (ends facing same way, centers have right hands)",
+    "alternateNames": [
+      "Three-and-One Line"
+    ],
+    "pictogramId": 201,
+    "handedness": "right",
+    "description": "Line of 4 with three dancers facing one way and one facing the other; ends face same way, centers have right hands.",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "3-and-1 Line (ends facing same way, centers have left hands)",
+    "alternateNames": [
+      "Three-and-One Line"
+    ],
+    "pictogramId": 941,
+    "handedness": "left",
+    "description": "Mirror of pictogram 201.",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "3-and-1 Line (centers facing same way, ends are beaus)",
+    "alternateNames": [
+      "Three-and-One Line"
+    ],
+    "pictogramId": 202,
+    "handedness": "general",
+    "description": "Line of 4 where centers face the same direction; ends are beaus.",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "3-and-1 Line (centers facing same way, ends are belles)",
+    "alternateNames": [
+      "Three-and-One Line"
+    ],
+    "pictogramId": 943,
+    "handedness": "general",
+    "description": "Mirror of pictogram 202; ends are belles.",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "Inverted Line",
+    "alternateNames": [],
+    "pictogramId": 203,
+    "handedness": "general",
+    "description": "Line of 4 with the ends facing each other and the centers facing out, or vice versa.",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "Inverted Box",
+    "alternateNames": [],
+    "pictogramId": 204,
+    "handedness": "general",
+    "description": "Box where the centers and ends are inverted relative to a normal box.",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "Split Square Thru Box",
+    "alternateNames": [],
+    "pictogramId": 205,
+    "handedness": "general",
+    "description": "Box configuration occurring during Split Square Thru.",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "Parallel 3-and-1 Lines (ends facing in, centers have right hands)",
+    "alternateNames": [
+      "Parallel Three-and-One Lines"
+    ],
+    "pictogramId": 206,
+    "handedness": "right",
+    "description": "Two parallel 3-and-1 lines; ends facing in; centers have right hands.",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "Parallel 3-and-1 Lines (ends facing in, centers have left hands)",
+    "alternateNames": [
+      "Parallel Three-and-One Lines"
+    ],
+    "pictogramId": 946,
+    "handedness": "left",
+    "description": "Mirror of pictogram 206.",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "Parallel 3-and-1 Lines (ends facing out, centers have right hands)",
+    "alternateNames": [
+      "Parallel Three-and-One Lines"
+    ],
+    "pictogramId": 207,
+    "handedness": "right",
+    "description": "Two parallel 3-and-1 lines; ends facing out; centers have right hands.",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "Parallel 3-and-1 Lines (ends facing out, centers have left hands)",
+    "alternateNames": [
+      "Parallel Three-and-One Lines"
+    ],
+    "pictogramId": 948,
+    "handedness": "left",
+    "description": "Mirror of pictogram 207.",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "Parallel 3-and-1 Lines (centers facing in, ends are beaus)",
+    "alternateNames": [
+      "Parallel Three-and-One Lines"
+    ],
+    "pictogramId": 208,
+    "handedness": "general",
+    "description": "Two parallel 3-and-1 lines; centers facing in; ends are beaus.",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "Parallel 3-and-1 Lines (centers facing in, ends are belles)",
+    "alternateNames": [
+      "Parallel Three-and-One Lines"
+    ],
+    "pictogramId": 950,
+    "handedness": "general",
+    "description": "Mirror of pictogram 208; ends are belles.",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "Parallel 3-and-1 Lines (centers facing out, ends are beaus)",
+    "alternateNames": [
+      "Parallel Three-and-One Lines"
+    ],
+    "pictogramId": 209,
+    "handedness": "general",
+    "description": "Two parallel 3-and-1 lines; centers facing out; ends are beaus.",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "Parallel 3-and-1 Lines (centers facing out, ends are belles)",
+    "alternateNames": [
+      "Parallel Three-and-One Lines"
+    ],
+    "pictogramId": 952,
+    "handedness": "general",
+    "description": "Mirror of pictogram 209; ends are belles.",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "Parallel Inverted Lines (ends facing in)",
+    "alternateNames": [],
+    "pictogramId": 210,
+    "handedness": "general",
+    "description": "Two parallel inverted lines with ends facing in.",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "Parallel Inverted Lines (ends facing out)",
+    "alternateNames": [],
+    "pictogramId": 211,
+    "handedness": "general",
+    "description": "Two parallel inverted lines with ends facing out.",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "Tidal 3-and-1 Line",
+    "alternateNames": [
+      "Tidal Three-and-One Line"
+    ],
+    "pictogramId": 212,
+    "handedness": "general",
+    "description": "Eight-dancer single line formed as a 3-and-1 pattern (typical handedness).",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "Tidal Inverted Line",
+    "alternateNames": [],
+    "pictogramId": 213,
+    "handedness": "general",
+    "description": "Eight-dancer single line formed as an inverted line (typical handedness).",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "Right-Hand As Couples Wave",
+    "alternateNames": [],
+    "pictogramId": 214,
+    "handedness": "right",
+    "description": "As-couples application of a right-hand wave; same shape as Right-Hand Tidal Wave.",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "Left-Hand As Couples Wave",
+    "alternateNames": [],
+    "pictogramId": 956,
+    "handedness": "left",
+    "description": "Mirror of Right-Hand As Couples Wave.",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "Right-Hand As Couples Two-Faced Line",
+    "alternateNames": [],
+    "pictogramId": 215,
+    "handedness": "right",
+    "description": "As-couples application of a right-hand two-faced line; same shape as Right-Hand Tidal Two-Faced Line.",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "Left-Hand As Couples Two-Faced Line",
+    "alternateNames": [],
+    "pictogramId": 958,
+    "handedness": "left",
+    "description": "Mirror of Right-Hand As Couples Two-Faced Line.",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "General Tidal Column",
+    "alternateNames": [
+      "Column of 8"
+    ],
+    "pictogramId": 216,
+    "handedness": "general",
+    "description": "Eight-dancer column; facing directions unspecified.",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "Right-Hand Hourglass",
+    "alternateNames": [],
+    "pictogramId": 217,
+    "handedness": "right",
+    "description": "Eight-dancer hourglass with the points of two diamonds at the ends and a center wave.",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "Left-Hand Hourglass",
+    "alternateNames": [],
+    "pictogramId": 960,
+    "handedness": "left",
+    "description": "Mirror of Right-Hand Hourglass.",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "Facing Hourglass (very centers have right hands)",
+    "alternateNames": [],
+    "pictogramId": 218,
+    "handedness": "facing",
+    "description": "Hourglass formation with the very centers facing each other; right hands meeting.",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "Facing Hourglass (very centers have left hands)",
+    "alternateNames": [],
+    "pictogramId": 964,
+    "handedness": "facing",
+    "description": "Mirror of pictogram 218.",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "General Hourglass",
+    "alternateNames": [],
+    "pictogramId": 219,
+    "handedness": "general",
+    "description": "Hourglass shape; facing directions unspecified.",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "Right-Hand Columns of 3 and 2 Lonesome Dancers",
+    "alternateNames": [
+      "Right-Hand 1/2 In Roll Circulate (formation)"
+    ],
+    "pictogramId": 220,
+    "handedness": "right",
+    "description": "Eight-dancer formation made of two right-hand columns of three plus two outside dancers.",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "Left-Hand Columns of 3 and 2 Lonesome Dancers",
+    "alternateNames": [
+      "Left-Hand 1/2 In Roll Circulate (formation)"
+    ],
+    "pictogramId": 962,
+    "handedness": "left",
+    "description": "Mirror of pictogram 220.",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "Columns of 3 and 2 Lonesome Dancers",
+    "alternateNames": [
+      "1/4 Chain Reaction (formation)"
+    ],
+    "pictogramId": 221,
+    "handedness": "general",
+    "description": "Eight-dancer formation made of two columns of three plus two outside dancers; from Right-Hand 1/4 Tag.",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "Right-Hand Star and Two Mini-Waves",
+    "alternateNames": [
+      "1/2 Chain Reaction (formation)"
+    ],
+    "pictogramId": 222,
+    "handedness": "right",
+    "description": "Eight-dancer formation: a right-hand star at the centers plus two outside mini-waves.",
+    "introducedAt": "adv"
+  },
+  {
+    "name": "Left-Hand Star",
+    "alternateNames": [],
+    "introducedAt": "bms",
+    "pictogramId": 1021,
+    "handedness": "left",
+    "description": "Mirror of Right-Hand Star (pictogram 21). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants."
+  },
+  {
+    "name": "Left-Hand Stars",
+    "alternateNames": [],
+    "introducedAt": "bms",
+    "pictogramId": 1022,
+    "handedness": "left",
+    "description": "Mirror of Right-Hand Stars (pictogram 22). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants."
+  },
+  {
+    "name": "Left-Hand Single 1/4 Tag",
+    "alternateNames": [
+      "Left-Hand Single Quarter Tag"
+    ],
+    "introducedAt": "plus",
+    "pictogramId": 1105,
+    "handedness": "left",
+    "description": "Mirror of Right-Hand Single 1/4 Tag (pictogram 105). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants."
+  },
+  {
+    "name": "Left-Hand Single 3/4 Tag",
+    "alternateNames": [
+      "Left-Hand Single Three-Quarter Tag"
+    ],
+    "introducedAt": "plus",
+    "pictogramId": 1106,
+    "handedness": "left",
+    "description": "Mirror of Right-Hand Single 3/4 Tag (pictogram 106). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants."
+  },
+  {
+    "name": "Left-Hand Star (aligned to walls)",
+    "alternateNames": [
+      "Gear"
+    ],
+    "introducedAt": "plus",
+    "pictogramId": 1107,
+    "handedness": "left",
+    "description": "Mirror of Right-Hand Star (aligned to walls) (pictogram 107). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants."
+  },
+  {
+    "name": "Left-Hand Stars (aligned to walls)",
+    "alternateNames": [
+      "Gears"
+    ],
+    "introducedAt": "plus",
+    "pictogramId": 1108,
+    "handedness": "left",
+    "description": "Mirror of Right-Hand Stars (aligned to walls) (pictogram 108). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants."
+  },
+  {
+    "name": "Left-Hand End-to-End Single 1/4 Tags",
+    "alternateNames": [
+      "Left-Hand End-to-End Single Quarter Tags"
+    ],
+    "introducedAt": "plus",
+    "pictogramId": 1115,
+    "handedness": "left",
+    "description": "Mirror of Right-Hand End-to-End Single 1/4 Tags (pictogram 115). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants."
+  },
+  {
+    "name": "Left-Hand End-to-End Single 3/4 Tags",
+    "alternateNames": [
+      "Left-Hand End-to-End Single Three-Quarter Tags"
+    ],
+    "introducedAt": "plus",
+    "pictogramId": 1116,
+    "handedness": "left",
+    "description": "Mirror of Right-Hand End-to-End Single 3/4 Tags (pictogram 116). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants."
+  },
+  {
+    "name": "Left-Hand End-to-End Z's (centers are leaders)",
+    "alternateNames": [],
+    "introducedAt": "plus",
+    "pictogramId": 1119,
+    "handedness": "left",
+    "description": "Mirror of Right-Hand End-to-End Z's (centers are leaders) (pictogram 119). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants."
+  },
+  {
+    "name": "Left-Hand End-to-End Z's (centers are trailers)",
+    "alternateNames": [],
+    "introducedAt": "plus",
+    "pictogramId": 1120,
+    "handedness": "left",
+    "description": "Mirror of Right-Hand End-to-End Z's (centers are trailers) (pictogram 120). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants."
+  },
+  {
+    "name": "Left-Hand Star and Two Mini-Waves",
+    "alternateNames": [
+      "1/2 Chain Reaction (formation)"
+    ],
+    "introducedAt": "adv",
+    "pictogramId": 1222,
+    "handedness": "left",
+    "description": "Mirror of Right-Hand Star and Two Mini-Waves (pictogram 222). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants."
+  }
 ]
