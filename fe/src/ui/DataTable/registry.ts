@@ -11,7 +11,7 @@ export const tableRegistry: Record<TableId, { route: string; focusSafe: boolean 
   'call-family': { route: '/data/call-families', focusSafe: true },
   program: { route: '/data/programs', focusSafe: true },
   formation: { route: '/data/formations', focusSafe: true },
-  'call-formation': { route: '/data/call-formations', focusSafe: true },
+  'call-formation': { route: '/data/call-formations', focusSafe: false },
   sequence: { route: '/data/sequences', focusSafe: true },
 };
 

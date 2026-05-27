@@ -1,5 +1,6 @@
 'use client';
 
+import { notFound } from 'next/navigation';
 import { DataTable } from './DataTable';
 import { defineTableConfig } from './registry';
 import type { TableConfig } from './types';
@@ -313,10 +314,12 @@ export function TableView({
   focus,
   on,
 }: {
-  table: keyof typeof configs;
+  table: string;
   data: Row[];
   focus?: string | null;
   on?: string | null;
 }) {
-  return <DataTable config={configs[table]} data={data} focus={focus} focusOn={on} />;
+  const config = configs[table];
+  if (!config) notFound();
+  return <DataTable config={config} data={data} focus={focus} focusOn={on} />;
 }

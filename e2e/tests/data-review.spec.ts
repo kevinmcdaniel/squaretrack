@@ -70,6 +70,6 @@ test('modal opens with the sequence step list and closes', async ({ page }) => {
   const row = page.getByRole('row', { name: seqName });
   await row.getByRole('button', { name: 'Expand row' }).click();
   await expect(page.getByText('Heads')).toBeVisible();
-  await page.getByRole('button', { name: '✕' }).click();
+  await page.getByRole('button', { name: 'Close' }).click();
   await expect(page.getByText('Heads')).toHaveCount(0);
 });

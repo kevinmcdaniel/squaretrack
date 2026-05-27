@@ -197,6 +197,7 @@ export function DataTable({
               </h2>
               <button
                 onClick={() => setModalRow(null)}
+                aria-label="Close"
                 className="rounded px-2 py-1 text-gray-500 hover:bg-gray-100"
               >
                 ✕
