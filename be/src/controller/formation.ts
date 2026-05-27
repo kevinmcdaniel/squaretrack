@@ -6,9 +6,19 @@ import {
   listFormationsService,
   searchFormationsService,
   listFormationsByCallService,
+  listCallFormationsService,
   createFormationService,
   createCallFormationService,
 } from '../service/formation/index.js';
+
+export const listCallFormations = async (_req: Request, res: Response, next: any) => {
+  try {
+    const records = await listCallFormationsService();
+    res.json({ data: records, message: 'List of all call formations' });
+  } catch (error) {
+    next(error);
+  }
+};
 
 export const listFormation = async (req: Request, res: Response, next: any) => {
   try {

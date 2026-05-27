@@ -14,6 +14,17 @@ export const searchFormationsService = async (search: string) => {
   });
 };
 
+export const listCallFormationsService = async () => {
+  return prisma.call_formation.findMany({
+    include: {
+      call: { select: { name: true } },
+      startForm: { select: { name: true } },
+      endForm: { select: { name: true } },
+    },
+    orderBy: [{ callId: 'asc' }, { startId: 'asc' }],
+  });
+};
+
 export const listFormationsByCallService = async (callId: number) => {
   const rows = await prisma.call_formation.findMany({
     where: { callId },

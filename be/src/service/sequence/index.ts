@@ -60,5 +60,16 @@ export const getSequenceService = async (seqId: number) => {
 };
 
 export const listSequencesService = async () => {
-  return prisma.sequence.findMany();
+  return prisma.sequence.findMany({
+    include: {
+      startFormation: { select: { name: true } },
+      calls: {
+        orderBy: { order: 'asc' },
+        include: {
+          callFormation: { include: { call: { select: { name: true } } } },
+        },
+      },
+    },
+    orderBy: { name: 'asc' },
+  });
 };

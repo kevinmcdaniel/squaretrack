@@ -10,15 +10,23 @@ afterAll(async () => { await cleanupTestData(); });
 // ── GET /api/call/list ──────────────────────────────────────────────────────
 
 describe('GET /api/call/list', () => {
-  it('returns 200 with data when calls exist', async () => {
-    await prisma.call.create({ data: { name: `${T}ListCheck` } });
+  it('returns 200 with data and embedded formations when calls exist', async () => {
+    const form = await prisma.formation.create({ data: { name: `${T}ListCheckForm` } });
+    const call = await prisma.call.create({ data: { name: `${T}ListCheck` } });
+    await prisma.call_formation.create({
+      data: { callId: call.callId, startId: form.formId, endId: form.formId },
+    });
     const res = await request(app).get('/api/call/list');
     expect(res.status).toBe(200);
     expect(res.body.data).toBeInstanceOf(Array);
     expect(res.body.data.length).toBeGreaterThan(0);
+    const row = res.body.data.find((c: any) => c.name === `${T}ListCheck`);
+    expect(row.formations).toBeInstanceOf(Array);
+    expect(row.formations[0].startForm.name).toBe(`${T}ListCheckForm`);
   });
 
   it('returns 200 array (possibly empty) when no T-prefixed calls remain', async () => {
+    await prisma.call_formation.deleteMany({ where: { call: { name: { startsWith: T } } } });
     await prisma.call.deleteMany({ where: { name: { startsWith: T } } });
     const res = await request(app).get('/api/call/list');
     expect(res.status).toBe(200);

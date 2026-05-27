@@ -3,6 +3,7 @@ import {
   HomeIcon,
   DocumentDuplicateIcon,
   BookOpenIcon,
+  TableCellsIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
@@ -15,6 +16,7 @@ const links = [
     icon: DocumentDuplicateIcon,
   },
   { name: 'Sequences', href: '/calling/sequences', icon: UserGroupIcon },
+  { name: 'Data', href: '/data', icon: TableCellsIcon },
   { name: 'API Docs', href: '/docs', icon: BookOpenIcon },
 ];
 

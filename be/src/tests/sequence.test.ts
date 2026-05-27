@@ -10,12 +10,25 @@ afterAll(async () => { await cleanupTestData(); });
 // ── GET /api/sequence/list ──────────────────────────────────────────────────
 
 describe('GET /api/sequence/list', () => {
-  it('returns 200 with sequences when they exist', async () => {
+  it('returns 200 with sequences and embedded steps when they exist', async () => {
     const form = await prisma.formation.create({ data: { name: `${T}SeqListForm` } });
-    await prisma.sequence.create({ data: { name: `${T}SeqList1`, startFormationId: form.formId } });
+    const call = await prisma.call.create({ data: { name: `${T}SeqListCall` } });
+    await prisma.call_formation.create({
+      data: { callId: call.callId, startId: form.formId, endId: form.formId },
+    });
+    await prisma.sequence.create({
+      data: {
+        name: `${T}SeqList1`,
+        startFormationId: form.formId,
+        calls: { create: [{ order: 1, type: 'call', callId: call.callId, startId: form.formId }] },
+      },
+    });
     const res = await request(app).get('/api/sequence/list');
     expect(res.status).toBe(200);
     expect(res.body.data).toBeInstanceOf(Array);
+    const row = res.body.data.find((s: any) => s.name === `${T}SeqList1`);
+    expect(row.calls).toBeInstanceOf(Array);
+    expect(row.calls[0].callFormation.call.name).toBe(`${T}SeqListCall`);
   });
 
   it('returns 200 array (possibly empty) when no T-prefixed sequences remain', async () => {
