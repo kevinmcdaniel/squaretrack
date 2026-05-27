@@ -10,7 +10,19 @@ const listCallService = async (iCallId: number) => {
 };
 
 const listCallsService = async () => {
-  return prisma.call.findMany();
+  return prisma.call.findMany({
+    include: {
+      callFamily: { select: { name: true } },
+      formations: {
+        include: {
+          startForm: { select: { name: true } },
+          endForm: { select: { name: true } },
+        },
+        orderBy: { startId: 'asc' },
+      },
+    },
+    orderBy: { name: 'asc' },
+  });
 };
 
 export { listCallService, listCallsService };

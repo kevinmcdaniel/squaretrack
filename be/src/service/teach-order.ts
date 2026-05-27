@@ -19,16 +19,34 @@ export type EntryInput = {
 
 const ENTRY_INCLUDE = {
   orderBy: { entryOrder: 'asc' },
-  include: { fasrs: { orderBy: { fasrOrder: 'asc' } } },
+  include: {
+    call: { select: { name: true } },
+    callFamily: { select: { name: true } },
+    fasrs: {
+      orderBy: { fasrOrder: 'asc' },
+      include: {
+        callFormation: {
+          include: {
+            call: { select: { name: true } },
+            startForm: { select: { name: true } },
+            endForm: { select: { name: true } },
+          },
+        },
+      },
+    },
+  },
 } as const;
 
 export const listTeachOrdersService = async () =>
-  prisma.teach_order.findMany({ include: { program: true } });
+  prisma.teach_order.findMany({
+    include: { program: { select: { name: true } }, _count: { select: { entries: true } } },
+    orderBy: { name: 'asc' },
+  });
 
 export const getTeachOrderService = async (id: number) =>
   prisma.teach_order.findUnique({
     where: { id },
-    include: { entries: ENTRY_INCLUDE },
+    include: { program: { select: { name: true } }, entries: ENTRY_INCLUDE },
   });
 
 function buildEntryCreate(entries: EntryInput[]) {

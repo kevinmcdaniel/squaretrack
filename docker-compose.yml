@@ -172,6 +172,29 @@ services:
       db:
         condition: service_healthy
 
+  e2e:
+    image: mcr.microsoft.com/playwright:v1.49.1-jammy
+    profiles: [test]
+    working_dir: /e2e
+    env_file:
+      - path: .env
+        required: true
+    environment:
+      BASE_URL: http://square.fe:${FE_PORT_INT}
+      DATABASE_URL: ${DB_SQUARETRACK_URL}
+      CI: "true"
+    volumes:
+      - ./e2e:/e2e
+      - e2e_node_modules:/e2e/node_modules
+    networks:
+      - default
+      - squarenet
+    container_name: square.e2e
+    command: sh -c "npm install && npx playwright test"
+    depends_on:
+      fe:
+        condition: service_started
+
   # trivybe:
   #   image: aquasec/trivy:0.67.0
   #   volumes:
@@ -212,4 +235,5 @@ volumes:
   squaredb_vol:
   pgadmin_vol:
   trivy_cache:
+  e2e_node_modules:
 

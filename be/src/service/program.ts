@@ -20,6 +20,7 @@ export const updateProgramService = async (
 export const listProgramsService = async (opts?: { showInactive?: boolean }) =>
   prisma.program.findMany({
     where: opts?.showInactive ? undefined : { isActive: true },
+    include: { _count: { select: { teachOrders: true } } },
     orderBy: { order: 'asc' },
   });
 

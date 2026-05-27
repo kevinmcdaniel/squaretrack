@@ -5,7 +5,8 @@ import { groupRoute } from "./people/groups.js";
 import { sequenceRoute } from "./calls/sequences.js";
 import { programRoute } from "./calls/programs.js";
 import { teachOrderRoute } from "./calls/teach-orders.js";
-import { createCallFormation } from "../controller/index.js";
+import { callFormationRoute } from "./calls/call-formations.js";
+import { callFamilyRoute } from "./calls/call-families.js";
 
 export const indexRoute = express.Router();
 
@@ -19,4 +20,5 @@ indexRoute.use('/group', groupRoute);
 indexRoute.use('/sequence', sequenceRoute);
 indexRoute.use('/program', programRoute);
 indexRoute.use('/teach-order', teachOrderRoute);
-indexRoute.post('/call-formation', createCallFormation);
+indexRoute.use('/call-formation', callFormationRoute);
+indexRoute.use('/call-family', callFamilyRoute);
