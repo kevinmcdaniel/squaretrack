@@ -1,130 +1,72 @@
 import Image from "next/image";
-// import styles from "@/ui/home.module.css";
+import Link from "next/link";
 import { inter, montsie } from "@/ui/fonts";
 import { SquareTrackLogo } from "@/ui/elements/logo";
+
+const entryPoints = [
+  {
+    href: "/calling/calls",
+    title: "Calls",
+    description: "Browse the catalog of square dance calls.",
+  },
+  {
+    href: "/calling/sequences",
+    title: "Sequences",
+    description: "Build and review sequences.",
+  },
+  {
+    href: "/data",
+    title: "Data review",
+    description: "Audit calls, formations, teach orders, and programs.",
+  },
+  {
+    href: "/docs",
+    title: "API docs",
+    description: "Endpoint reference and conventions.",
+  },
+];
 
 export default function Home() {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        {/* <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        /> */}
-        < SquareTrackLogo />
-          {/* doesn't work - need to figure out path right through ui/images function */}
+        <SquareTrackLogo />
+
         <Image
           src="/squareset.png"
           width={100}
           height={100}
           className="hidden md:block"
-          alt="squared set"
+          alt="Squared set"
         />
-        <div
-          className="relative w-0 h-0 border-l-[15px] border-r-[15px] border-b-[26px] border-l-transparent border-r-transparent border-b-black"
-        />
-        <div
-          className="relative w-0 h-0 border-l-[15px] border-r-[15px] border-b-[28px] border-l-transparent border-r-transparent border-b-black"
-        >
-          I want this green or red... and not hidden.
-        </div>
-        <p className={`${montsie.className} text-xl text-gray-700 md:text-3xl md:leading-normal`}
+
+        <p
+          className={`${montsie.className} text-xl text-gray-700 md:text-3xl md:leading-normal`}
         >
           <strong>Go Square Tracking</strong>
-          </p>
-          <p className={`${inter.className} text-xl text-gray-500 md:text-2xl md:leading-normal`} >
+        </p>
+        <p
+          className={`${inter.className} text-xl text-gray-500 md:text-2xl md:leading-normal`}
+        >
           All you need to know about square dance.
         </p>
 
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-          <li>totally adding another option.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
+        <nav
+          aria-label="Primary"
+          className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-2xl"
+        >
+          {entryPoints.map((entry) => (
+            <Link
+              key={entry.href}
+              href={entry.href}
+              className="rounded-lg border border-black/[.08] dark:border-white/[.145] p-4 transition-colors hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a]"
+            >
+              <div className="text-base font-semibold">{entry.title}</div>
+              <div className="text-sm text-gray-500">{entry.description}</div>
+            </Link>
+          ))}
+        </nav>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }
