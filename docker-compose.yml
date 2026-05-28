@@ -173,7 +173,7 @@ services:
         condition: service_healthy
 
   e2e:
-    image: mcr.microsoft.com/playwright:v1.49.1-jammy
+    image: mcr.microsoft.com/playwright:v1.60.0-jammy
     profiles: [test]
     working_dir: /e2e
     env_file:
