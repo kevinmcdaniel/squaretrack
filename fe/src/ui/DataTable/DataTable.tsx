@@ -2,17 +2,17 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
-import { ChevronRightIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
-import type { ColumnConfig, TableConfig } from './types';
+import {
+  ChevronRightIcon,
+  ChevronDownIcon,
+  ChevronDoubleRightIcon,
+  ChevronDoubleDownIcon,
+} from '@heroicons/react/24/outline';
+import type { ColumnConfig, ParentConfig, ParentFieldConfig, TableConfig } from './types';
 import { tableRegistry } from './registry';
+import { getByPath } from './path';
 
 type Row = Record<string, unknown>;
-
-const getByPath = (row: Row, path: string): unknown =>
-  path.split('.').reduce<unknown>((acc, key) => {
-    if (acc && typeof acc === 'object') return (acc as Record<string, unknown>)[key];
-    return undefined;
-  }, row);
 
 const formatByType = (value: unknown, type: ColumnConfig['type']): string => {
   if (value === null || value === undefined) return '';
@@ -34,12 +34,15 @@ const rowKeyOf = (config: TableConfig, row: Row, index: number): string => {
 export function DataTable({
   config,
   data,
+  parent,
   focus,
   focusOn,
   nested = false,
 }: {
   config: TableConfig;
   data: Row[];
+  /** Parent-context row for the sticky header; rendered only when `config.parent` is set. */
+  parent?: Row;
   /** Cross-link target value, from the page's `?focus=` search param. */
   focus?: string | null;
   /** Field on this table's rows that `focus` matches against, from `?on=`. */
@@ -115,6 +118,8 @@ export function DataTable({
 
   return (
     <div className={nested ? 'pl-6' : ''}>
+      {!nested && config.parent && parent && <ParentHeader config={config.parent} parent={parent} />}
+
       {!nested && (
         <div className="mb-4 flex items-center justify-between gap-4">
           <h1 className="text-xl font-semibold">{config.title}</h1>
@@ -296,6 +301,59 @@ function FragmentRow({
         </tr>
       )}
     </>
+  );
+}
+
+const parentFieldText = (parent: Row, f: ParentFieldConfig): string => {
+  const raw = getByPath(parent, f.field);
+  if (f.format) return f.format(raw, parent);
+  return raw == null ? '' : String(raw);
+};
+
+/**
+ * Sticky, accordion parent-context header. The whole header row is the toggle (chevron +
+ * one-line summary, always visible), so collapsing/expanding has a full-width click target.
+ * Expanding reveals the labelled field list below; fields with no value are skipped.
+ */
+function ParentHeader({ config, parent }: { config: ParentConfig; parent: Row }) {
+  const [open, setOpen] = useState(config.defaultExpanded);
+  const summary = config.summary
+    ? config.summary(parent)
+    : config.fields
+        .slice(0, 2)
+        .map((f) => parentFieldText(parent, f))
+        .filter(Boolean)
+        .join(' · ');
+
+  const fields = config.fields.filter((f) => parentFieldText(parent, f) !== '');
+
+  return (
+    <div className="sticky top-0 z-10 mb-4 rounded-md border border-gray-200 bg-white/95 px-3 py-2 shadow-sm backdrop-blur">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        aria-label="Toggle details"
+        className="flex w-full items-center gap-2 text-left text-sm"
+      >
+        {open ? (
+          <ChevronDoubleDownIcon className="h-3.5 w-3.5 shrink-0 text-green-600" strokeWidth={2} />
+        ) : (
+          <ChevronDoubleRightIcon className="h-3.5 w-3.5 shrink-0 text-green-600" strokeWidth={2} />
+        )}
+        <span className="truncate text-gray-600">{summary}</span>
+      </button>
+      {open && (
+        <dl className="mt-2 grid grid-cols-1 gap-x-6 gap-y-1 sm:grid-cols-2">
+          {fields.map((f) => (
+            <div key={f.field} className="flex gap-2 text-sm">
+              <dt className="shrink-0 text-gray-500">{f.label}</dt>
+              <dd className="font-medium text-gray-800">{parentFieldText(parent, f)}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
+    </div>
   );
 }
 

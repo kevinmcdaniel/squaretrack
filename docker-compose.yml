@@ -113,6 +113,10 @@ services:
       - ./fe/public:/app/public
       - ./fe/src:/app/src
       - ./docs:/app/docs
+      # Mount build configs so edits (e.g. tailwind `content`) are live without an image rebuild.
+      - ./fe/tailwind.config.ts:/app/tailwind.config.ts
+      - ./fe/postcss.config.mjs:/app/postcss.config.mjs
+      - ./fe/next.config.ts:/app/next.config.ts
     networks:
       - default
       - squarenet
@@ -190,7 +194,8 @@ services:
       - default
       - squarenet
     container_name: square.e2e
-    command: sh -c "npm install && npx playwright test"
+    # `npm ci` installs exactly from the lockfile and never rewrites it (unlike `npm install`).
+    command: sh -c "npm ci && npx playwright test"
     depends_on:
       fe:
         condition: service_started
