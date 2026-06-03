@@ -194,7 +194,8 @@ services:
       - default
       - squarenet
     container_name: square.e2e
-    command: sh -c "npm install && npx playwright test"
+    # `npm ci` installs exactly from the lockfile and never rewrites it (unlike `npm install`).
+    command: sh -c "npm ci && npx playwright test"
     depends_on:
       fe:
         condition: service_started
