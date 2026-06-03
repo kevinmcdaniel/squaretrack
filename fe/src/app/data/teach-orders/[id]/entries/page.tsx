@@ -23,14 +23,15 @@ export default async function Page({
 
   return (
     <div>
-      <Link href="/data/teach-orders" className="text-sm text-blue-600 hover:underline">
+      <Link href="/data/teach-orders" className="mb-3 inline-block text-sm text-blue-600 hover:underline">
         ← Teach Orders
       </Link>
-      <p className="mb-4 mt-1 text-sm text-gray-500">
-        {teachOrder?.name ?? `Teach order ${id}`}
-        {teachOrder?.program?.name ? ` · ${teachOrder.program.name}` : ''}
-      </p>
-      <DataTablePage table="teach-order-entries" rows={entries} searchParams={searchParams} />
+      <DataTablePage
+        table="teach-order-entries"
+        rows={entries}
+        parent={teachOrder ?? { name: `Teach order ${id}` }}
+        searchParams={searchParams}
+      />
     </div>
   );
 }

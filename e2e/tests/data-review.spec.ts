@@ -7,7 +7,7 @@ const seed = JSON.parse(readFileSync(new URL('../.seed.json', import.meta.url), 
   startName: string;
   seqName: string;
 };
-const { callName, startName, seqName } = seed;
+const { callId, callName, startName, seqName } = seed;
 
 test('menu lists reviewable tables and links to Calls', async ({ page }) => {
   await page.goto('/data');
@@ -63,6 +63,31 @@ test('teach orders table drills into its entries', async ({ page }) => {
   await page.getByRole('link', { name: 'Drill in' }).first().click();
   await expect(page).toHaveURL(/\/data\/teach-orders\/\d+\/entries/);
   await expect(page.locator('tbody tr').first()).toBeVisible();
+});
+
+test('entries page shows a sticky parent header that expands to the field list', async ({ page }) => {
+  await page.goto('/data/teach-orders');
+  await page.getByRole('link', { name: 'Drill in' }).first().click();
+  await expect(page).toHaveURL(/\/data\/teach-orders\/\d+\/entries/);
+
+  const header = page.getByRole('button', { name: 'Toggle details' });
+  await expect(header).toHaveAttribute('aria-expanded', 'false'); // collapsed by default
+  await expect(page.locator('dl dt')).toHaveCount(0); // field list hidden while collapsed
+
+  await header.click();
+  await expect(header).toHaveAttribute('aria-expanded', 'true');
+  // Expanded → labelled field list, in order: Program, Name, Total entries.
+  await expect(page.locator('dl dt')).toHaveText(['Program', 'Name', 'Total entries']);
+});
+
+test('namespaced ?focus= targets the matching table and ignores other tables', async ({ page }) => {
+  // Addressed to this table → the legacy bare behavior, but via the `<tableId>:` form.
+  await page.goto(`/data/calls?focus=call:${callId}&on=call:callId`);
+  await expect(page.locator('tr.bg-yellow-100')).toHaveCount(1);
+
+  // Addressed to a different table → this table ignores it, nothing highlighted.
+  await page.goto(`/data/calls?focus=program:${callId}&on=program:programId`);
+  await expect(page.locator('tr.bg-yellow-100')).toHaveCount(0);
 });
 
 test('modal opens with the sequence step list and closes', async ({ page }) => {
