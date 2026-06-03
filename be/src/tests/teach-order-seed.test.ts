@@ -105,6 +105,27 @@ describe('seedTeachOrder', () => {
     expect(entries[1].label).toBe('added');
   });
 
+  it('persists source and notes, refreshing them on re-seed', async () => {
+    const { program, callA } = await fixtures();
+    const raw: RawTeachOrder = {
+      name: `${T}TO Source`,
+      programAbbreviation: program.abbreviation,
+      source: 'CALLERLAB Test Press Release',
+      notes: 'interspersed items',
+      entries: [{ displayOrder: '1', type: 'call', callName: callA.name, label: 'a' }],
+    };
+    await seedTeachOrder(raw);
+    let order = await prisma.teach_order.findFirst({ where: { name: `${T}TO Source` } });
+    expect(order?.source).toBe('CALLERLAB Test Press Release');
+    expect(order?.notes).toBe('interspersed items');
+
+    // Re-seed with a changed source and omitted notes → source updated, notes cleared.
+    await seedTeachOrder({ ...raw, source: 'Updated Source', notes: undefined });
+    order = await prisma.teach_order.findFirst({ where: { name: `${T}TO Source` } });
+    expect(order?.source).toBe('Updated Source');
+    expect(order?.notes).toBeNull();
+  });
+
   it('throws when programAbbreviation does not exist', async () => {
     const raw: RawTeachOrder = {
       name: `${T}TO Bad Program`,

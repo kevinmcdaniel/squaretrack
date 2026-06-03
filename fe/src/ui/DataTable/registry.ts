@@ -6,6 +6,17 @@ import type {
   TableData,
   TableId,
 } from './types';
+import { getByPath } from './path';
+
+/*
+ * Three distinct "table identifier" scopes exist — keep them straight:
+ *   1. `TableId` (types.ts) — the closed union of cross-link / `?focus=` *targets*. Only
+ *      focus-safe tables belong here; this `tableRegistry` is keyed by it.
+ *   2. `configs` map keys (configs.tsx) — every page-level table, including non-focus ones
+ *      (e.g. `teach-order-entries`). These are the `?focus=<tableId>:` namespaces.
+ *   3. `TableData.tableId` strings on nested child configs (e.g. `call.fasrs`) — internal
+ *      identifiers only; never page routes or focus targets.
+ */
 
 /**
  * Central registry of reviewable tables. `route` is where a cross-link navigates;
@@ -21,12 +32,6 @@ export const tableRegistry: Record<TableId, { route: string; focusSafe: boolean 
   'call-formation': { route: '/data/call-formations', focusSafe: false },
   sequence: { route: '/data/sequences', focusSafe: true },
 };
-
-const getByPath = (row: Record<string, unknown>, path: string): unknown =>
-  path.split('.').reduce<unknown>((acc, key) => {
-    if (acc && typeof acc === 'object') return (acc as Record<string, unknown>)[key];
-    return undefined;
-  }, row);
 
 /** Stable sort by explicit `order`, falling back to original array position. */
 const byOrder = <T extends { order?: number }>(items: T[]): T[] =>

@@ -318,7 +318,10 @@ const teachOrderEntriesConfig: TableConfig = defineTable(
       fields: [
         { field: 'program.name', label: 'Program', order: 1 },
         { field: 'name', label: 'Name', order: 2 },
-        { field: 'entries', label: 'Total entries', order: 3 },
+        { field: 'source', label: 'Source', order: 3 },
+        { field: 'notes', label: 'Notes', order: 4 },
+        { field: 'callCount', label: 'Calls', order: 5 },
+        { field: 'entries', label: 'Entries', order: 6 },
       ],
     },
   },
@@ -335,6 +338,11 @@ const teachOrderEntriesConfig: TableConfig = defineTable(
         return `${parts.join(' · ')} · ${n} ${n === 1 ? 'entry' : 'entries'}`;
       },
       fields: {
+        // `callCount` is a synthetic field (no path on the row) — the format derives it from entries.
+        callCount: {
+          format: (_v, p) =>
+            String((Array.isArray(p.entries) ? p.entries : []).filter((e) => obj(e).entryType === 'call').length),
+        },
         entries: { format: (v) => String(Array.isArray(v) ? v.length : 0) },
       },
     },
@@ -361,6 +369,10 @@ const knownTables = new Set(Object.keys(configs));
  * `<tableId>:<value>` (consumed only by the matching table; ignored by others) and the legacy
  * bare form `<value>` (applies to single-table pages). A colon that isn't a known-table prefix
  * is treated as part of the value, so values may safely contain colons.
+ *
+ * `focus` and `on` are resolved independently. A mismatched pair — e.g. `focus=call:1&on=program:x`
+ * on the call table — resolves `focus` to `1` but `on` to null, so nothing highlights (no error).
+ * In practice link cells always emit a matched pair, so this only arises from hand-built URLs.
  */
 function resolveFocus(table: string, raw: string | null): string | null {
   if (!raw) return null;

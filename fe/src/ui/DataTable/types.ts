@@ -86,11 +86,13 @@ export type TableBehaviors = {
 // ── Resolved layer ───────────────────────────────────────────────────────────
 // Produced by `defineTable(data, behaviors)`; this is what <DataTable> consumes.
 
-export type ColumnConfig = ColumnData & {
+// `order` is consumed by `defineTable` (it sorts columns/fields) and is dead afterwards,
+// so the resolved layer omits it.
+export type ColumnConfig = Omit<ColumnData, 'order'> & {
   format?: (value: unknown, row: Record<string, unknown>) => string;
 };
 
-export type ParentFieldConfig = ParentFieldData & {
+export type ParentFieldConfig = Omit<ParentFieldData, 'order'> & {
   format?: (value: unknown, parent: Record<string, unknown>) => string;
 };
 

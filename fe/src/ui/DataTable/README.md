@@ -80,9 +80,29 @@ Behaviors hold functions, which **cannot** cross the server→client boundary. S
 ## Parent header (sticky, accordion)
 
 A config may declare a `parent` block; the page then supplies a `parent` row alongside `data`.
-Rendered in a `position: sticky` region above the table — it stays pinned while rows scroll.
-Collapsed shows `summary` (or the first 1–2 fields); expanded shows the full ordered field list
-with labels. Open/closed state is local (`defaultExpanded`); not persisted to the URL.
+Rendered in a `position: sticky` region above the table — it stays pinned while rows scroll. The
+whole header row is the toggle (chevron + summary, always visible); expanding reveals the labelled
+field list. Fields whose value resolves to empty are skipped, so an absent `program`/`notes`
+leaves no blank row. Open/closed state is local (`defaultExpanded`); not persisted to the URL.
+
+> **Sticky caveat:** `position: sticky` silently stops pinning if any ancestor sets `overflow`
+> (`hidden`/`auto`/`scroll`). If the header won't stick, check the scroll container's ancestors.
+
+A `parent.fields` entry can reference an **array** field (e.g. `entries`) or a **synthetic**
+field with no path on the row (e.g. `callCount`) as long as a `format` behavior derives the
+displayed string from the value and/or the whole parent row:
+
+```ts
+fields: [
+  { field: 'entries', label: 'Entries' },     // array field
+  { field: 'callCount', label: 'Calls' },      // synthetic — value is undefined; format reads parent
+]
+// behaviors.parent.fields:
+{
+  entries: { format: (v) => String((v as unknown[]).length) },
+  callCount: { format: (_v, p) => String((p.entries as { entryType: string }[]).filter((e) => e.entryType === 'call').length) },
+}
+```
 
 ```tsx
 // server page

@@ -105,6 +105,8 @@ model teach_order {
   programId Int
   program   program             @relation(fields: [programId], references: [programId])
   name      String
+  source    String?
+  notes     String?
   entries   teach_order_entry[]
   sequences sequence[]
 }

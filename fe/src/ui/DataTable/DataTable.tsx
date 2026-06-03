@@ -10,14 +10,9 @@ import {
 } from '@heroicons/react/24/outline';
 import type { ColumnConfig, ParentConfig, ParentFieldConfig, TableConfig } from './types';
 import { tableRegistry } from './registry';
+import { getByPath } from './path';
 
 type Row = Record<string, unknown>;
-
-const getByPath = (row: Row, path: string): unknown =>
-  path.split('.').reduce<unknown>((acc, key) => {
-    if (acc && typeof acc === 'object') return (acc as Record<string, unknown>)[key];
-    return undefined;
-  }, row);
 
 const formatByType = (value: unknown, type: ColumnConfig['type']): string => {
   if (value === null || value === undefined) return '';
@@ -315,15 +310,22 @@ const parentFieldText = (parent: Row, f: ParentFieldConfig): string => {
   return raw == null ? '' : String(raw);
 };
 
-/** Sticky, accordion parent-context header. Collapsed shows a one-line summary; expanded shows the field list. */
+/**
+ * Sticky, accordion parent-context header. The whole header row is the toggle (chevron +
+ * one-line summary, always visible), so collapsing/expanding has a full-width click target.
+ * Expanding reveals the labelled field list below; fields with no value are skipped.
+ */
 function ParentHeader({ config, parent }: { config: ParentConfig; parent: Row }) {
   const [open, setOpen] = useState(config.defaultExpanded);
-  const collapsed = config.summary
+  const summary = config.summary
     ? config.summary(parent)
     : config.fields
         .slice(0, 2)
         .map((f) => parentFieldText(parent, f))
+        .filter(Boolean)
         .join(' · ');
+
+  const fields = config.fields.filter((f) => parentFieldText(parent, f) !== '');
 
   return (
     <div className="sticky top-0 z-10 mb-4 rounded-md border border-gray-200 bg-white/95 px-3 py-2 shadow-sm backdrop-blur">
@@ -339,11 +341,11 @@ function ParentHeader({ config, parent }: { config: ParentConfig; parent: Row })
         ) : (
           <ChevronDoubleRightIcon className="h-3.5 w-3.5 shrink-0 text-green-600" strokeWidth={2} />
         )}
-        {!open && <span className="truncate text-sm text-gray-600">{collapsed}</span>}
+        <span className="truncate text-gray-600">{summary}</span>
       </button>
       {open && (
         <dl className="mt-2 grid grid-cols-1 gap-x-6 gap-y-1 sm:grid-cols-2">
-          {config.fields.map((f) => (
+          {fields.map((f) => (
             <div key={f.field} className="flex gap-2 text-sm">
               <dt className="shrink-0 text-gray-500">{f.label}</dt>
               <dd className="font-medium text-gray-800">{parentFieldText(parent, f)}</dd>

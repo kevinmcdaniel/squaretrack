@@ -86,17 +86,20 @@ export async function seedTeachOrder(raw: RawTeachOrder): Promise<SeedSummary> {
   let teachOrderId: number;
   if (existing) {
     teachOrderId = existing.id;
-    if (existing.programId !== program.programId) {
-      await prisma.teach_order.update({
-        where: { id: teachOrderId },
-        data: { programId: program.programId },
-      });
-    }
+    await prisma.teach_order.update({
+      where: { id: teachOrderId },
+      data: { programId: program.programId, source: raw.source ?? null, notes: raw.notes ?? null },
+    });
     // Cascade delete entries (and FASR children via FK cascade).
     await prisma.teach_order_entry.deleteMany({ where: { teachOrderId } });
   } else {
     const created = await prisma.teach_order.create({
-      data: { name: raw.name, programId: program.programId },
+      data: {
+        name: raw.name,
+        programId: program.programId,
+        source: raw.source ?? null,
+        notes: raw.notes ?? null,
+      },
     });
     teachOrderId = created.id;
   }

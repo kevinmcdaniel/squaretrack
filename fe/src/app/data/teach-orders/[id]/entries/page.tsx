@@ -29,7 +29,7 @@ export default async function Page({
       <DataTablePage
         table="teach-order-entries"
         rows={entries}
-        parent={teachOrder ?? { name: `Teach order ${id}` }}
+        parent={teachOrder ?? undefined}
         searchParams={searchParams}
       />
     </div>

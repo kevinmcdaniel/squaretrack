@@ -76,8 +76,19 @@ test('entries page shows a sticky parent header that expands to the field list',
 
   await header.click();
   await expect(header).toHaveAttribute('aria-expanded', 'true');
-  // Expanded → labelled field list, in order: Program, Name, Total entries.
-  await expect(page.locator('dl dt')).toHaveText(['Program', 'Name', 'Total entries']);
+  // Expanded → labelled field list; Program/Name lead, plus the detail fields.
+  const labels = page.locator('dl dt');
+  await expect(labels.nth(0)).toHaveText('Program');
+  await expect(labels.nth(1)).toHaveText('Name');
+  const dl = page.locator('dl');
+  await expect(dl.getByText('Source', { exact: true })).toBeVisible();
+  await expect(dl.getByText('Calls', { exact: true })).toBeVisible();
+  await expect(dl.getByText('Entries', { exact: true })).toBeVisible();
+
+  // Collapse cycle: clicking again hides the field list.
+  await header.click();
+  await expect(header).toHaveAttribute('aria-expanded', 'false');
+  await expect(page.locator('dl dt')).toHaveCount(0);
 });
 
 test('namespaced ?focus= targets the matching table and ignores other tables', async ({ page }) => {
@@ -87,6 +98,10 @@ test('namespaced ?focus= targets the matching table and ignores other tables', a
 
   // Addressed to a different table → this table ignores it, nothing highlighted.
   await page.goto(`/data/calls?focus=program:${callId}&on=program:programId`);
+  await expect(page.locator('tr.bg-yellow-100')).toHaveCount(0);
+
+  // A non-table prefix is part of the value, not a namespace → must NOT strip to the bare id.
+  await page.goto(`/data/calls?focus=notatable:${callId}&on=callId`);
   await expect(page.locator('tr.bg-yellow-100')).toHaveCount(0);
 });
 
