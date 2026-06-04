@@ -19,7 +19,7 @@ export default async function Page({
 
   return (
     <div>
-      <Link href="/data/programs" className="text-sm text-blue-600 hover:underline">
+      <Link href="/reference/programs" className="text-sm text-blue-600 hover:underline">
         ← Programs
       </Link>
       <p className="mb-4 mt-1 text-sm text-gray-500">Teach orders for {programName}</p>

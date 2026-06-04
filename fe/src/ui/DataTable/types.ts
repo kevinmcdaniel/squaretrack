@@ -118,7 +118,7 @@ export type ModalDetail = {
 
 export type DrillInDetail = {
   mode: 'drillIn';
-  /** Navigated to, e.g. `/data/programs/${row.programId}/teach-orders`. Rendered as a real link. */
+  /** Navigated to, e.g. `/reference/programs/${row.programId}/teach-orders`. Rendered as a real link. */
   route: (row: Record<string, unknown>) => string;
   /** Optional text shown beside the chevron to make the drill-in link discoverable. */
   label?: string;

@@ -1,6 +1,6 @@
 # DataTable
 
-A generic, config-driven, read-only table for the data-review surface (`/data`). It knows
+A generic, config-driven, read-only table for the reference surface (`/reference`). It knows
 nothing about the calls/programs domain — behavior comes entirely from a config.
 
 Features: in-memory search and sort, typed column rendering, FK cross-links (`?focus=`), an
