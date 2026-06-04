@@ -1,11 +1,7 @@
 import { inter, montsie } from "@/ui/fonts";
 import { SquareTrackLogo } from "@/ui/elements/logo";
 
-/**
- * Home now renders inside the app shell (the sidebar provides navigation, and the
- * squareset picture lives in the sidebar header). The right pane is a simple
- * welcome: the wordmark logo, name, and tagline.
- */
+// Home renders inside the app shell; right pane shows logo, name, and tagline.
 export default function Home() {
   return (
     <section className="flex h-full flex-col justify-center gap-6">

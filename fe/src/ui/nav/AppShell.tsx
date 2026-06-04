@@ -3,11 +3,7 @@
 import { useState } from 'react';
 import SideNav from '@/ui/nav/sidebar';
 
-/**
- * Client shell that owns the sidebar collapse state. It lives in `(app)/layout.tsx`,
- * which Next keeps mounted across navigations within the group, so the open/collapsed
- * choice persists as you move between sections.
- */
+// Owns sidebar collapse state; lives in the layout so it persists across nav.
 export function AppShell({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
 

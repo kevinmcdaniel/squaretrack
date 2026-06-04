@@ -1,9 +1,4 @@
-/**
- * Consistent placeholder for routes that exist in the skeleton (issue #62/#67)
- * but whose feature isn't built yet. Renders the section title, a "coming soon"
- * line, and an optional one-sentence description of what will live here — never
- * a blank page or a 404.
- */
+// Consistent "coming soon" placeholder for skeleton routes (issue #67).
 export function StubPage({
   title,
   children,

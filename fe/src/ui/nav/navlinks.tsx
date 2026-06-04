@@ -5,9 +5,7 @@ import {
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
 
-// The squareset picture in the sidebar header links to `/`, so there is no
-// top-level Home link. API Docs lives at the bottom of the sidebar (dev-tools
-// style), not in this list.
+// No Home link (header picture links to /); API Docs sits at the sidebar bottom.
 const links = [
   { name: 'Sequences', href: '/sequences', icon: QueueListIcon },
   { name: 'Classes', href: '/classes', icon: UserGroupIcon },

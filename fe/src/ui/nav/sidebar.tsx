@@ -15,16 +15,13 @@ export default function SideNav({
   collapsed?: boolean;
   onToggle?: () => void;
 }) {
-  // Hide a button/link label when the rail is collapsed; on mobile labels are
-  // always hidden (icon-only row), matching the existing responsive behaviour.
+  // Labels hide when collapsed; on mobile they're always hidden (icon-only row).
   const labelClass = collapsed ? 'hidden' : 'hidden md:block';
   const rowJustify = collapsed ? 'md:justify-center' : 'md:justify-start';
 
   return (
     <div className="flex h-full flex-col px-3 py-4 md:px-2">
-      {/* Header: picture stays top-left in both states. The wordmark shows beside
-          it only when expanded. The toggle sits on its own row, anchored to the
-          left edge, so it keeps the same position whether open or collapsed. */}
+      {/* Picture fixed top-left; wordmark shows when expanded; toggle on its own row. */}
       <div className="mb-4 flex flex-col gap-2">
         <div className="flex items-center gap-3 overflow-hidden">
           <Link href="/" aria-label="Home" className="flex flex-none items-center">
@@ -62,8 +59,7 @@ export default function SideNav({
         <NavLinks collapsed={collapsed} />
         <div className="hidden h-auto w-full grow rounded-md bg-gray-50 md:block"></div>
 
-        {/* Temporary dev-tools entry: opens the API docs in a new tab so closing it
-            returns here rather than stranding the user in /docs with no way back. */}
+        {/* Dev-tools link: opens API docs in a new tab so there's no /docs dead-end. */}
         <a
           href="/docs"
           target="_blank"
