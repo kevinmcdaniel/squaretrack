@@ -1,4 +1,4 @@
-// Consistent "coming soon" placeholder for skeleton routes (issue #67).
+// Consistent "coming soon" placeholder for skeleton routes.
 export function StubPage({
   title,
   children,
