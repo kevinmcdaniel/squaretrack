@@ -105,7 +105,7 @@ const programsConfig: TableConfig = defineTable(
     rowDetail: {
       mode: 'drillIn',
       label: 'Teach orders',
-      route: (r) => `/data/programs/${r.programId}/teach-orders`,
+      route: (r) => `/reference/programs/${r.programId}/teach-orders`,
       hasChildren: (r) => Number(obj(r._count).teachOrders ?? 0) > 0,
     },
   },
@@ -243,7 +243,7 @@ const programTeachOrdersConfig: TableConfig = defineTable(
     rowDetail: {
       mode: 'drillIn',
       label: 'Entries',
-      route: (r) => `/data/teach-orders/${r.id}/entries`,
+      route: (r) => `/reference/teach-orders/${r.id}/entries`,
       hasChildren: (r) => Number(obj(r._count).entries ?? 0) > 0,
     },
   },
@@ -273,7 +273,7 @@ const teachOrdersConfig: TableConfig = defineTable(
     rowDetail: {
       mode: 'drillIn',
       label: 'Entries',
-      route: (r) => `/data/teach-orders/${r.id}/entries`,
+      route: (r) => `/reference/teach-orders/${r.id}/entries`,
       hasChildren: (r) => Number(obj(r._count).entries ?? 0) > 0,
     },
   },

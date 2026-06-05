@@ -23,7 +23,7 @@ export default async function Page({
 
   return (
     <div>
-      <Link href="/data/teach-orders" className="mb-3 inline-block text-sm text-blue-600 hover:underline">
+      <Link href="/reference/teach-orders" className="mb-3 inline-block text-sm text-blue-600 hover:underline">
         ← Teach Orders
       </Link>
       <DataTablePage

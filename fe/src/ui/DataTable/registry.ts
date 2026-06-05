@@ -25,12 +25,12 @@ import { getByPath } from './path';
  * rejected by `defineTable` at module-eval time.
  */
 export const tableRegistry: Record<TableId, { route: string; focusSafe: boolean }> = {
-  call: { route: '/data/calls', focusSafe: true },
-  'call-family': { route: '/data/call-families', focusSafe: true },
-  program: { route: '/data/programs', focusSafe: true },
-  formation: { route: '/data/formations', focusSafe: true },
-  'call-formation': { route: '/data/call-formations', focusSafe: false },
-  sequence: { route: '/data/sequences', focusSafe: true },
+  call: { route: '/reference/calls', focusSafe: true },
+  'call-family': { route: '/reference/call-families', focusSafe: true },
+  program: { route: '/reference/programs', focusSafe: true },
+  formation: { route: '/reference/formations', focusSafe: true },
+  'call-formation': { route: '/reference/call-formations', focusSafe: false },
+  sequence: { route: '/reference/sequences', focusSafe: true },
 };
 
 /** Stable sort by explicit `order`, falling back to original array position. */
