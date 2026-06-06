@@ -1,6 +1,6 @@
 import { type Request, type Response } from 'express';
 import { validationError, conflictError, notFoundError } from '../common/errorHandler.js';
-import { isNumeric } from '../common/utils.js';
+import { isNumeric, routeParam } from '../common/utils.js';
 import {
   listTeachOrdersService,
   getTeachOrderService,
@@ -48,10 +48,11 @@ export const listTeachOrders = async (_req: Request, res: Response, next: any) =
 
 export const getTeachOrder = async (req: Request, res: Response, next: any) => {
   try {
-    if (!isNumeric(req.params.id)) {
-      throw new validationError(`Teach order ID is an integer. Invalid value:${req.params.id}.`);
+    const idParam = routeParam(req.params.id);
+    if (!isNumeric(idParam)) {
+      throw new validationError(`Teach order ID is an integer. Invalid value:${idParam}.`);
     }
-    const id = parseInt(req.params.id, 10);
+    const id = parseInt(idParam, 10);
     const record = await getTeachOrderService(id);
     if (!record) throw new notFoundError(`Teach order id:${id} not found!`);
     res.json({ data: record, message: 'Teach order with entries' });
@@ -84,10 +85,11 @@ export const createTeachOrder = async (req: Request, res: Response, next: any) =
 
 export const updateTeachOrder = async (req: Request, res: Response, next: any) => {
   try {
-    if (!isNumeric(req.params.id)) {
-      throw new validationError(`Teach order ID is an integer. Invalid value:${req.params.id}.`);
+    const idParam = routeParam(req.params.id);
+    if (!isNumeric(idParam)) {
+      throw new validationError(`Teach order ID is an integer. Invalid value:${idParam}.`);
     }
-    const id = parseInt(req.params.id, 10);
+    const id = parseInt(idParam, 10);
     const { entries } = req.body;
     if (!entries) throw new validationError('entries are required.');
 

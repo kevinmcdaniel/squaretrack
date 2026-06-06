@@ -1,6 +1,6 @@
 import { type Request, type Response } from 'express';
 import { validationError, conflictError, notFoundError } from '../common/errorHandler.js';
-import { isNumeric } from '../common/utils.js';
+import { isNumeric, routeParam } from '../common/utils.js';
 import {
   listFormationService,
   listFormationsService,
@@ -22,11 +22,12 @@ export const listCallFormations = async (_req: Request, res: Response, next: any
 
 export const listFormation = async (req: Request, res: Response, next: any) => {
   try {
-    if (!isNumeric(req.params.formationId)) {
-      throw new validationError(`Formation ID is an integer. Invalid value:${req.params.formationId}.`);
+    const formationId = routeParam(req.params.formationId);
+    if (!isNumeric(formationId)) {
+      throw new validationError(`Formation ID is an integer. Invalid value:${formationId}.`);
     }
-    const record = await listFormationService(parseInt(req.params.formationId, 10));
-    if (!record) throw new notFoundError(`Formation id:${req.params.formationId} not found!`);
+    const record = await listFormationService(parseInt(formationId, 10));
+    if (!record) throw new notFoundError(`Formation id:${formationId} not found!`);
     res.json({ message: 'Unique formation by id', data: record });
   } catch (error) {
     next(error);

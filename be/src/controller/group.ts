@@ -1,13 +1,15 @@
 // group table controller
 import { type Request, type Response } from 'express';
 import { notFoundError } from '../common/errorHandler.js';
+import { routeParam } from '../common/utils.js';
 import { listGroupService, listGroupsService } from '../service/group.js';
 
 const listGroup = async (req: Request, res: Response, next: any) => {
   try {
-    const record = await listGroupService(req.params.groupId);
+    const groupId = routeParam(req.params.groupId);
+    const record = await listGroupService(groupId);
     if (!record) {
-      throw new notFoundError(`Group id:${req.params.groupId} not found!`);
+      throw new notFoundError(`Group id:${groupId} not found!`);
     }
     res.json({
       message: 'Unique group by id',

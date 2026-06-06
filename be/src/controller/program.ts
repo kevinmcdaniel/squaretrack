@@ -1,6 +1,6 @@
 import { type Request, type Response } from 'express';
 import { validationError, conflictError, notFoundError } from '../common/errorHandler.js';
-import { isNumeric } from '../common/utils.js';
+import { isNumeric, routeParam } from '../common/utils.js';
 import {
   createProgramService,
   updateProgramService,
@@ -51,10 +51,11 @@ export const createProgram = async (req: Request, res: Response, next: any) => {
 
 export const updateProgram = async (req: Request, res: Response, next: any) => {
   try {
-    if (!isNumeric(req.params.programId)) {
-      throw new validationError(`Program ID is an integer. Invalid value:${req.params.programId}.`);
+    const programIdParam = routeParam(req.params.programId);
+    if (!isNumeric(programIdParam)) {
+      throw new validationError(`Program ID is an integer. Invalid value:${programIdParam}.`);
     }
-    const programId = parseInt(req.params.programId, 10);
+    const programId = parseInt(programIdParam, 10);
     const { name, abbreviation, order, isActive } = req.body;
 
     if (
@@ -94,10 +95,11 @@ export const updateProgram = async (req: Request, res: Response, next: any) => {
 
 export const listProgramCallFormations = async (req: Request, res: Response, next: any) => {
   try {
-    if (!isNumeric(req.params.programId)) {
-      throw new validationError(`Program ID is an integer. Invalid value:${req.params.programId}.`);
+    const programIdParam = routeParam(req.params.programId);
+    if (!isNumeric(programIdParam)) {
+      throw new validationError(`Program ID is an integer. Invalid value:${programIdParam}.`);
     }
-    const programId = parseInt(req.params.programId, 10);
+    const programId = parseInt(programIdParam, 10);
     const records = await listProgramCallFormationsService(programId);
     res.json({
       data: records.map((r) => ({
@@ -117,10 +119,11 @@ export const listProgramCallFormations = async (req: Request, res: Response, nex
 
 export const createProgramCallFormation = async (req: Request, res: Response, next: any) => {
   try {
-    if (!isNumeric(req.params.programId)) {
-      throw new validationError(`Program ID is an integer. Invalid value:${req.params.programId}.`);
+    const programIdParam = routeParam(req.params.programId);
+    if (!isNumeric(programIdParam)) {
+      throw new validationError(`Program ID is an integer. Invalid value:${programIdParam}.`);
     }
-    const programId = parseInt(req.params.programId, 10);
+    const programId = parseInt(programIdParam, 10);
     const { callId, startId, difficulty } = req.body;
 
     if (!callId) throw new validationError('callId, startId, and difficulty are required.');
