@@ -36,12 +36,19 @@ export const listFormation = async (req: Request, res: Response, next: NextFunct
 
 export const listFormations = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { search, callId } = req.query as Record<string, string>;
+    const { search, callId, dancers } = req.query as Record<string, string>;
 
     if (callId !== undefined) {
       if (!isNumeric(callId)) throw new validationError(`callId must be an integer. Invalid value:${callId}.`);
       const records = await listFormationsByCallService(parseInt(callId, 10));
       res.json({ message: 'Formations for call', data: records });
+      return;
+    }
+
+    if (dancers !== undefined) {
+      if (!isNumeric(dancers)) throw new validationError(`dancers must be an integer. Invalid value:${dancers}.`);
+      const records = await listFormationsService(parseInt(dancers, 10));
+      res.json({ message: 'Formations by dancer count', data: records });
       return;
     }
 

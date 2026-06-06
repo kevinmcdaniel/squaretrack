@@ -31,9 +31,12 @@ export const listCalls = async (_req: Request, res: Response, next: NextFunction
 
 export const createCall = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { name, tamSeq, sdSeq, preferredDisplay, familyId } = req.body;
+    const { name, tamSeq, sdSeq, preferredDisplay, familyId, isPositional, isGenderCall, waveRuleApplies, dancerCount } =
+      req.body;
     if (!name) throw new validationError('name is required.');
-    const record = await createCallService({ name, tamSeq, sdSeq, preferredDisplay, familyId });
+    const record = await createCallService({
+      name, tamSeq, sdSeq, preferredDisplay, familyId, isPositional, isGenderCall, waveRuleApplies, dancerCount,
+    });
     res.status(201).json({ message: 'Call created', data: record });
   } catch (error: any) {
     if (error?.code === 'P2002') return next(new conflictError('Call name already exists.'));

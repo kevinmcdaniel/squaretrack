@@ -4,8 +4,10 @@ export const listFormationService = async (formId: number) => {
   return prisma.formation.findUnique({ where: { formId } });
 };
 
-export const listFormationsService = async () => {
-  return prisma.formation.findMany();
+export const listFormationsService = async (dancerCount?: number) => {
+  return prisma.formation.findMany({
+    where: dancerCount !== undefined ? { dancerCount } : undefined,
+  });
 };
 
 export const searchFormationsService = async (search: string) => {

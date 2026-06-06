@@ -31,6 +31,10 @@ type FormationRow = {
   pictogramId: number;
   handedness: 'right' | 'left' | 'facing' | 'general';
   description: string;
+  // Atomic dancer count for this formation: 1 | 2 | 4 | 8. Derived from the
+  // singular=one-unit / plural=two-parallel-units naming pattern plus the
+  // arrangement described in `description` (see issue #66).
+  dancerCount: number;
 };
 
 const SEED_DIR = join(process.cwd(), 'src/prisma/seed-data/callerlab');
@@ -51,6 +55,7 @@ export async function runImport(): Promise<{ inserted: number; updated: number; 
         data: {
           description: r.description,
           clCode: String(r.pictogramId),
+          dancerCount: r.dancerCount,
         },
       });
       updated++;
@@ -60,6 +65,7 @@ export async function runImport(): Promise<{ inserted: number; updated: number; 
           name: r.name,
           description: r.description,
           clCode: String(r.pictogramId),
+          dancerCount: r.dancerCount,
         },
       });
       inserted++;

@@ -6,6 +6,10 @@ export const createCallService = async (data: {
   sdSeq?: string;
   preferredDisplay?: string;
   familyId?: number;
+  isPositional?: boolean;
+  isGenderCall?: boolean;
+  waveRuleApplies?: boolean;
+  dancerCount?: number;
 }) => {
   return prisma.call.create({ data });
 };

@@ -123,6 +123,7 @@ const formationsConfig: TableConfig = defineTable({
     { field: 'formId', label: 'ID', type: 'number', sortable: true, width: '4rem' },
     { field: 'name', label: 'Name', searchable: true, sortable: true },
     { field: 'description', label: 'Description' },
+    { field: 'dancerCount', label: 'Dancers', type: 'number', sortable: true, width: '6rem' },
     { field: 'clCode', label: 'CL' },
     { field: 'sdCode', label: 'SD' },
   ],
