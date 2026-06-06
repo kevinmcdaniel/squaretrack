@@ -1,6 +1,6 @@
-import { Request, Response } from 'express';
+import { type Request, type Response, type NextFunction } from 'express';
 import { validationError, conflictError, notFoundError } from '../common/errorHandler.js';
-import { isNumeric } from '../common/utils.js';
+import { isNumeric, routeParam } from '../common/utils.js';
 import {
   listTeachOrdersService,
   getTeachOrderService,
@@ -37,7 +37,7 @@ async function validateEntries(programId: number, entries: any[]) {
   }
 }
 
-export const listTeachOrders = async (req: Request, res: Response, next: any) => {
+export const listTeachOrders = async (_req: Request, res: Response, next: NextFunction) => {
   try {
     const records = await listTeachOrdersService();
     res.json({ data: records, message: 'List of all teach orders' });
@@ -46,12 +46,13 @@ export const listTeachOrders = async (req: Request, res: Response, next: any) =>
   }
 };
 
-export const getTeachOrder = async (req: Request, res: Response, next: any) => {
+export const getTeachOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    if (!isNumeric(req.params.id)) {
-      throw new validationError(`Teach order ID is an integer. Invalid value:${req.params.id}.`);
+    const idParam = routeParam(req.params.id);
+    if (!isNumeric(idParam)) {
+      throw new validationError(`Teach order ID is an integer. Invalid value:${idParam}.`);
     }
-    const id = parseInt(req.params.id, 10);
+    const id = parseInt(idParam, 10);
     const record = await getTeachOrderService(id);
     if (!record) throw new notFoundError(`Teach order id:${id} not found!`);
     res.json({ data: record, message: 'Teach order with entries' });
@@ -60,7 +61,7 @@ export const getTeachOrder = async (req: Request, res: Response, next: any) => {
   }
 };
 
-export const createTeachOrder = async (req: Request, res: Response, next: any) => {
+export const createTeachOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { name, programId, entries } = req.body;
     if (!name) throw new validationError('name, programId, and entries are required.');
@@ -82,12 +83,13 @@ export const createTeachOrder = async (req: Request, res: Response, next: any) =
   }
 };
 
-export const updateTeachOrder = async (req: Request, res: Response, next: any) => {
+export const updateTeachOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    if (!isNumeric(req.params.id)) {
-      throw new validationError(`Teach order ID is an integer. Invalid value:${req.params.id}.`);
+    const idParam = routeParam(req.params.id);
+    if (!isNumeric(idParam)) {
+      throw new validationError(`Teach order ID is an integer. Invalid value:${idParam}.`);
     }
-    const id = parseInt(req.params.id, 10);
+    const id = parseInt(idParam, 10);
     const { entries } = req.body;
     if (!entries) throw new validationError('entries are required.');
 
@@ -104,7 +106,7 @@ export const updateTeachOrder = async (req: Request, res: Response, next: any) =
   }
 };
 
-export const parseTeachOrder = async (req: Request, res: Response, next: any) => {
+export const parseTeachOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { text, programId } = req.body;
     if (!text) throw new validationError('text and programId are required.');

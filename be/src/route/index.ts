@@ -10,7 +10,7 @@ import { callFamilyRoute } from "./calls/call-families.js";
 
 export const indexRoute = express.Router();
 
-indexRoute.get('/', (req, res) => {
+indexRoute.get('/', (_req, res) => {
   res.json({ message: 'Hello World 🌍🚀' });
 });
 

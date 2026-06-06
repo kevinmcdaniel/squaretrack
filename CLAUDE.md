@@ -23,10 +23,13 @@ npm run migrate  # Run Prisma migrations (prisma migrate dev)
 
 ### Frontend (`fe/`)
 ```bash
-npm run dev      # Start Next.js with Turbopack on $PORT
-npm run build    # Production build
-npm run lint     # ESLint
+npm run dev        # Start Next.js with Turbopack on $PORT
+npm run build      # Production build
+npm run lint       # ESLint (flat config, max-warnings 0)
+npm run typecheck  # tsc --noEmit
 ```
+
+Both packages also expose `npm run typecheck` and `npm run lint` in `be/` — CI runs both on every PR.
 
 ### Database
 The README has instructions for initializing PostgreSQL with user `squaretrack` and database `squaretrack`. Connection config lives in `.env` at the repo root.
@@ -62,3 +65,21 @@ When adding or changing API endpoints, follow the response conventions in [`docs
 - **Single-resource endpoints** (`/:id`) return `data: <object>` with HTTP 200 when found, `data: null` with HTTP **404** when not found. Use `notFoundError`, never the (now-removed) `emptyError`.
 
 Tests assert these shapes; FE consumers depend on them. If you find an endpoint that doesn't follow the convention, fix it as part of your change rather than copying the deviation.
+
+## Typecheck & lint configs
+
+Both packages run `tsc --noEmit` and ESLint flat-config in CI (`.github/workflows/ci.yml`). Keep them green.
+
+**TypeScript strict flags enabled in both `be/tsconfig.json` and `fe/tsconfig.json`:**
+- `strict`
+- `noUnusedLocals`, `noUnusedParameters` — prefix intentionally-unused args with `_` (e.g. Express middleware `_req`, `_res`)
+- `noFallthroughCasesInSwitch`
+- `noImplicitOverride`
+
+**Intentionally off:**
+- `noUncheckedIndexedAccess` — high signal but too noisy on the existing controllers/scripts; revisit per-file via narrowing helpers.
+- `exactOptionalPropertyTypes` — usually too noisy on Prisma/Next code without a dedicated pass.
+
+**ESLint:** `--max-warnings 0` in both packages. `@typescript-eslint/consistent-type-imports` enforced. FE also runs `react-hooks/exhaustive-deps` as error.
+
+**BE module setup:** `"type": "module"` + `"module": "NodeNext"`. Relative imports require `.js` extensions. Scripts use `import.meta` and run via `tsx`.

@@ -1,9 +1,9 @@
-import { Request, Response } from 'express';
+import { type Request, type Response, type NextFunction } from 'express';
 import { validationError, notFoundError } from '../common/errorHandler.js';
-import { isNumeric } from '../common/utils.js';
+import { isNumeric, routeParam } from '../common/utils.js';
 import { listCallFamiliesService, listCallFamilyService } from '../service/call-family.js';
 
-export const listCallFamilies = async (_req: Request, res: Response, next: any) => {
+export const listCallFamilies = async (_req: Request, res: Response, next: NextFunction) => {
   try {
     const records = await listCallFamiliesService();
     res.json({ data: records, message: 'List of all call families' });
@@ -12,13 +12,14 @@ export const listCallFamilies = async (_req: Request, res: Response, next: any) 
   }
 };
 
-export const listCallFamily = async (req: Request, res: Response, next: any) => {
+export const listCallFamily = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    if (!isNumeric(req.params.familyId)) {
-      throw new validationError(`Family ID is an integer. Invalid value:${req.params.familyId}.`);
+    const familyId = routeParam(req.params.familyId);
+    if (!isNumeric(familyId)) {
+      throw new validationError(`Family ID is an integer. Invalid value:${familyId}.`);
     }
-    const record = await listCallFamilyService(parseInt(req.params.familyId, 10));
-    if (!record) throw new notFoundError(`Call family id:${req.params.familyId} not found!`);
+    const record = await listCallFamilyService(parseInt(familyId, 10));
+    if (!record) throw new notFoundError(`Call family id:${familyId} not found!`);
     res.json({ message: 'Unique call family by id', data: record });
   } catch (error) {
     next(error);
