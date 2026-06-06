@@ -32,8 +32,8 @@ export const parseSequence = async (req: Request, res: Response, next: NextFunct
   try {
     const { text } = req.body;
     if (!text) throw new validationError('text is required.');
-    const steps = await parseSequenceText(text);
-    res.json({ message: 'Parsed sequence', data: steps });
+    const draft = await parseSequenceText(text);
+    res.json({ message: 'Parsed presentation', data: draft });
   } catch (error) {
     next(error);
   }

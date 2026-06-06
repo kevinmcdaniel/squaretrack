@@ -135,7 +135,9 @@ HTTP **406**
 
 ## POST /api/sequence/parse
 
-Parses raw pasted sequence text into structured steps. Does **not** persist anything — returns a preview for the user to review and confirm before saving.
+Parses raw pasted sequence text into the **two-layer draft** (issue #70): a presentation-free **module draft** (the choreography) and a **presentation draft** (the spoken/cueing layer). Does **not** persist anything — it returns a preview for the user to review and confirm before saving each layer.
+
+A pasted document is always a *presentation*: it carries cueing text and caller-specific phrasing. The parser decomposes it into both layers at once — call resolution and formation chaining go to `module.steps`; filler/qualifier text goes to `presentation`.
 
 ### Request Body
 
@@ -145,21 +147,24 @@ Parses raw pasted sequence text into structured steps. Does **not** persist anyt
 
 ### Line Classification Rules
 
-| Input Pattern        | Classified As |
-|----------------------|---------------|
-| `// comment` or `# comment` | `warning`   |
-| `[tip] …`            | `tip`         |
-| `[filler] …`         | `filler`      |
-| `[recovery] …`       | `recovery`    |
-| `[warning] …`        | `warning`     |
-| `heads` or `sides` alone | `activator` |
-| Anything else        | `call`        |
+| Input Pattern        | Routed To |
+|----------------------|-----------|
+| `// comment` or `# comment` | presentation text item, `textType: warning`   |
+| `[tip] …`            | presentation text item, `textType: tip`         |
+| `[filler] …`         | presentation text item, `textType: filler`      |
+| `[recovery] …`       | presentation text item, `textType: recovery`    |
+| `[warning] …`        | presentation text item, `textType: warning`     |
+| `heads` or `sides` alone | presentation text item, `textType: activator` |
+| Anything else        | `module.steps[]` (a choreographic call)        |
 
 For `call` lines, the parser:
-1. Strips a leading designator (`heads`, `sides`, `boys`, `girls`, `centers`, `ends`, `leads`, `trailers`, `beaus`, `belles`)
-2. Strips a trailing numeric count
-3. Looks up the remaining text against `call.name` (exact, case-insensitive), then against `call_synonym.alias`
-4. Returns `callMatches` and, if exactly one match, `formationMatches`
+1. Strips a leading designator (`heads`, `sides`, `boys`, `girls`, `centers`, `ends`, `leads`, `trailers`, `beaus`, `belles`) onto the module step.
+2. Strips leading spoken filler (`and`, `then`, `now`, `go`, `ok`, `okay`, `easy`) onto the presentation layer as `textBefore`.
+3. Strips a trailing numeric count onto the module step.
+4. Looks up the remaining text against `call.name` (exact, case-insensitive), then `call_synonym.alias`.
+5. Returns `callMatches` and, if exactly one match, `formationMatches` (and the resolved `callId` / single `startId`).
+
+The module step holds **only** choreographic data; all spoken text lives on `presentation`. The `presentation.items[]` array holds one `module_ref` item (whose `steps[]` carry per-call cueing keyed by `stepOrder`) plus one `text` item per non-call line.
 
 ### Expected Results
 
@@ -169,39 +174,46 @@ HTTP **200**
 
 ```json
 {
-  "data": [
-    {
-      "rawLine": "heads square thru 4",
-      "type": "call",
-      "designator": "heads",
-      "count": 4,
-      "callMatches": [
-        { "callId": 5, "name": "Square Thru", "confidence": 1 }
-      ],
-      "formationMatches": [
-        { "startId": 1, "name": "Squared Set" }
-      ],
-      "resolution": "resolved"
+  "data": {
+    "module": {
+      "steps": [
+        {
+          "order": 0,
+          "rawLine": "heads square thru 4",
+          "designator": "heads",
+          "count": 4,
+          "callMatches": [{ "callId": 5, "name": "Square Thru", "confidence": 1 }],
+          "formationMatches": [{ "startId": 1, "name": "Squared Set" }],
+          "resolution": "resolved",
+          "callId": 5,
+          "startId": 1
+        },
+        {
+          "order": 1,
+          "rawLine": "and right and left thru",
+          "callMatches": [{ "callId": 8, "name": "Right and Left Thru", "confidence": 1 }],
+          "formationMatches": [],
+          "resolution": "resolved",
+          "callId": 8
+        }
+      ]
     },
-    {
-      "rawLine": "do sa do",
-      "type": "call",
-      "designator": null,
-      "count": null,
-      "callMatches": [],
-      "formationMatches": [],
-      "resolution": "unresolved"
-    },
-    {
-      "rawLine": "// note for caller",
-      "type": "warning",
-      "text": "note for caller",
-      "callMatches": [],
-      "formationMatches": [],
-      "resolution": "resolved"
+    "presentation": {
+      "sourceText": "heads square thru 4\nand right and left thru\n[tip] nice and smooth",
+      "items": [
+        {
+          "order": 0,
+          "type": "module_ref",
+          "steps": [
+            { "stepOrder": 0 },
+            { "stepOrder": 1, "textBefore": "and" }
+          ]
+        },
+        { "order": 1, "type": "text", "textType": "tip", "text": "nice and smooth" }
+      ]
     }
-  ],
-  "message": "Parsed sequence"
+  },
+  "message": "Parsed presentation"
 }
 ```
 
@@ -227,9 +239,10 @@ HTTP **406**
 
 ### Business Rules
 
-- Non-call types (`activator`, `filler`, `warning`, `tip`, `recovery`) always resolve immediately.
-- A line marked `unresolved` blocks `isValid` on the saved sequence if saved as-is.
-- After a user resolves an unresolved line, they can save a synonym via `POST /api/call/:callId/synonym` so future parses auto-resolve.
+- Non-call lines become `presentation.items` text entries; they carry no choreography.
+- A module step marked `unresolved` blocks `isValid` on the saved module if saved as-is.
+- After a user resolves an unresolved step, they can save a synonym via `POST /api/call/:callId/synonym` so future parses auto-resolve.
+- The module and presentation drafts are saved independently: the choreography can be reused across presentations, and a presentation can re-cue an existing module.
 
 ---
 

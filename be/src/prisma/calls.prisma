@@ -61,6 +61,7 @@ model call_formation {
   programEntries        program_call_formation[]
   teachFasrEntries      teach_order_entry_fasr[]
   sequenceSteps         sequence_calls[]
+  choreoSteps           choreo_module_step[]
   @@id([callId, startId])
   @@index([startId])
   @@index([endId])
@@ -76,6 +77,8 @@ model formation {
   callStart       call_formation[] @relation(name: "startFormation")
   callEnding      call_formation[] @relation(name: "endingFormation")
   sequenceStarts  sequence[]
+  moduleStarts    choreo_module[]  @relation(name: "moduleStart")
+  moduleEnds      choreo_module[]  @relation(name: "moduleEnd")
 }
 
 model program {
@@ -116,6 +119,7 @@ model teach_order {
   notes     String?
   entries   teach_order_entry[]
   sequences sequence[]
+  choreoModules choreo_module[]
 }
 
 // Display row for a curriculum slot in a teach order. Mirrors what the caller sees in the
@@ -196,4 +200,96 @@ model sequence_calls {
   text          String?         // display override for calls; full content for non-call types
   helperText    String?         // caller annotation; never exported to Taminations or SD
   @@id([seqId, order])
+}
+
+// ── Two-layer choreo / presentation model (issue #70) ────────────────────────
+// choreo_module + choreo_module_step hold the reusable, presentation-free
+// choreographic content (what calls, from what formations, in what order).
+// presentation + presentation_item + presentation_item_step wrap a module with
+// the spoken/cueing layer (filler text, alternate names, contextual warnings).
+// The sequence / sequence_calls tables are retained until the editor UIs
+// (#18/#19/#20) are rebuilt on this model.
+
+// The reusable choreographic unit. Contains no spoken text.
+model choreo_module {
+  id                  Int                  @id @default(autoincrement())
+  name                String
+  startFormId         Int                  // formation the module begins from
+  startForm           formation            @relation("moduleStart", fields: [startFormId], references: [formId])
+  endFormId           Int                  // formation the module leaves dancers in
+  endForm             formation            @relation("moduleEnd", fields: [endFormId], references: [formId])
+  inFlowRotation      String?              // flow entering this module
+  inFlowDirection     String?
+  outFlowRotation     String?              // flow exiting this module
+  outFlowDirection    String?
+  isValid             Boolean              @default(false)
+  isVerified          Boolean              @default(false)
+  variantGroupId      String?              // shared UUID for choreo-equivalent modules
+  safeAfterEntryOrder Int?                 // latest teach-order position used
+  safeAfterFasrOrder  Int?
+  teachOrderId        Int?
+  teachOrder          teach_order?         @relation(fields: [teachOrderId], references: [id])
+  steps               choreo_module_step[]
+  presentationItems   presentation_item[]
+  @@index([variantGroupId])
+}
+
+// One call within a module. No spoken text. Inherent warnings live here.
+model choreo_module_step {
+  moduleId      Int
+  module        choreo_module  @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  order         Int
+  callId        Int
+  startId       Int
+  callFormation call_formation @relation(fields: [callId, startId], references: [callId, startId])
+  designator    String?        // heads | sides | centers | ends | leads | trailers | beaus | belles
+  count         Int?           // e.g. 4 for "square thru 4"
+  // Inherent choreographic warning — true regardless of presentation. Distinct
+  // from presentation_item_step.warning (contextual). Set at import or manually.
+  warning       String?
+  @@id([moduleId, order])
+  @@index([callId, startId])
+}
+
+// A crafted, speakable sequence. References modules, interleaved with text items.
+model presentation {
+  id         Int                 @id @default(autoincrement())
+  name       String
+  source     String?             // taminations | callerlab | personal | <caller name>
+  activator  String?             // heads | sides
+  rating     String?             // excellent | good | acceptable | poor
+  notes      String?
+  sourceText String?             // raw pasted input, preserved as-is
+  items      presentation_item[]
+}
+
+// An ordered slot in a presentation: a module reference or a pure text entry.
+model presentation_item {
+  id             Int                      @id @default(autoincrement())
+  presentationId Int
+  presentation   presentation             @relation(fields: [presentationId], references: [id], onDelete: Cascade)
+  order          Int                      // position within the presentation
+  type           String                   // module_ref | text
+  // --- module_ref fields ---
+  moduleId       Int?
+  module         choreo_module?           @relation(fields: [moduleId], references: [id])
+  // --- text fields (activator cue, filler, tip, warning, closer) ---
+  text           String?                  // spoken text for text-type items
+  textType       String?                  // activator | filler | tip | warning | closer
+  steps          presentation_item_step[]
+  @@unique([presentationId, order])
+}
+
+// Per-step cueing decoration for a module reference. Additive: it never replaces
+// the choreographic data, only adds the spoken layer around it.
+model presentation_item_step {
+  itemId            Int
+  item              presentation_item @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  stepOrder         Int               // matches choreo_module_step.order
+  textBefore        String?           // spoken before the call name (e.g. "And now", "Easy")
+  textAfter         String?           // spoken after the call (e.g. "nice", "keep moving")
+  callNameAlternate String?           // caller's preferred spoken name for this call here
+  warning           String?           // contextual warning for this step in this presentation
+  helperText        String?           // caller's private note; never shown to dancers
+  @@id([itemId, stepOrder])
 }

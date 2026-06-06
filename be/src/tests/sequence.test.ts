@@ -83,24 +83,68 @@ describe('GET /api/sequence/:seqId', () => {
 // ── POST /api/sequence/parse ────────────────────────────────────────────────
 
 describe('POST /api/sequence/parse', () => {
-  it('parses plain call lines and returns steps', async () => {
+  it('parses plain call lines into module steps (#70)', async () => {
     const res = await request(app)
       .post('/api/sequence/parse')
       .send({ text: 'circle left\ndo-sa-do' });
     expect(res.status).toBe(200);
-    expect(res.body.data).toBeInstanceOf(Array);
-    expect(res.body.data.length).toBe(2);
-    expect(res.body.data[0].rawLine).toBe('circle left');
-    expect(res.body.data[0].type).toBe('call');
+    expect(res.body.data.module.steps).toBeInstanceOf(Array);
+    expect(res.body.data.module.steps.length).toBe(2);
+    expect(res.body.data.module.steps[0].rawLine).toBe('circle left');
+    expect(res.body.data.module.steps[0].order).toBe(0);
   });
 
-  it('extracts designator from line', async () => {
+  it('returns both a module draft and a presentation draft (#70)', async () => {
+    const res = await request(app)
+      .post('/api/sequence/parse')
+      .send({ text: 'circle left' });
+    expect(res.status).toBe(200);
+    expect(res.body.data).toHaveProperty('module');
+    expect(res.body.data).toHaveProperty('presentation');
+    expect(res.body.data.presentation.sourceText).toBe('circle left');
+    const moduleRef = res.body.data.presentation.items.find((i: any) => i.type === 'module_ref');
+    expect(moduleRef).toBeDefined();
+  });
+
+  it('module steps carry no spoken text (#70)', async () => {
+    const res = await request(app)
+      .post('/api/sequence/parse')
+      .send({ text: 'circle left' });
+    const step = res.body.data.module.steps[0];
+    expect(step).not.toHaveProperty('text');
+    expect(step).not.toHaveProperty('textBefore');
+    expect(step).not.toHaveProperty('helperText');
+  });
+
+  it('routes non-call lines to presentation text items (#70)', async () => {
+    const res = await request(app)
+      .post('/api/sequence/parse')
+      .send({ text: 'circle left\n[tip] smooth dancing' });
+    expect(res.status).toBe(200);
+    expect(res.body.data.module.steps.length).toBe(1);
+    const textItem = res.body.data.presentation.items.find((i: any) => i.type === 'text');
+    expect(textItem.textType).toBe('tip');
+    expect(textItem.text).toBe('smooth dancing');
+  });
+
+  it('strips leading filler into presentation textBefore (#70)', async () => {
+    const res = await request(app)
+      .post('/api/sequence/parse')
+      .send({ text: 'circle left\nand do-sa-do' });
+    expect(res.body.data.module.steps.length).toBe(2);
+    expect(res.body.data.module.steps[1].rawLine).toBe('and do-sa-do');
+    const moduleRef = res.body.data.presentation.items.find((i: any) => i.type === 'module_ref');
+    const decoration = moduleRef.steps.find((s: any) => s.stepOrder === 1);
+    expect(decoration.textBefore).toBe('and');
+  });
+
+  it('extracts designator and count onto the module step', async () => {
     const res = await request(app)
       .post('/api/sequence/parse')
       .send({ text: 'heads square thru 4' });
     expect(res.status).toBe(200);
-    expect(res.body.data[0].designator).toBe('heads');
-    expect(res.body.data[0].count).toBe(4);
+    expect(res.body.data.module.steps[0].designator).toBe('heads');
+    expect(res.body.data.module.steps[0].count).toBe(4);
   });
 
   it('resolves call by exact name match', async () => {
@@ -109,8 +153,8 @@ describe('POST /api/sequence/parse', () => {
       .post('/api/sequence/parse')
       .send({ text: `${T}parse circle` });
     expect(res.status).toBe(200);
-    expect(res.body.data[0].resolution).toBe('resolved');
-    expect(res.body.data[0].callMatches.length).toBe(1);
+    expect(res.body.data.module.steps[0].resolution).toBe('resolved');
+    expect(res.body.data.module.steps[0].callMatches.length).toBe(1);
   });
 
   it('resolves call by synonym', async () => {
@@ -120,7 +164,7 @@ describe('POST /api/sequence/parse', () => {
       .post('/api/sequence/parse')
       .send({ text: `${T}parse dosado` });
     expect(res.status).toBe(200);
-    expect(res.body.data[0].resolution).toBe('resolved');
+    expect(res.body.data.module.steps[0].resolution).toBe('resolved');
   });
 
   it('marks unresolved when no match found', async () => {
@@ -128,7 +172,7 @@ describe('POST /api/sequence/parse', () => {
       .post('/api/sequence/parse')
       .send({ text: 'xyzzy_no_such_call_9999' });
     expect(res.status).toBe(200);
-    expect(res.body.data[0].resolution).toBe('unresolved');
+    expect(res.body.data.module.steps[0].resolution).toBe('unresolved');
   });
 
   it('returns 406 when text is missing', async () => {

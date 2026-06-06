@@ -5,6 +5,10 @@ import { prisma } from '../database.js';
 export const T = '_TEST_';
 
 export async function cleanupTestData() {
+  // Two-layer model (#70). Delete before the formations/calls/teach-orders they
+  // FK to. Cascades remove presentation_item(+_step) and choreo_module_step rows.
+  await prisma.presentation.deleteMany({ where: { name: { startsWith: T } } });
+  await prisma.choreo_module.deleteMany({ where: { name: { startsWith: T } } });
   await prisma.teach_order_entry_fasr.deleteMany({ where: { entry: { teachOrder: { name: { startsWith: T } } } } });
   await prisma.teach_order_entry.deleteMany({ where: { teachOrder: { name: { startsWith: T } } } });
   await prisma.teach_order.deleteMany({ where: { name: { startsWith: T } } });
