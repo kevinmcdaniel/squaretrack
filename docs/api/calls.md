@@ -25,6 +25,10 @@ No parameters.
       "tamSeq": "sq_thru",
       "sdSeq": "sq thru",
       "preferredDisplay": "Square Thru",
+      "isPositional": null,
+      "isGenderCall": null,
+      "waveRuleApplies": null,
+      "dancerCount": null,
       "familyId": null
     }
   ],
@@ -34,7 +38,18 @@ No parameters.
 ```
 
 - `data` is an array — possibly empty (`[]`) when no calls exist.
-- Each item includes `callId`, `name`, and all optional fields (`tamSeq`, `sdSeq`, `preferredDisplay`, `familyId`). Optional fields are `null` when not set.
+- Each item includes `callId`, `name`, and all optional fields (`tamSeq`, `sdSeq`, `preferredDisplay`, the four metadata fields below, and `familyId`). Optional fields are `null` when not set.
+
+### Metadata fields (#66)
+
+These describe a call's gender-dependency, wave rule, and scale. They are **not** in the Taminations source — they come from Callerlab definitions and are `null` until a data-entry pass fills them.
+
+| Field             | Type    | Description |
+|-------------------|---------|-------------|
+| `isPositional`    | boolean | Executable from each dancer's position + facing alone, no gender needed (e.g. Swing Thru, Cast Off 3/4). |
+| `isGenderCall`    | boolean | The definition explicitly references boys / girls (e.g. Boys Run, Star Thru). Not mutually exclusive with `isPositional`. |
+| `waveRuleApplies` | boolean | The wave rule adjusts who-does-what when starting from a wave rather than facing couples (e.g. Swing Thru). |
+| `dancerCount`     | integer | The **atomic definition unit**: the fewest dancers the call is defined for (Star Thru = 2, Swing Thru = 4, Promenade = 8). When executed from a larger formation, multiple atomic groups do it at once. This is *not* the total dancers in the formation. |
 
 ---
 
@@ -60,6 +75,10 @@ Returns a single call by its numeric ID.
     "tamSeq": "sq_thru",
     "sdSeq": "sq thru",
     "preferredDisplay": null,
+    "isPositional": null,
+    "isGenderCall": null,
+    "waveRuleApplies": null,
+    "dancerCount": null,
     "familyId": 2
   },
   "message": "Unique call by id"
@@ -104,6 +123,10 @@ Creates a new call.
 | tamSeq           | string  | no       | Taminations sequence identifier                  |
 | sdSeq            | string  | no       | SD program call identifier                       |
 | preferredDisplay | string  | no       | Caller's preferred display name; falls back to `name` |
+| isPositional     | boolean | no       | Executable by position alone, no gender (see [Metadata fields](#metadata-fields-66)) |
+| isGenderCall     | boolean | no       | Definition references boys / girls               |
+| waveRuleApplies  | boolean | no       | Wave rule adjusts execution from a wave          |
+| dancerCount      | integer | no       | Atomic definition unit (fewest dancers the call is defined for) |
 | familyId         | integer | no       | ID of the call family this call belongs to       |
 
 ### Expected Results
@@ -120,6 +143,10 @@ HTTP **201**
     "tamSeq": null,
     "sdSeq": null,
     "preferredDisplay": null,
+    "isPositional": null,
+    "isGenderCall": null,
+    "waveRuleApplies": null,
+    "dancerCount": null,
     "familyId": null
   },
   "message": "Call created"

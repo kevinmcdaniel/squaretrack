@@ -6,6 +6,12 @@ model call {
   tamSeq           String?             // Taminations call identifier
   sdSeq            String?             // SD program call identifier
   preferredDisplay String?             // caller's preferred name; falls back to name
+  // Gender / wave-rule / scale metadata. Nullable until a Callerlab-definition
+  // data-entry pass fills them; not present in the Taminations source.
+  isPositional     Boolean?            // executable from position + facing alone, no gender needed
+  isGenderCall     Boolean?            // definition explicitly references boys / girls
+  waveRuleApplies  Boolean?            // wave rule adjusts who-does-what when starting from a wave
+  dancerCount      Int?                // atomic definition unit: fewest dancers the call is defined for
   familyId         Int?
   callFamily       call_family?        @relation(fields: [familyId], references: [familyId])
   formations       call_formation[]
@@ -66,6 +72,7 @@ model formation {
   description String?
   clCode      String?
   sdCode      String?
+  dancerCount Int?             // 1 | 2 | 4 | 8; null = not yet assigned
   callStart       call_formation[] @relation(name: "startFormation")
   callEnding      call_formation[] @relation(name: "endingFormation")
   sequenceStarts  sequence[]

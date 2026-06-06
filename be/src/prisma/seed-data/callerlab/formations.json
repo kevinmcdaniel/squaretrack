@@ -5,6 +5,7 @@
     "pictogramId": 1,
     "handedness": "general",
     "description": "Two dancers side by side, both facing the same direction.",
+    "dancerCount": 2,
     "introducedAt": "bms"
   },
   {
@@ -13,6 +14,7 @@
     "pictogramId": 2,
     "handedness": "right",
     "description": "Two dancers side by side facing opposite directions, with right shoulders adjacent.",
+    "dancerCount": 2,
     "introducedAt": "bms"
   },
   {
@@ -21,6 +23,7 @@
     "pictogramId": 802,
     "handedness": "left",
     "description": "Two dancers side by side facing opposite directions, with left shoulders adjacent.",
+    "dancerCount": 2,
     "introducedAt": "bms"
   },
   {
@@ -31,6 +34,7 @@
     "pictogramId": 3,
     "handedness": "facing",
     "description": "Two dancers facing each other.",
+    "dancerCount": 2,
     "introducedAt": "bms"
   },
   {
@@ -39,6 +43,7 @@
     "pictogramId": 4,
     "handedness": "general",
     "description": "Two dancers back to back.",
+    "dancerCount": 2,
     "introducedAt": "bms"
   },
   {
@@ -47,6 +52,7 @@
     "pictogramId": 5,
     "handedness": "general",
     "description": "Two dancers, one directly behind the other, both facing the same direction.",
+    "dancerCount": 2,
     "introducedAt": "bms"
   },
   {
@@ -57,6 +63,7 @@
     "pictogramId": 7,
     "handedness": "general",
     "description": "Four dancers in a line; facing directions unspecified.",
+    "dancerCount": 4,
     "introducedAt": "bms"
   },
   {
@@ -67,6 +74,7 @@
     "pictogramId": 8,
     "handedness": "general",
     "description": "Four dancers in a line, all facing the same direction.",
+    "dancerCount": 4,
     "introducedAt": "bms"
   },
   {
@@ -75,6 +83,7 @@
     "pictogramId": 9,
     "handedness": "right",
     "description": "Four dancers in a line forming two right-hand couples back-to-back at the centers.",
+    "dancerCount": 4,
     "introducedAt": "bms"
   },
   {
@@ -83,6 +92,7 @@
     "pictogramId": 809,
     "handedness": "left",
     "description": "Four dancers in a line forming two left-hand couples back-to-back at the centers.",
+    "dancerCount": 4,
     "introducedAt": "bms"
   },
   {
@@ -93,6 +103,7 @@
     "pictogramId": 10,
     "handedness": "right",
     "description": "Four dancers in a line with alternating facing directions; centers have right hands.",
+    "dancerCount": 4,
     "introducedAt": "bms"
   },
   {
@@ -103,6 +114,7 @@
     "pictogramId": 811,
     "handedness": "left",
     "description": "Four dancers in a line with alternating facing directions; centers have left hands.",
+    "dancerCount": 4,
     "introducedAt": "bms"
   },
   {
@@ -113,6 +125,7 @@
     "pictogramId": 11,
     "handedness": "general",
     "description": "Four dancers in a column; facing directions unspecified.",
+    "dancerCount": 4,
     "introducedAt": "bms"
   },
   {
@@ -121,6 +134,7 @@
     "pictogramId": 12,
     "handedness": "general",
     "description": "Two facing pairs of tandem dancers, one tandem behind the other facing in opposite directions.",
+    "dancerCount": 4,
     "introducedAt": "bms"
   },
   {
@@ -132,6 +146,7 @@
     "pictogramId": 13,
     "handedness": "general",
     "description": "Two pairs of facing tandems, the centers facing the outsides.",
+    "dancerCount": 4,
     "introducedAt": "bms"
   },
   {
@@ -143,6 +158,7 @@
     "pictogramId": 14,
     "handedness": "general",
     "description": "Two pairs of back-to-back tandems.",
+    "dancerCount": 4,
     "introducedAt": "bms"
   },
   {
@@ -154,6 +170,7 @@
     "pictogramId": 15,
     "handedness": "general",
     "description": "Four dancers in a 2x2 formation; facing directions unspecified.",
+    "dancerCount": 4,
     "introducedAt": "bms"
   },
   {
@@ -162,6 +179,7 @@
     "pictogramId": 16,
     "handedness": "facing",
     "description": "Two couples facing each other.",
+    "dancerCount": 4,
     "introducedAt": "bms"
   },
   {
@@ -170,6 +188,7 @@
     "pictogramId": 17,
     "handedness": "general",
     "description": "Two couples back to back.",
+    "dancerCount": 4,
     "introducedAt": "bms"
   },
   {
@@ -178,6 +197,7 @@
     "pictogramId": 18,
     "handedness": "general",
     "description": "Two couples in tandem, both facing the same direction.",
+    "dancerCount": 4,
     "introducedAt": "bms"
   },
   {
@@ -190,6 +210,7 @@
     "pictogramId": 19,
     "handedness": "right",
     "description": "2x2 with two right-hand mini-waves, centers facing in opposite directions across diagonals.",
+    "dancerCount": 4,
     "introducedAt": "bms"
   },
   {
@@ -202,6 +223,7 @@
     "pictogramId": 819,
     "handedness": "left",
     "description": "2x2 with two left-hand mini-waves.",
+    "dancerCount": 4,
     "introducedAt": "bms"
   },
   {
@@ -210,6 +232,7 @@
     "pictogramId": 20,
     "handedness": "general",
     "description": "Four dancers in a circle.",
+    "dancerCount": 4,
     "introducedAt": "bms"
   },
   {
@@ -218,6 +241,7 @@
     "pictogramId": 21,
     "handedness": "right",
     "description": "Four dancers with right hands joined in the center forming a star.",
+    "dancerCount": 4,
     "introducedAt": "bms"
   },
   {
@@ -226,6 +250,7 @@
     "pictogramId": 22,
     "handedness": "right",
     "description": "Two right-hand stars side by side.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -236,6 +261,7 @@
     "pictogramId": 23,
     "handedness": "general",
     "description": "Four couples around the perimeter of a square, each couple facing the center.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -244,6 +270,7 @@
     "pictogramId": 24,
     "handedness": "general",
     "description": "The eight spots of a Squared Set; facing directions unspecified.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -254,6 +281,7 @@
     "pictogramId": 25,
     "handedness": "general",
     "description": "Eight dancers in a circle, all facing the center.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -262,6 +290,7 @@
     "pictogramId": 26,
     "handedness": "general",
     "description": "Eight dancers in a ring with alternating facing directions, all hands joined.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -270,6 +299,7 @@
     "pictogramId": 27,
     "handedness": "general",
     "description": "Eight dancers in a circle with alternating facing directions, ready for a Right and Left Grand.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -278,6 +308,7 @@
     "pictogramId": 28,
     "handedness": "general",
     "description": "Eight dancers in a circle, all facing counterclockwise in single file.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -286,6 +317,7 @@
     "pictogramId": 29,
     "handedness": "general",
     "description": "Eight dancers in a circle, all facing clockwise in single file.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -294,6 +326,7 @@
     "pictogramId": 31,
     "handedness": "general",
     "description": "Four couples in a circle promenading counterclockwise.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -302,6 +335,7 @@
     "pictogramId": 32,
     "handedness": "general",
     "description": "Four couples in a circle promenading clockwise.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -312,6 +346,7 @@
     "pictogramId": 33,
     "handedness": "general",
     "description": "Inside dancers form a back-up right-hand star, outside dancers face counterclockwise.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -320,6 +355,7 @@
     "pictogramId": 34,
     "handedness": "general",
     "description": "Inside dancers form a back-up left-hand star, outside dancers face clockwise.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -330,6 +366,7 @@
     "pictogramId": 35,
     "handedness": "facing",
     "description": "Two parallel lines of four facing each other.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -340,6 +377,7 @@
     "pictogramId": 36,
     "handedness": "general",
     "description": "Two parallel lines of four with backs toward each other.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -350,6 +388,7 @@
     "pictogramId": 37,
     "handedness": "right",
     "description": "Two parallel right-hand two-faced lines.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -360,6 +399,7 @@
     "pictogramId": 835,
     "handedness": "left",
     "description": "Two parallel left-hand two-faced lines.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -373,6 +413,7 @@
     "pictogramId": 38,
     "handedness": "right",
     "description": "Two parallel right-hand ocean waves.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -386,6 +427,7 @@
     "pictogramId": 837,
     "handedness": "left",
     "description": "Two parallel left-hand ocean waves.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -397,6 +439,7 @@
     "pictogramId": 39,
     "handedness": "general",
     "description": "Two parallel lines of four; facing directions unspecified.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -405,6 +448,7 @@
     "pictogramId": 40,
     "handedness": "general",
     "description": "2x4 formation with two facing-couples at each end.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -413,6 +457,7 @@
     "pictogramId": 41,
     "handedness": "general",
     "description": "2x4 formation with facing-couples at the centers and back-to-back couples at the ends.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -425,6 +470,7 @@
     "pictogramId": 42,
     "handedness": "general",
     "description": "2x4 column of facing tandems.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -435,6 +481,7 @@
     "pictogramId": 43,
     "handedness": "general",
     "description": "2x4 column of back-to-back tandems.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -445,6 +492,7 @@
     "pictogramId": 44,
     "handedness": "right",
     "description": "Two parallel right-hand columns of four.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -455,6 +503,7 @@
     "pictogramId": 843,
     "handedness": "left",
     "description": "Two parallel left-hand columns of four.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -466,6 +515,7 @@
     "pictogramId": 45,
     "handedness": "general",
     "description": "Two parallel columns of four; facing directions unspecified.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -476,6 +526,7 @@
     "pictogramId": 46,
     "handedness": "right",
     "description": "Outside facing-couples flanking a right-hand center wave.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -486,6 +537,7 @@
     "pictogramId": 846,
     "handedness": "left",
     "description": "Outside facing-couples flanking a left-hand center wave.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -496,6 +548,7 @@
     "pictogramId": 47,
     "handedness": "right",
     "description": "Outside back-to-back couples flanking a right-hand center wave.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -506,6 +559,7 @@
     "pictogramId": 848,
     "handedness": "left",
     "description": "Outside back-to-back couples flanking a left-hand center wave.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -514,6 +568,7 @@
     "pictogramId": 48,
     "handedness": "right",
     "description": "Eight dancers in a single line forming a right-hand tidal wave.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -522,6 +577,7 @@
     "pictogramId": 823,
     "handedness": "left",
     "description": "Eight dancers in a single line forming a left-hand tidal wave.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -530,6 +586,7 @@
     "pictogramId": 49,
     "handedness": "right",
     "description": "Eight dancers in a single line forming a right-hand tidal two-faced line.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -538,6 +595,7 @@
     "pictogramId": 825,
     "handedness": "left",
     "description": "Eight dancers in a single line forming a left-hand tidal two-faced line.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -548,6 +606,7 @@
     "pictogramId": 50,
     "handedness": "right",
     "description": "Eight dancers in a single line all facing the same direction.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -558,6 +617,7 @@
     "pictogramId": 827,
     "handedness": "left",
     "description": "Eight dancers in a single line, mirror form.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -569,6 +629,7 @@
     "pictogramId": 51,
     "handedness": "general",
     "description": "Eight dancers in a single line; facing directions unspecified.",
+    "dancerCount": 8,
     "introducedAt": "bms"
   },
   {
@@ -577,6 +638,7 @@
     "pictogramId": 101,
     "handedness": "right",
     "description": "Four dancers in a diamond shape with the centers having right hands.",
+    "dancerCount": 4,
     "introducedAt": "plus"
   },
   {
@@ -585,6 +647,7 @@
     "pictogramId": 901,
     "handedness": "left",
     "description": "Four dancers in a diamond shape with the centers having left hands.",
+    "dancerCount": 4,
     "introducedAt": "plus"
   },
   {
@@ -593,6 +656,7 @@
     "pictogramId": 102,
     "handedness": "facing",
     "description": "Diamond with centers facing each other; right hands meeting at the center.",
+    "dancerCount": 4,
     "introducedAt": "plus"
   },
   {
@@ -601,6 +665,7 @@
     "pictogramId": 903,
     "handedness": "facing",
     "description": "Diamond with centers facing each other; left hands meeting at the center.",
+    "dancerCount": 4,
     "introducedAt": "plus"
   },
   {
@@ -609,6 +674,7 @@
     "pictogramId": 103,
     "handedness": "right",
     "description": "Four-dancer Z formation with right-hand center mini-wave; centers are leaders.",
+    "dancerCount": 4,
     "introducedAt": "plus"
   },
   {
@@ -617,6 +683,7 @@
     "pictogramId": 905,
     "handedness": "left",
     "description": "Mirror of Right-Hand Z (centers are leaders).",
+    "dancerCount": 4,
     "introducedAt": "plus"
   },
   {
@@ -625,6 +692,7 @@
     "pictogramId": 104,
     "handedness": "right",
     "description": "Four-dancer Z formation with right-hand center mini-wave; centers are trailers.",
+    "dancerCount": 4,
     "introducedAt": "plus"
   },
   {
@@ -633,6 +701,7 @@
     "pictogramId": 907,
     "handedness": "left",
     "description": "Mirror of Right-Hand Z (centers are trailers).",
+    "dancerCount": 4,
     "introducedAt": "plus"
   },
   {
@@ -643,6 +712,7 @@
     "pictogramId": 105,
     "handedness": "right",
     "description": "Single 1/4 Tag with right-hand center mini-wave.",
+    "dancerCount": 4,
     "introducedAt": "plus"
   },
   {
@@ -653,6 +723,7 @@
     "pictogramId": 106,
     "handedness": "right",
     "description": "Single 3/4 Tag with right-hand center mini-wave.",
+    "dancerCount": 4,
     "introducedAt": "plus"
   },
   {
@@ -663,6 +734,7 @@
     "pictogramId": 107,
     "handedness": "right",
     "description": "Right-hand four-dancer star aligned with the walls of the hall.",
+    "dancerCount": 4,
     "introducedAt": "plus"
   },
   {
@@ -673,6 +745,7 @@
     "pictogramId": 108,
     "handedness": "right",
     "description": "Two right-hand stars side by side, aligned to the walls.",
+    "dancerCount": 8,
     "introducedAt": "plus"
   },
   {
@@ -683,6 +756,7 @@
     "pictogramId": 109,
     "handedness": "right",
     "description": "Two right-hand diamonds side by side.",
+    "dancerCount": 8,
     "introducedAt": "plus"
   },
   {
@@ -693,6 +767,7 @@
     "pictogramId": 909,
     "handedness": "left",
     "description": "Two left-hand diamonds side by side.",
+    "dancerCount": 8,
     "introducedAt": "plus"
   },
   {
@@ -703,6 +778,7 @@
     "pictogramId": 110,
     "handedness": "facing",
     "description": "Two facing diamonds side by side with the centers of each having right hands.",
+    "dancerCount": 8,
     "introducedAt": "plus"
   },
   {
@@ -713,6 +789,7 @@
     "pictogramId": 911,
     "handedness": "facing",
     "description": "Two facing diamonds side by side with the centers of each having left hands.",
+    "dancerCount": 8,
     "introducedAt": "plus"
   },
   {
@@ -723,6 +800,7 @@
     "pictogramId": 111,
     "handedness": "general",
     "description": "Two diamonds side by side; facing directions unspecified.",
+    "dancerCount": 8,
     "introducedAt": "plus"
   },
   {
@@ -731,6 +809,7 @@
     "pictogramId": 112,
     "handedness": "general",
     "description": "Two diamonds with their points touching; facing unspecified.",
+    "dancerCount": 8,
     "introducedAt": "plus"
   },
   {
@@ -739,6 +818,7 @@
     "pictogramId": 113,
     "handedness": "right",
     "description": "Two right-hand diamonds with their points touching.",
+    "dancerCount": 8,
     "introducedAt": "plus"
   },
   {
@@ -747,6 +827,7 @@
     "pictogramId": 917,
     "handedness": "left",
     "description": "Two left-hand diamonds with their points touching.",
+    "dancerCount": 8,
     "introducedAt": "plus"
   },
   {
@@ -755,6 +836,7 @@
     "pictogramId": 114,
     "handedness": "facing",
     "description": "Two facing diamonds with points touching; centers have right hands.",
+    "dancerCount": 8,
     "introducedAt": "plus"
   },
   {
@@ -763,6 +845,7 @@
     "pictogramId": 921,
     "handedness": "facing",
     "description": "Two facing diamonds with points touching; centers have left hands.",
+    "dancerCount": 8,
     "introducedAt": "plus"
   },
   {
@@ -773,6 +856,7 @@
     "pictogramId": 115,
     "handedness": "right",
     "description": "Two right-hand single 1/4 tags placed end to end.",
+    "dancerCount": 8,
     "introducedAt": "plus"
   },
   {
@@ -783,6 +867,7 @@
     "pictogramId": 116,
     "handedness": "right",
     "description": "Two right-hand single 3/4 tags placed end to end.",
+    "dancerCount": 8,
     "introducedAt": "plus"
   },
   {
@@ -791,6 +876,7 @@
     "pictogramId": 117,
     "handedness": "right",
     "description": "Two right-hand Z formations side by side; centers are leaders.",
+    "dancerCount": 8,
     "introducedAt": "plus"
   },
   {
@@ -799,6 +885,7 @@
     "pictogramId": 913,
     "handedness": "left",
     "description": "Mirror of Right-Hand Side-by-Side Z's (centers are leaders).",
+    "dancerCount": 8,
     "introducedAt": "plus"
   },
   {
@@ -807,6 +894,7 @@
     "pictogramId": 118,
     "handedness": "right",
     "description": "Two right-hand Z formations side by side; centers are trailers.",
+    "dancerCount": 8,
     "introducedAt": "plus"
   },
   {
@@ -815,6 +903,7 @@
     "pictogramId": 915,
     "handedness": "left",
     "description": "Mirror of Right-Hand Side-by-Side Z's (centers are trailers).",
+    "dancerCount": 8,
     "introducedAt": "plus"
   },
   {
@@ -823,6 +912,7 @@
     "pictogramId": 119,
     "handedness": "right",
     "description": "Two right-hand Z formations placed end to end; centers are leaders.",
+    "dancerCount": 8,
     "introducedAt": "plus"
   },
   {
@@ -831,6 +921,7 @@
     "pictogramId": 120,
     "handedness": "right",
     "description": "Two right-hand Z formations placed end to end; centers are trailers.",
+    "dancerCount": 8,
     "introducedAt": "plus"
   },
   {
@@ -839,6 +930,7 @@
     "pictogramId": 121,
     "handedness": "general",
     "description": "Eight dancers in a circle ready for Dixie Grand; alternating facing.",
+    "dancerCount": 8,
     "introducedAt": "plus"
   },
   {
@@ -849,6 +941,7 @@
     "pictogramId": 122,
     "handedness": "right",
     "description": "2x2 mini-wave-style box with right-hand handholds; same as pictogram 429.",
+    "dancerCount": 4,
     "introducedAt": "plus"
   },
   {
@@ -859,6 +952,7 @@
     "pictogramId": 919,
     "handedness": "left",
     "description": "Mirror of Right-Hand 1/4 Box.",
+    "dancerCount": 4,
     "introducedAt": "plus"
   },
   {
@@ -867,6 +961,7 @@
     "pictogramId": 123,
     "handedness": "general",
     "description": "Eight dancers in two crossed lines aligned with the walls; used in (Anything) and Spread.",
+    "dancerCount": 8,
     "introducedAt": "plus"
   },
   {
@@ -877,6 +972,7 @@
     "pictogramId": 201,
     "handedness": "right",
     "description": "Line of 4 with three dancers facing one way and one facing the other; ends face same way, centers have right hands.",
+    "dancerCount": 4,
     "introducedAt": "adv"
   },
   {
@@ -887,6 +983,7 @@
     "pictogramId": 941,
     "handedness": "left",
     "description": "Mirror of pictogram 201.",
+    "dancerCount": 4,
     "introducedAt": "adv"
   },
   {
@@ -897,6 +994,7 @@
     "pictogramId": 202,
     "handedness": "general",
     "description": "Line of 4 where centers face the same direction; ends are beaus.",
+    "dancerCount": 4,
     "introducedAt": "adv"
   },
   {
@@ -907,6 +1005,7 @@
     "pictogramId": 943,
     "handedness": "general",
     "description": "Mirror of pictogram 202; ends are belles.",
+    "dancerCount": 4,
     "introducedAt": "adv"
   },
   {
@@ -915,6 +1014,7 @@
     "pictogramId": 203,
     "handedness": "general",
     "description": "Line of 4 with the ends facing each other and the centers facing out, or vice versa.",
+    "dancerCount": 4,
     "introducedAt": "adv"
   },
   {
@@ -923,6 +1023,7 @@
     "pictogramId": 204,
     "handedness": "general",
     "description": "Box where the centers and ends are inverted relative to a normal box.",
+    "dancerCount": 4,
     "introducedAt": "adv"
   },
   {
@@ -931,6 +1032,7 @@
     "pictogramId": 205,
     "handedness": "general",
     "description": "Box configuration occurring during Split Square Thru.",
+    "dancerCount": 4,
     "introducedAt": "adv"
   },
   {
@@ -941,6 +1043,7 @@
     "pictogramId": 206,
     "handedness": "right",
     "description": "Two parallel 3-and-1 lines; ends facing in; centers have right hands.",
+    "dancerCount": 8,
     "introducedAt": "adv"
   },
   {
@@ -951,6 +1054,7 @@
     "pictogramId": 946,
     "handedness": "left",
     "description": "Mirror of pictogram 206.",
+    "dancerCount": 8,
     "introducedAt": "adv"
   },
   {
@@ -961,6 +1065,7 @@
     "pictogramId": 207,
     "handedness": "right",
     "description": "Two parallel 3-and-1 lines; ends facing out; centers have right hands.",
+    "dancerCount": 8,
     "introducedAt": "adv"
   },
   {
@@ -971,6 +1076,7 @@
     "pictogramId": 948,
     "handedness": "left",
     "description": "Mirror of pictogram 207.",
+    "dancerCount": 8,
     "introducedAt": "adv"
   },
   {
@@ -981,6 +1087,7 @@
     "pictogramId": 208,
     "handedness": "general",
     "description": "Two parallel 3-and-1 lines; centers facing in; ends are beaus.",
+    "dancerCount": 8,
     "introducedAt": "adv"
   },
   {
@@ -991,6 +1098,7 @@
     "pictogramId": 950,
     "handedness": "general",
     "description": "Mirror of pictogram 208; ends are belles.",
+    "dancerCount": 8,
     "introducedAt": "adv"
   },
   {
@@ -1001,6 +1109,7 @@
     "pictogramId": 209,
     "handedness": "general",
     "description": "Two parallel 3-and-1 lines; centers facing out; ends are beaus.",
+    "dancerCount": 8,
     "introducedAt": "adv"
   },
   {
@@ -1011,6 +1120,7 @@
     "pictogramId": 952,
     "handedness": "general",
     "description": "Mirror of pictogram 209; ends are belles.",
+    "dancerCount": 8,
     "introducedAt": "adv"
   },
   {
@@ -1019,6 +1129,7 @@
     "pictogramId": 210,
     "handedness": "general",
     "description": "Two parallel inverted lines with ends facing in.",
+    "dancerCount": 8,
     "introducedAt": "adv"
   },
   {
@@ -1027,6 +1138,7 @@
     "pictogramId": 211,
     "handedness": "general",
     "description": "Two parallel inverted lines with ends facing out.",
+    "dancerCount": 8,
     "introducedAt": "adv"
   },
   {
@@ -1037,6 +1149,7 @@
     "pictogramId": 212,
     "handedness": "general",
     "description": "Eight-dancer single line formed as a 3-and-1 pattern (typical handedness).",
+    "dancerCount": 8,
     "introducedAt": "adv"
   },
   {
@@ -1045,6 +1158,7 @@
     "pictogramId": 213,
     "handedness": "general",
     "description": "Eight-dancer single line formed as an inverted line (typical handedness).",
+    "dancerCount": 8,
     "introducedAt": "adv"
   },
   {
@@ -1053,6 +1167,7 @@
     "pictogramId": 214,
     "handedness": "right",
     "description": "As-couples application of a right-hand wave; same shape as Right-Hand Tidal Wave.",
+    "dancerCount": 8,
     "introducedAt": "adv"
   },
   {
@@ -1061,6 +1176,7 @@
     "pictogramId": 956,
     "handedness": "left",
     "description": "Mirror of Right-Hand As Couples Wave.",
+    "dancerCount": 8,
     "introducedAt": "adv"
   },
   {
@@ -1069,6 +1185,7 @@
     "pictogramId": 215,
     "handedness": "right",
     "description": "As-couples application of a right-hand two-faced line; same shape as Right-Hand Tidal Two-Faced Line.",
+    "dancerCount": 8,
     "introducedAt": "adv"
   },
   {
@@ -1077,6 +1194,7 @@
     "pictogramId": 958,
     "handedness": "left",
     "description": "Mirror of Right-Hand As Couples Two-Faced Line.",
+    "dancerCount": 8,
     "introducedAt": "adv"
   },
   {
@@ -1087,6 +1205,7 @@
     "pictogramId": 216,
     "handedness": "general",
     "description": "Eight-dancer column; facing directions unspecified.",
+    "dancerCount": 8,
     "introducedAt": "adv"
   },
   {
@@ -1095,6 +1214,7 @@
     "pictogramId": 217,
     "handedness": "right",
     "description": "Eight-dancer hourglass with the points of two diamonds at the ends and a center wave.",
+    "dancerCount": 8,
     "introducedAt": "adv"
   },
   {
@@ -1103,6 +1223,7 @@
     "pictogramId": 960,
     "handedness": "left",
     "description": "Mirror of Right-Hand Hourglass.",
+    "dancerCount": 8,
     "introducedAt": "adv"
   },
   {
@@ -1111,6 +1232,7 @@
     "pictogramId": 218,
     "handedness": "facing",
     "description": "Hourglass formation with the very centers facing each other; right hands meeting.",
+    "dancerCount": 8,
     "introducedAt": "adv"
   },
   {
@@ -1119,6 +1241,7 @@
     "pictogramId": 964,
     "handedness": "facing",
     "description": "Mirror of pictogram 218.",
+    "dancerCount": 8,
     "introducedAt": "adv"
   },
   {
@@ -1127,6 +1250,7 @@
     "pictogramId": 219,
     "handedness": "general",
     "description": "Hourglass shape; facing directions unspecified.",
+    "dancerCount": 8,
     "introducedAt": "adv"
   },
   {
@@ -1137,6 +1261,7 @@
     "pictogramId": 220,
     "handedness": "right",
     "description": "Eight-dancer formation made of two right-hand columns of three plus two outside dancers.",
+    "dancerCount": 8,
     "introducedAt": "adv"
   },
   {
@@ -1147,6 +1272,7 @@
     "pictogramId": 962,
     "handedness": "left",
     "description": "Mirror of pictogram 220.",
+    "dancerCount": 8,
     "introducedAt": "adv"
   },
   {
@@ -1157,6 +1283,7 @@
     "pictogramId": 221,
     "handedness": "general",
     "description": "Eight-dancer formation made of two columns of three plus two outside dancers; from Right-Hand 1/4 Tag.",
+    "dancerCount": 8,
     "introducedAt": "adv"
   },
   {
@@ -1167,6 +1294,7 @@
     "pictogramId": 222,
     "handedness": "right",
     "description": "Eight-dancer formation: a right-hand star at the centers plus two outside mini-waves.",
+    "dancerCount": 8,
     "introducedAt": "adv"
   },
   {
@@ -1175,7 +1303,8 @@
     "introducedAt": "bms",
     "pictogramId": 1021,
     "handedness": "left",
-    "description": "Mirror of Right-Hand Star (pictogram 21). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants."
+    "description": "Mirror of Right-Hand Star (pictogram 21). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants.",
+    "dancerCount": 4
   },
   {
     "name": "Left-Hand Stars",
@@ -1183,7 +1312,8 @@
     "introducedAt": "bms",
     "pictogramId": 1022,
     "handedness": "left",
-    "description": "Mirror of Right-Hand Stars (pictogram 22). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants."
+    "description": "Mirror of Right-Hand Stars (pictogram 22). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants.",
+    "dancerCount": 8
   },
   {
     "name": "Left-Hand Single 1/4 Tag",
@@ -1193,7 +1323,8 @@
     "introducedAt": "plus",
     "pictogramId": 1105,
     "handedness": "left",
-    "description": "Mirror of Right-Hand Single 1/4 Tag (pictogram 105). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants."
+    "description": "Mirror of Right-Hand Single 1/4 Tag (pictogram 105). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants.",
+    "dancerCount": 4
   },
   {
     "name": "Left-Hand Single 3/4 Tag",
@@ -1203,7 +1334,8 @@
     "introducedAt": "plus",
     "pictogramId": 1106,
     "handedness": "left",
-    "description": "Mirror of Right-Hand Single 3/4 Tag (pictogram 106). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants."
+    "description": "Mirror of Right-Hand Single 3/4 Tag (pictogram 106). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants.",
+    "dancerCount": 4
   },
   {
     "name": "Left-Hand Star (aligned to walls)",
@@ -1213,7 +1345,8 @@
     "introducedAt": "plus",
     "pictogramId": 1107,
     "handedness": "left",
-    "description": "Mirror of Right-Hand Star (aligned to walls) (pictogram 107). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants."
+    "description": "Mirror of Right-Hand Star (aligned to walls) (pictogram 107). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants.",
+    "dancerCount": 4
   },
   {
     "name": "Left-Hand Stars (aligned to walls)",
@@ -1223,7 +1356,8 @@
     "introducedAt": "plus",
     "pictogramId": 1108,
     "handedness": "left",
-    "description": "Mirror of Right-Hand Stars (aligned to walls) (pictogram 108). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants."
+    "description": "Mirror of Right-Hand Stars (aligned to walls) (pictogram 108). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants.",
+    "dancerCount": 8
   },
   {
     "name": "Left-Hand End-to-End Single 1/4 Tags",
@@ -1233,7 +1367,8 @@
     "introducedAt": "plus",
     "pictogramId": 1115,
     "handedness": "left",
-    "description": "Mirror of Right-Hand End-to-End Single 1/4 Tags (pictogram 115). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants."
+    "description": "Mirror of Right-Hand End-to-End Single 1/4 Tags (pictogram 115). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants.",
+    "dancerCount": 8
   },
   {
     "name": "Left-Hand End-to-End Single 3/4 Tags",
@@ -1243,7 +1378,8 @@
     "introducedAt": "plus",
     "pictogramId": 1116,
     "handedness": "left",
-    "description": "Mirror of Right-Hand End-to-End Single 3/4 Tags (pictogram 116). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants."
+    "description": "Mirror of Right-Hand End-to-End Single 3/4 Tags (pictogram 116). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants.",
+    "dancerCount": 8
   },
   {
     "name": "Left-Hand End-to-End Z's (centers are leaders)",
@@ -1251,7 +1387,8 @@
     "introducedAt": "plus",
     "pictogramId": 1119,
     "handedness": "left",
-    "description": "Mirror of Right-Hand End-to-End Z's (centers are leaders) (pictogram 119). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants."
+    "description": "Mirror of Right-Hand End-to-End Z's (centers are leaders) (pictogram 119). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants.",
+    "dancerCount": 8
   },
   {
     "name": "Left-Hand End-to-End Z's (centers are trailers)",
@@ -1259,7 +1396,8 @@
     "introducedAt": "plus",
     "pictogramId": 1120,
     "handedness": "left",
-    "description": "Mirror of Right-Hand End-to-End Z's (centers are trailers) (pictogram 120). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants."
+    "description": "Mirror of Right-Hand End-to-End Z's (centers are trailers) (pictogram 120). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants.",
+    "dancerCount": 8
   },
   {
     "name": "Left-Hand Star and Two Mini-Waves",
@@ -1269,6 +1407,7 @@
     "introducedAt": "adv",
     "pictogramId": 1222,
     "handedness": "left",
-    "description": "Mirror of Right-Hand Star and Two Mini-Waves (pictogram 222). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants."
+    "description": "Mirror of Right-Hand Star and Two Mini-Waves (pictogram 222). Distinct row because hand flow and Standard Position settings differ between right- and left-hand variants.",
+    "dancerCount": 8
   }
 ]

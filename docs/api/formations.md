@@ -8,7 +8,13 @@ Names and pictogram identifiers come from Callerlab's [**Formation Pictograms** 
 
 The `formation.clCode` column carries the pictogram number from the PDF (e.g. `clCode: "10"` for Right-Hand Ocean Wave). This is how teach orders, parsers, and call definitions trace back to the official reference.
 
-The current seed covers Basic/Mainstream/SSD, Plus, and Advanced (~128 rows). Challenge formations (C-1, C-2, C-3A) are tracked in a follow-up issue.
+The current seed covers Basic/Mainstream/SSD, Plus, and Advanced (139 rows). Challenge formations (C-1, C-2, C-3A) are tracked in a follow-up issue.
+
+### `dancerCount`
+
+Each formation carries `dancerCount` — the number of dancers in the arrangement: `2` (a single couple / pair), `4` (one line, wave, box, column, diamond, star, …), or `8` (full square: parallel pairs, Squared Set, Tidal formations, …). `1` is reserved for single-dancer Taminations edge cases not used in SquareTrack. `null` means not yet assigned.
+
+The seed derives it from the singular = one-unit / plural = two-parallel-units naming pattern combined with the arrangement in `description` (e.g. "Eight-dancer …", "2x4", "Line of 4"). The sequence builder filters starting formations by this value (see [`GET /api/formation?dancers=`](#get-apiformationdancers)).
 
 ---
 
@@ -34,7 +40,8 @@ HTTP **200**
       "name": "Squared Set",
       "description": "Eight dancers in a square",
       "clCode": null,
-      "sdCode": null
+      "sdCode": null,
+      "dancerCount": 8
     }
   ],
   "message": "List of all formations"
@@ -70,7 +77,8 @@ HTTP **200**
     "name": "Squared Set",
     "description": null,
     "clCode": null,
-    "sdCode": null
+    "sdCode": null,
+    "dancerCount": 8
   },
   "message": "Unique formation by id"
 }
@@ -168,6 +176,40 @@ HTTP **406**
 
 ---
 
+## GET /api/formation?dancers=
+
+Returns only formations with the given `dancerCount`. Used by the sequence builder's starting-formation picker, which defaults to `?dancers=8` (full square) and offers a toggle to show 2- and 4-dancer teaching formations.
+
+### Query Parameters
+
+| Parameter | Type    | Required | Description                              |
+|-----------|---------|----------|------------------------------------------|
+| dancers   | integer | **yes**  | Dancer count to filter by (`2`, `4`, `8`) |
+
+### Expected Results
+
+#### Success
+
+HTTP **200**
+
+```json
+{
+  "data": [
+    { "formId": 1, "name": "Squared Set", "description": null, "clCode": null, "sdCode": null, "dancerCount": 8 },
+    { "formId": 7, "name": "Facing Lines", "description": null, "clCode": null, "sdCode": null, "dancerCount": 8 }
+  ],
+  "message": "Formations by dancer count"
+}
+```
+
+- Returns an empty array (not `null`) when no formations match the count.
+
+#### Invalid dancers (non-numeric)
+
+HTTP **406**
+
+---
+
 ## POST /api/formation
 
 Creates a new formation.
@@ -194,7 +236,8 @@ HTTP **201**
     "name": "Right-Hand Wave",
     "description": null,
     "clCode": null,
-    "sdCode": null
+    "sdCode": null,
+    "dancerCount": null
   },
   "message": "Formation created"
 }
@@ -216,3 +259,4 @@ HTTP **406**
 
 - Formation names are not enforced unique at the DB level; callers may have multiple variations with the same conceptual name. Use `clCode` and `sdCode` to distinguish precisely.
 - The system seeds a **"Squared Set"** formation on first setup. Its ID is used as the default `startFormationId` for new sequences.
+- `dancerCount` is **not** set via this endpoint — it is assigned by the Callerlab seed importer. Formations created through POST start with `dancerCount: null` until assigned.

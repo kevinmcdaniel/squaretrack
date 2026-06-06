@@ -60,6 +60,32 @@ describe('GET /api/formation?search=', () => {
   });
 });
 
+// ── GET /api/formation?dancers= ─────────────────────────────────────────────
+
+describe('GET /api/formation?dancers=', () => {
+  it('returns only formations matching the dancer count (#66)', async () => {
+    await prisma.formation.create({ data: { name: `${T}Eight`, dancerCount: 8 } });
+    await prisma.formation.create({ data: { name: `${T}Four`, dancerCount: 4 } });
+    const res = await request(app).get('/api/formation?dancers=8');
+    expect(res.status).toBe(200);
+    const names = res.body.data.map((f: any) => f.name);
+    expect(names).toContain(`${T}Eight`);
+    expect(names).not.toContain(`${T}Four`);
+    expect(res.body.data.every((f: any) => f.dancerCount === 8)).toBe(true);
+  });
+
+  it('includes dancerCount on each formation', async () => {
+    const res = await request(app).get('/api/formation/list');
+    expect(res.status).toBe(200);
+    expect(res.body.data[0]).toHaveProperty('dancerCount');
+  });
+
+  it('returns 406 for non-numeric dancers', async () => {
+    const res = await request(app).get('/api/formation?dancers=abc');
+    expect(res.status).toBe(406);
+  });
+});
+
 // ── GET /api/formation?callId= ──────────────────────────────────────────────
 
 describe('GET /api/formation?callId=', () => {

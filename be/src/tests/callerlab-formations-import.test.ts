@@ -18,6 +18,7 @@ type FormationRow = {
   pictogramId: number;
   handedness: string;
   description: string;
+  dancerCount: number;
 };
 
 function loadJson(): FormationRow[] {
@@ -50,6 +51,31 @@ describe('formations.json source file', () => {
       expect(['right', 'left', 'facing', 'general']).toContain(r.handedness);
       expect(r.description.length).toBeGreaterThan(0);
       expect(Array.isArray(r.alternateNames)).toBe(true);
+    }
+  });
+
+  it('every row has a dancerCount of 1, 2, 4, or 8 (#66)', () => {
+    for (const r of rows) {
+      expect([1, 2, 4, 8], `dancerCount on ${r.name} (#${r.pictogramId})`).toContain(r.dancerCount);
+    }
+  });
+
+  it('canonical dancerCounts are correct (#66)', () => {
+    const byName = new Map(rows.map((r) => [r.name, r] as const));
+    const expected: Record<string, number> = {
+      Couple: 2,
+      'Right-Hand Mini-Wave': 2,
+      'Facing Couples': 4,
+      'Right-Hand Ocean Wave': 4,
+      'Right-Hand Star': 4,
+      'Single Eight Chain Thru': 4,
+      'Squared Set': 8,
+      'Eight Chain Thru': 8,
+      'Facing Lines': 8,
+      'Right-Hand Tidal Wave': 8,
+    };
+    for (const [name, count] of Object.entries(expected)) {
+      expect(byName.get(name)?.dancerCount, name).toBe(count);
     }
   });
 
@@ -112,6 +138,15 @@ describe('importCallerlabFormations against seeded DB', () => {
     expect(summary.inserted).toBe(0);
     expect(summary.updated).toBe(rows.length);
     expect(after).toBe(before);
+  });
+
+  it('import populates dancerCount on every callerlab formation (#66)', async () => {
+    await importCallerlabFormations();
+    const dbRows = await prisma.formation.findMany({ select: { name: true, dancerCount: true } });
+    const dbByName = new Map(dbRows.map((f) => [f.name, f.dancerCount] as const));
+    for (const r of rows) {
+      expect(dbByName.get(r.name), `dancerCount in DB for ${r.name}`).toBe(r.dancerCount);
+    }
   });
 
   it('canonical anchor formations exist (Squared Set, Right-Hand Ocean Wave, Eight Chain Thru)', async () => {

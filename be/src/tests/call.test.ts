@@ -107,6 +107,39 @@ describe('POST /api/call', () => {
   });
 });
 
+// ── #66 metadata fields (isPositional, isGenderCall, waveRuleApplies, dancerCount) ──
+
+describe('call #66 metadata fields', () => {
+  it('GET list/:id returns the four metadata fields', async () => {
+    const call = await prisma.call.create({
+      data: { name: `${T}MetaCall`, isPositional: true, isGenderCall: false, waveRuleApplies: true, dancerCount: 4 },
+    });
+    const res = await request(app).get(`/api/call/list/${call.callId}`);
+    expect(res.status).toBe(200);
+    expect(res.body.data.isPositional).toBe(true);
+    expect(res.body.data.isGenderCall).toBe(false);
+    expect(res.body.data.waveRuleApplies).toBe(true);
+    expect(res.body.data.dancerCount).toBe(4);
+  });
+
+  it('GET list/:id returns null metadata when unset', async () => {
+    const call = await prisma.call.create({ data: { name: `${T}MetaNull` } });
+    const res = await request(app).get(`/api/call/list/${call.callId}`);
+    expect(res.status).toBe(200);
+    expect(res.body.data.isPositional).toBeNull();
+    expect(res.body.data.dancerCount).toBeNull();
+  });
+
+  it('POST creates a call with metadata fields', async () => {
+    const res = await request(app)
+      .post('/api/call')
+      .send({ name: `${T}MetaCreate`, isPositional: false, isGenderCall: true, waveRuleApplies: false, dancerCount: 2 });
+    expect(res.status).toBe(201);
+    expect(res.body.data.isGenderCall).toBe(true);
+    expect(res.body.data.dancerCount).toBe(2);
+  });
+});
+
 // ── POST /api/call/:callId/synonym ──────────────────────────────────────────
 
 describe('POST /api/call/:callId/synonym', () => {
