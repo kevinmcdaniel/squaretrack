@@ -22,6 +22,8 @@ jobs:
           cache-dependency-path: be/package-lock.json
       - run: npm ci
       - run: npx prisma generate
+        env:
+          DB_SQUARETRACK_URL: postgresql://stub:stub@localhost:5432/stub
       - run: npm run typecheck
       - run: npm run lint
 
