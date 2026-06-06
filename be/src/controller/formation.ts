@@ -1,4 +1,4 @@
-import { type Request, type Response } from 'express';
+import { type Request, type Response, type NextFunction } from 'express';
 import { validationError, conflictError, notFoundError } from '../common/errorHandler.js';
 import { isNumeric, routeParam } from '../common/utils.js';
 import {
@@ -11,7 +11,7 @@ import {
   createCallFormationService,
 } from '../service/formation/index.js';
 
-export const listCallFormations = async (_req: Request, res: Response, next: any) => {
+export const listCallFormations = async (_req: Request, res: Response, next: NextFunction) => {
   try {
     const records = await listCallFormationsService();
     res.json({ data: records, message: 'List of all call formations' });
@@ -20,7 +20,7 @@ export const listCallFormations = async (_req: Request, res: Response, next: any
   }
 };
 
-export const listFormation = async (req: Request, res: Response, next: any) => {
+export const listFormation = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const formationId = routeParam(req.params.formationId);
     if (!isNumeric(formationId)) {
@@ -34,7 +34,7 @@ export const listFormation = async (req: Request, res: Response, next: any) => {
   }
 };
 
-export const listFormations = async (req: Request, res: Response, next: any) => {
+export const listFormations = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { search, callId } = req.query as Record<string, string>;
 
@@ -58,7 +58,7 @@ export const listFormations = async (req: Request, res: Response, next: any) => 
   }
 };
 
-export const createFormation = async (req: Request, res: Response, next: any) => {
+export const createFormation = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { name, description, clCode, sdCode } = req.body;
     if (!name) throw new validationError('name is required.');
@@ -69,7 +69,7 @@ export const createFormation = async (req: Request, res: Response, next: any) =>
   }
 };
 
-export const createCallFormation = async (req: Request, res: Response, next: any) => {
+export const createCallFormation = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { callId, startId, endId, inFlowRotation, inFlowDirection, outFlowRotation, outFlowDirection } = req.body;
     if (!callId || !startId || !endId) throw new validationError('callId, startId, and endId are required.');

@@ -1,4 +1,4 @@
-import { type Request, type Response } from 'express';
+import { type Request, type Response, type NextFunction } from 'express';
 
 export class authError extends Error {
   constructor(message: any) {
@@ -28,7 +28,7 @@ export class notFoundError extends Error {
   }
 }
 
-export const errorHandler = (err: any, _req: Request, res: Response, next: any) => {
+export const errorHandler = (err: any, _req: Request, res: Response, next: NextFunction) => {
   if (res.headersSent) {
     next(err);
   } else if (err.name === 'Authorization Error' || err.name === 'Authrorization Error') {

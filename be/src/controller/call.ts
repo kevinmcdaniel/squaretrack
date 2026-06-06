@@ -1,10 +1,10 @@
-import { type Request, type Response } from 'express';
+import { type Request, type Response, type NextFunction } from 'express';
 import { validationError, conflictError, notFoundError } from '../common/errorHandler.js';
 import { isNumeric, routeParam } from '../common/utils.js';
 import { listCallService, listCallsService } from '../service/call/list.js';
 import { createCallService, createCallSynonymService } from '../service/call/create.js';
 
-export const listCall = async (req: Request, res: Response, next: any) => {
+export const listCall = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const callId = routeParam(req.params.callId);
     if (!isNumeric(callId)) {
@@ -20,7 +20,7 @@ export const listCall = async (req: Request, res: Response, next: any) => {
   }
 };
 
-export const listCalls = async (_req: Request, res: Response, next: any) => {
+export const listCalls = async (_req: Request, res: Response, next: NextFunction) => {
   try {
     const records = await listCallsService();
     res.json({ data: records, message: 'List of all calls' });
@@ -29,7 +29,7 @@ export const listCalls = async (_req: Request, res: Response, next: any) => {
   }
 };
 
-export const createCall = async (req: Request, res: Response, next: any) => {
+export const createCall = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { name, tamSeq, sdSeq, preferredDisplay, familyId } = req.body;
     if (!name) throw new validationError('name is required.');
@@ -42,7 +42,7 @@ export const createCall = async (req: Request, res: Response, next: any) => {
   }
 };
 
-export const createCallSynonym = async (req: Request, res: Response, next: any) => {
+export const createCallSynonym = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const callIdParam = routeParam(req.params.callId);
     if (!isNumeric(callIdParam)) {

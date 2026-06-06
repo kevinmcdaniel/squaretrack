@@ -179,21 +179,16 @@ export async function runSeed(): Promise<SeedSummary[]> {
 async function main() {
   const summaries = await runSeed();
   for (const s of summaries) {
-     
     console.log(`\n${s.teachOrder} [${s.programAbbreviation}] — ${s.entryCount} entries`);
     if (s.unresolvedCalls.length) {
-       
       console.log(`  unresolved calls (${s.unresolvedCalls.length}):`);
       for (const u of s.unresolvedCalls) {
-         
         console.log(`    ${u.displayOrder}  ${u.callName ?? '(null)'}  — ${u.label ?? ''}`);
       }
     }
     if (s.unresolvedFamilies.length) {
-       
       console.log(`  unresolved families (${s.unresolvedFamilies.length}):`);
       for (const u of s.unresolvedFamilies) {
-         
         console.log(`    ${u.displayOrder}  ${u.familyName ?? '(null)'}  — ${u.label ?? ''}`);
       }
     }
@@ -207,7 +202,6 @@ const isDirectInvocation =
 
 if (isDirectInvocation) {
   main().catch((e) => {
-     
     console.error(e);
     process.exit(1);
   });

@@ -1,4 +1,4 @@
-import { type Request, type Response } from 'express';
+import { type Request, type Response, type NextFunction } from 'express';
 import { validationError, conflictError, notFoundError } from '../common/errorHandler.js';
 import { isNumeric, routeParam } from '../common/utils.js';
 import {
@@ -37,7 +37,7 @@ async function validateEntries(programId: number, entries: any[]) {
   }
 }
 
-export const listTeachOrders = async (_req: Request, res: Response, next: any) => {
+export const listTeachOrders = async (_req: Request, res: Response, next: NextFunction) => {
   try {
     const records = await listTeachOrdersService();
     res.json({ data: records, message: 'List of all teach orders' });
@@ -46,7 +46,7 @@ export const listTeachOrders = async (_req: Request, res: Response, next: any) =
   }
 };
 
-export const getTeachOrder = async (req: Request, res: Response, next: any) => {
+export const getTeachOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const idParam = routeParam(req.params.id);
     if (!isNumeric(idParam)) {
@@ -61,7 +61,7 @@ export const getTeachOrder = async (req: Request, res: Response, next: any) => {
   }
 };
 
-export const createTeachOrder = async (req: Request, res: Response, next: any) => {
+export const createTeachOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { name, programId, entries } = req.body;
     if (!name) throw new validationError('name, programId, and entries are required.');
@@ -83,7 +83,7 @@ export const createTeachOrder = async (req: Request, res: Response, next: any) =
   }
 };
 
-export const updateTeachOrder = async (req: Request, res: Response, next: any) => {
+export const updateTeachOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const idParam = routeParam(req.params.id);
     if (!isNumeric(idParam)) {
@@ -106,7 +106,7 @@ export const updateTeachOrder = async (req: Request, res: Response, next: any) =
   }
 };
 
-export const parseTeachOrder = async (req: Request, res: Response, next: any) => {
+export const parseTeachOrder = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { text, programId } = req.body;
     if (!text) throw new validationError('text and programId are required.');

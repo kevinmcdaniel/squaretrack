@@ -1,9 +1,9 @@
-import { type Request, type Response } from 'express';
+import { type Request, type Response, type NextFunction } from 'express';
 import { validationError, notFoundError } from '../common/errorHandler.js';
 import { isNumeric, routeParam } from '../common/utils.js';
 import { listCallFamiliesService, listCallFamilyService } from '../service/call-family.js';
 
-export const listCallFamilies = async (_req: Request, res: Response, next: any) => {
+export const listCallFamilies = async (_req: Request, res: Response, next: NextFunction) => {
   try {
     const records = await listCallFamiliesService();
     res.json({ data: records, message: 'List of all call families' });
@@ -12,7 +12,7 @@ export const listCallFamilies = async (_req: Request, res: Response, next: any) 
   }
 };
 
-export const listCallFamily = async (req: Request, res: Response, next: any) => {
+export const listCallFamily = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const familyId = routeParam(req.params.familyId);
     if (!isNumeric(familyId)) {

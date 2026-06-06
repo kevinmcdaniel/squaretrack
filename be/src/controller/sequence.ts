@@ -1,10 +1,10 @@
-import { type Request, type Response } from 'express';
+import { type Request, type Response, type NextFunction } from 'express';
 import { validationError, conflictError, notFoundError } from '../common/errorHandler.js';
 import { isNumeric, routeParam } from '../common/utils.js';
 import { listSequencesService, getSequenceService, createSequenceService } from '../service/sequence/index.js';
 import { parseSequenceText } from '../service/parser.js';
 
-export const listSequence = async (req: Request, res: Response, next: any) => {
+export const listSequence = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const seqParam = routeParam(req.params.seqId ?? req.params.sequenceId);
     if (!isNumeric(seqParam)) {
@@ -19,7 +19,7 @@ export const listSequence = async (req: Request, res: Response, next: any) => {
   }
 };
 
-export const listSequences = async (_req: Request, res: Response, next: any) => {
+export const listSequences = async (_req: Request, res: Response, next: NextFunction) => {
   try {
     const records = await listSequencesService();
     res.json({ message: 'List of all sequences', data: records });
@@ -28,7 +28,7 @@ export const listSequences = async (_req: Request, res: Response, next: any) => 
   }
 };
 
-export const parseSequence = async (req: Request, res: Response, next: any) => {
+export const parseSequence = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { text } = req.body;
     if (!text) throw new validationError('text is required.');
@@ -39,7 +39,7 @@ export const parseSequence = async (req: Request, res: Response, next: any) => {
   }
 };
 
-export const createSequence = async (req: Request, res: Response, next: any) => {
+export const createSequence = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { name, startFormationId, activator, rating, notes, isVerified, sourceText, teachOrderId, steps } = req.body;
     if (!name) throw new validationError('name is required.');

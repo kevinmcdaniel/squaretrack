@@ -1,10 +1,10 @@
 // group table controller
-import { type Request, type Response } from 'express';
+import { type Request, type Response, type NextFunction } from 'express';
 import { notFoundError } from '../common/errorHandler.js';
 import { routeParam } from '../common/utils.js';
 import { listGroupService, listGroupsService } from '../service/group.js';
 
-const listGroup = async (req: Request, res: Response, next: any) => {
+const listGroup = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const groupId = routeParam(req.params.groupId);
     const record = await listGroupService(groupId);
@@ -20,7 +20,7 @@ const listGroup = async (req: Request, res: Response, next: any) => {
   }
 };
 
-const listGroups = async (_req: Request, res: Response, next: any) => {
+const listGroups = async (_req: Request, res: Response, next: NextFunction) => {
   try {
     const records = await listGroupsService();
     res.json({

@@ -131,7 +131,6 @@ export async function runImport() {
 
 async function main() {
   const summary = await runImport();
-   
   console.log('Imported:', summary);
   await prisma.$disconnect();
 }
@@ -142,7 +141,6 @@ const isDirectInvocation =
 
 if (isDirectInvocation) {
   main().catch((e) => {
-     
     console.error(e);
     process.exit(1);
   });

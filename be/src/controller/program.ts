@@ -1,4 +1,4 @@
-import { type Request, type Response } from 'express';
+import { type Request, type Response, type NextFunction } from 'express';
 import { validationError, conflictError, notFoundError } from '../common/errorHandler.js';
 import { isNumeric, routeParam } from '../common/utils.js';
 import {
@@ -11,7 +11,7 @@ import {
 
 const VALID_DIFFICULTIES = ['easy', 'hard', 'challenging'];
 
-export const listPrograms = async (req: Request, res: Response, next: any) => {
+export const listPrograms = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const showInactive = req.query.showInactive === 'true';
     const records = await listProgramsService({ showInactive });
@@ -24,7 +24,7 @@ export const listPrograms = async (req: Request, res: Response, next: any) => {
   }
 };
 
-export const createProgram = async (req: Request, res: Response, next: any) => {
+export const createProgram = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { name, abbreviation, order, isActive } = req.body;
     if (!name || !abbreviation || order == null) {
@@ -49,7 +49,7 @@ export const createProgram = async (req: Request, res: Response, next: any) => {
   }
 };
 
-export const updateProgram = async (req: Request, res: Response, next: any) => {
+export const updateProgram = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const programIdParam = routeParam(req.params.programId);
     if (!isNumeric(programIdParam)) {
@@ -93,7 +93,7 @@ export const updateProgram = async (req: Request, res: Response, next: any) => {
   }
 };
 
-export const listProgramCallFormations = async (req: Request, res: Response, next: any) => {
+export const listProgramCallFormations = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const programIdParam = routeParam(req.params.programId);
     if (!isNumeric(programIdParam)) {
@@ -117,7 +117,7 @@ export const listProgramCallFormations = async (req: Request, res: Response, nex
   }
 };
 
-export const createProgramCallFormation = async (req: Request, res: Response, next: any) => {
+export const createProgramCallFormation = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const programIdParam = routeParam(req.params.programId);
     if (!isNumeric(programIdParam)) {

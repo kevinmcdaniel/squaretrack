@@ -70,7 +70,6 @@ export async function runImport(): Promise<{ inserted: number; updated: number; 
 
 async function main() {
   const summary = await runImport();
-   
   console.log('Imported Callerlab formations:', summary);
   await prisma.$disconnect();
 }
@@ -81,7 +80,6 @@ const isDirectInvocation =
 
 if (isDirectInvocation) {
   main().catch((e) => {
-     
     console.error(e);
     process.exit(1);
   });

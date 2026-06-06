@@ -121,7 +121,6 @@ function extractCallFormations(tamRoot: string): CallFormationRow[] {
 function writeJson(outDir: string, name: string, data: unknown) {
   const path = join(outDir, name);
   writeFileSync(path, JSON.stringify(data, null, 2) + '\n');
-   
   console.log(`wrote ${path} (${Array.isArray(data) ? data.length : 1} rows)`);
 }
 
