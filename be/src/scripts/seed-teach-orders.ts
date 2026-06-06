@@ -179,21 +179,21 @@ export async function runSeed(): Promise<SeedSummary[]> {
 async function main() {
   const summaries = await runSeed();
   for (const s of summaries) {
-    // eslint-disable-next-line no-console
+     
     console.log(`\n${s.teachOrder} [${s.programAbbreviation}] — ${s.entryCount} entries`);
     if (s.unresolvedCalls.length) {
-      // eslint-disable-next-line no-console
+       
       console.log(`  unresolved calls (${s.unresolvedCalls.length}):`);
       for (const u of s.unresolvedCalls) {
-        // eslint-disable-next-line no-console
+         
         console.log(`    ${u.displayOrder}  ${u.callName ?? '(null)'}  — ${u.label ?? ''}`);
       }
     }
     if (s.unresolvedFamilies.length) {
-      // eslint-disable-next-line no-console
+       
       console.log(`  unresolved families (${s.unresolvedFamilies.length}):`);
       for (const u of s.unresolvedFamilies) {
-        // eslint-disable-next-line no-console
+         
         console.log(`    ${u.displayOrder}  ${u.familyName ?? '(null)'}  — ${u.label ?? ''}`);
       }
     }
@@ -207,7 +207,7 @@ const isDirectInvocation =
 
 if (isDirectInvocation) {
   main().catch((e) => {
-    // eslint-disable-next-line no-console
+     
     console.error(e);
     process.exit(1);
   });

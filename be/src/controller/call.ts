@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { type Request, type Response } from 'express';
 import { validationError, conflictError, notFoundError } from '../common/errorHandler.js';
 import { isNumeric } from '../common/utils.js';
 import { listCallService, listCallsService } from '../service/call/list.js';
@@ -19,7 +19,7 @@ export const listCall = async (req: Request, res: Response, next: any) => {
   }
 };
 
-export const listCalls = async (req: Request, res: Response, next: any) => {
+export const listCalls = async (_req: Request, res: Response, next: any) => {
   try {
     const records = await listCallsService();
     res.json({ data: records, message: 'List of all calls' });

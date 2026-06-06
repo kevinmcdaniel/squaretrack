@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { type Request, type Response } from 'express';
 import { validationError, conflictError, notFoundError } from '../common/errorHandler.js';
 import { isNumeric } from '../common/utils.js';
 import {
@@ -37,7 +37,7 @@ async function validateEntries(programId: number, entries: any[]) {
   }
 }
 
-export const listTeachOrders = async (req: Request, res: Response, next: any) => {
+export const listTeachOrders = async (_req: Request, res: Response, next: any) => {
   try {
     const records = await listTeachOrdersService();
     res.json({ data: records, message: 'List of all teach orders' });

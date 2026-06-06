@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { type Request, type Response } from 'express';
 import { validationError, conflictError, notFoundError } from '../common/errorHandler.js';
 import { isNumeric } from '../common/utils.js';
 import {
@@ -40,12 +40,14 @@ export const listFormations = async (req: Request, res: Response, next: any) => 
     if (callId !== undefined) {
       if (!isNumeric(callId)) throw new validationError(`callId must be an integer. Invalid value:${callId}.`);
       const records = await listFormationsByCallService(parseInt(callId, 10));
-      return res.json({ message: 'Formations for call', data: records });
+      res.json({ message: 'Formations for call', data: records });
+      return;
     }
 
     if (search !== undefined) {
       const records = await searchFormationsService(search);
-      return res.json({ message: 'Formation search results', data: records });
+      res.json({ message: 'Formation search results', data: records });
+      return;
     }
 
     const records = await listFormationsService();

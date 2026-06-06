@@ -1,5 +1,5 @@
 // group table controller
-import { Request, Response } from 'express';
+import { type Request, type Response } from 'express';
 import { notFoundError } from '../common/errorHandler.js';
 import { listGroupService, listGroupsService } from '../service/group.js';
 
@@ -18,7 +18,7 @@ const listGroup = async (req: Request, res: Response, next: any) => {
   }
 };
 
-const listGroups = async (req: Request, res: Response, next: any) => {
+const listGroups = async (_req: Request, res: Response, next: any) => {
   try {
     const records = await listGroupsService();
     res.json({

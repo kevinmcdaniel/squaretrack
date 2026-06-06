@@ -4,7 +4,7 @@ import { authError } from './errorHandler.js';
 
 
 export const authorizeApiKey = (apiValue: string) => {
-  return async (req: Request, res: Response, next: NextFunction) => {
+  return async (req: Request, _res: Response, next: NextFunction) => {
     try {
       let { apiKey } = req.body;
       if (!apiKey) {
@@ -39,8 +39,8 @@ export const authorizeApiKey = (apiValue: string) => {
 }
 
 export const authorizeUser = async (
-  req: Request,
-  res: Response,
+  _req: Request,
+  _res: Response,
   next: NextFunction
 ): Promise<void> => {
   try {

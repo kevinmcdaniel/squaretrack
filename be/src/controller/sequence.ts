@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { type Request, type Response } from 'express';
 import { validationError, conflictError, notFoundError } from '../common/errorHandler.js';
 import { isNumeric } from '../common/utils.js';
 import { listSequencesService, getSequenceService, createSequenceService } from '../service/sequence/index.js';
@@ -18,7 +18,7 @@ export const listSequence = async (req: Request, res: Response, next: any) => {
   }
 };
 
-export const listSequences = async (req: Request, res: Response, next: any) => {
+export const listSequences = async (_req: Request, res: Response, next: any) => {
   try {
     const records = await listSequencesService();
     res.json({ message: 'List of all sequences', data: records });
