@@ -43,5 +43,6 @@ be/src/generated/
 
 # trivy logs
 trivy*.log
-/.claude
+/.claude/*
+!/.claude/settings.json
 /postman/environments
