@@ -158,13 +158,15 @@ A pasted document is always a *presentation*: it carries cueing text and caller-
 | Anything else        | `module.steps[]` (a choreographic call)        |
 
 For `call` lines, the parser:
-1. Strips a leading designator (`heads`, `sides`, `boys`, `girls`, `centers`, `ends`, `leads`, `trailers`, `beaus`, `belles`) onto the module step.
-2. Strips leading spoken filler (`and`, `then`, `now`, `go`, `ok`, `okay`, `easy`) onto the presentation layer as `textBefore`.
+1. Strips spoken filler (`and`, `then`, `now`, `go`, `ok`, `okay`, `easy`) onto the presentation layer as `textBefore` — both **before** and **after** the designator, so `now heads square thru` keeps the `heads` designator while preserving `now`.
+2. Strips a leading designator (`heads`, `sides`, `boys`, `girls`, `centers`, `ends`, `leads`, `trailers`, `beaus`, `belles`) onto the module step.
 3. Strips a trailing numeric count onto the module step.
 4. Looks up the remaining text against `call.name` (exact, case-insensitive), then `call_synonym.alias`.
 5. Returns `callMatches` and, if exactly one match, `formationMatches` (and the resolved `callId` / single `startId`).
 
-The module step holds **only** choreographic data; all spoken text lives on `presentation`. The `presentation.items[]` array holds one `module_ref` item (whose `steps[]` carry per-call cueing keyed by `stepOrder`) plus one `text` item per non-call line.
+The module step holds **only** choreographic data; all spoken text lives on `presentation`. Detection is case-insensitive, but presentation text (`textBefore`, text items) is stored **verbatim** — a `[warning] STOP` stays `STOP`.
+
+The `presentation.items[]` array preserves source order: a run of consecutive calls becomes one `module_ref` item (whose `steps[]` carry per-call cueing keyed by `stepOrder`), and a non-call line becomes a `text` item in place — so a `[tip]` between calls splits the run into two `module_ref` items with the text item between them.
 
 ### Expected Results
 

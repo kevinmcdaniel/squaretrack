@@ -31,19 +31,17 @@ export type ParsedDraft = {
   presentation: { sourceText: string; items: ParsedPresentationItem[] };
 };
 
+// Classify a line by its leading marker. Detection is case-insensitive, but the
+// returned `text` keeps the caller's original casing so the presentation layer
+// stores it verbatim — a "[warning] STOP" stays "STOP".
 function classifyLine(line: string): { type: 'call' | 'activator' | 'filler' | 'warning' | 'tip' | 'recovery'; text: string } {
-  if (line.startsWith('//') || line.startsWith('#')) return { type: 'warning', text: line.replace(/^\/\/\s*|^#\s*/, '') };
-  if (line.startsWith('[tip]')) return { type: 'tip', text: line.slice(5).trim() };
-  if (line.startsWith('[filler]')) return { type: 'filler', text: line.slice(8).trim() };
-  if (line.startsWith('[recovery]')) return { type: 'recovery', text: line.slice(10).trim() };
-  if (line.startsWith('[warning]')) return { type: 'warning', text: line.slice(9).trim() };
-  if (DESIGNATORS.includes(line.split(/\s+/)[0])) {
-    const first = line.split(/\s+/)[0];
-    if (first === 'heads' || first === 'sides') {
-      const rest = line.slice(first.length).trim();
-      if (rest === '') return { type: 'activator', text: first };
-    }
-  }
+  const lower = line.toLowerCase();
+  if (lower.startsWith('//') || lower.startsWith('#')) return { type: 'warning', text: line.replace(/^\/\/\s*|^#\s*/, '') };
+  if (lower.startsWith('[tip]')) return { type: 'tip', text: line.slice(5).trim() };
+  if (lower.startsWith('[filler]')) return { type: 'filler', text: line.slice(8).trim() };
+  if (lower.startsWith('[recovery]')) return { type: 'recovery', text: line.slice(10).trim() };
+  if (lower.startsWith('[warning]')) return { type: 'warning', text: line.slice(9).trim() };
+  if (lower === 'heads' || lower === 'sides') return { type: 'activator', text: line };
   return { type: 'call', text: line };
 }
 
@@ -83,23 +81,38 @@ export async function parseSequenceText(rawText: string): Promise<ParsedDraft> {
     .filter((l) => l.length > 0);
 
   const moduleSteps: ParsedModuleStep[] = [];
-  const moduleDecoration: { stepOrder: number; textBefore?: string }[] = [];
-  const textItems: Extract<ParsedPresentationItem, { type: 'text' }>[] = [];
+  const items: ParsedPresentationItem[] = [];
 
-  let textOrder = 1; // module_ref item occupies order 0
+  let itemOrder = 0;
+  let pendingDecoration: { stepOrder: number; textBefore?: string }[] = [];
 
-  for (const line of lines) {
-    const normalized = line.toLowerCase().replace(/\s+/g, ' ').trim();
-    const { type, text: classified } = classifyLine(normalized);
+  // Flush the in-progress run of calls into one module_ref item, so text items
+  // keep their original position relative to the calls around them.
+  const flushModuleRef = () => {
+    if (pendingDecoration.length > 0) {
+      items.push({ order: itemOrder++, type: 'module_ref', steps: pendingDecoration });
+      pendingDecoration = [];
+    }
+  };
+
+  for (const rawLine of lines) {
+    const line = rawLine.replace(/\s+/g, ' ').trim(); // collapse whitespace, keep case
+    const { type, text } = classifyLine(line);
 
     if (type !== 'call') {
-      textItems.push({ order: textOrder++, type: 'text', textType: type, text: classified });
+      flushModuleRef();
+      items.push({ order: itemOrder++, type: 'text', textType: type, text });
       continue;
     }
 
-    const { text: afterDesignator, designator } = extractDesignator(classified);
-    const { text: afterFiller, textBefore } = extractTextBefore(afterDesignator);
-    const { text: callText, count } = extractCount(afterFiller);
+    // Strip spoken filler both before and after the designator. The designator
+    // must still be recognized (it drives call resolution); the filler is kept,
+    // in source order, on the presentation layer as textBefore.
+    const { text: afterPreFiller, textBefore: preFiller } = extractTextBefore(text);
+    const { text: afterDesignator, designator } = extractDesignator(afterPreFiller);
+    const { text: afterPostFiller, textBefore: postFiller } = extractTextBefore(afterDesignator);
+    const { text: callText, count } = extractCount(afterPostFiller);
+    const textBefore = [preFiller, postFiller].filter(Boolean).join(' ') || undefined;
 
     const byName = await prisma.call.findMany({ where: { name: { equals: callText, mode: 'insensitive' } } });
     const bySynonym = await prisma.call_synonym.findMany({
@@ -131,7 +144,7 @@ export async function parseSequenceText(rawText: string): Promise<ParsedDraft> {
     const stepOrder = moduleSteps.length;
     moduleSteps.push({
       order: stepOrder,
-      rawLine: line,
+      rawLine,
       designator,
       count,
       callMatches,
@@ -140,14 +153,10 @@ export async function parseSequenceText(rawText: string): Promise<ParsedDraft> {
       callId: callMatches.length === 1 ? callMatches[0].callId : undefined,
       startId: formationMatches.length === 1 ? formationMatches[0].startId : undefined,
     });
-    moduleDecoration.push({ stepOrder, ...(textBefore ? { textBefore } : {}) });
+    pendingDecoration.push({ stepOrder, ...(textBefore ? { textBefore } : {}) });
   }
 
-  const items: ParsedPresentationItem[] = [];
-  if (moduleSteps.length > 0) {
-    items.push({ order: 0, type: 'module_ref', steps: moduleDecoration });
-  }
-  items.push(...textItems);
+  flushModuleRef();
 
   return { module: { steps: moduleSteps }, presentation: { sourceText: rawText, items } };
 }

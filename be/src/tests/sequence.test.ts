@@ -138,6 +138,42 @@ describe('POST /api/sequence/parse', () => {
     expect(decoration.textBefore).toBe('and');
   });
 
+  it('keeps filler that precedes the designator, still extracting it (#70)', async () => {
+    const res = await request(app)
+      .post('/api/sequence/parse')
+      .send({ text: 'now heads square thru 4' });
+    expect(res.status).toBe(200);
+    const step = res.body.data.module.steps[0];
+    expect(step.designator).toBe('heads'); // designator still recognized
+    expect(step.count).toBe(4);
+    const moduleRef = res.body.data.presentation.items.find((i: any) => i.type === 'module_ref');
+    expect(moduleRef.steps[0].textBefore).toBe('now'); // filler preserved
+  });
+
+  it('preserves caller casing on the presentation layer (#70)', async () => {
+    const res = await request(app)
+      .post('/api/sequence/parse')
+      .send({ text: 'circle left\nAnd do-sa-do\n[warning] STOP NOW' });
+    expect(res.status).toBe(200);
+    const moduleRef = res.body.data.presentation.items.find((i: any) => i.type === 'module_ref');
+    const deco = moduleRef.steps.find((s: any) => s.stepOrder === 1);
+    expect(deco.textBefore).toBe('And'); // not lower-cased
+    const warn = res.body.data.presentation.items.find((i: any) => i.type === 'text');
+    expect(warn.text).toBe('STOP NOW'); // stored verbatim
+  });
+
+  it('interleaves text items in source order (#70)', async () => {
+    const res = await request(app)
+      .post('/api/sequence/parse')
+      .send({ text: '[tip] ready\ncircle left' });
+    expect(res.status).toBe(200);
+    const items = res.body.data.presentation.items;
+    expect(items[0].type).toBe('text'); // tip stays before the call
+    expect(items[0].textType).toBe('tip');
+    expect(items[1].type).toBe('module_ref');
+    expect(items[1].steps[0].stepOrder).toBe(0);
+  });
+
   it('extracts designator and count onto the module step', async () => {
     const res = await request(app)
       .post('/api/sequence/parse')

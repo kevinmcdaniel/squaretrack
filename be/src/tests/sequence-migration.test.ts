@@ -96,4 +96,45 @@ describe('migrate-sequences-to-modules (#70)', () => {
     expect(await prisma.presentation.count({ where: { name: `${T}migSeq` } })).toBe(1);
     expect(await prisma.choreo_module.count({ where: { name: `${T}migSeq` } })).toBe(1);
   });
+
+  it('preserves an unresolved call row as presentation text — no data loss (#70)', async () => {
+    const start = await prisma.formation.create({ data: { name: `${T}migUStart`, dancerCount: 8 } });
+    const end = await prisma.formation.create({ data: { name: `${T}migUEnd`, dancerCount: 8 } });
+    const call = await prisma.call.create({ data: { name: `${T}migUCall` } });
+    await prisma.call_formation.create({
+      data: { callId: call.callId, startId: start.formId, endId: end.formId },
+    });
+
+    await prisma.sequence.create({
+      data: {
+        name: `${T}migUnresolved`,
+        startFormationId: start.formId,
+        calls: {
+          create: [
+            { order: 0, type: 'call', callId: call.callId, startId: start.formId },
+            // Unresolved call: no callId/startId, but it carries spoken text.
+            { order: 1, type: 'call', text: 'some unknown call' },
+          ],
+        },
+      },
+    });
+
+    await runMigration();
+
+    // Only the resolved call becomes choreography.
+    const module = await prisma.choreo_module.findFirst({
+      where: { name: `${T}migUnresolved` },
+      include: { steps: true },
+    });
+    expect(module!.steps).toHaveLength(1);
+
+    // The unresolved row's text is kept on the presentation, not dropped.
+    const presentation = await prisma.presentation.findFirst({
+      where: { name: `${T}migUnresolved` },
+      include: { items: { orderBy: { order: 'asc' } } },
+    });
+    const textItem = presentation!.items.find((i) => i.type === 'text');
+    expect(textItem).toBeDefined();
+    expect(textItem!.text).toBe('some unknown call');
+  });
 });

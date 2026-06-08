@@ -272,7 +272,10 @@ model presentation_item {
   type           String                   // module_ref | text
   // --- module_ref fields ---
   moduleId       Int?
-  module         choreo_module?           @relation(fields: [moduleId], references: [id])
+  // Restrict (not SetNull): a module referenced by a presentation can't be
+  // deleted out from under it, which would otherwise leave a dangling
+  // module_ref item (null moduleId) plus orphaned per-step decoration.
+  module         choreo_module?           @relation(fields: [moduleId], references: [id], onDelete: Restrict)
   // --- text fields (activator cue, filler, tip, warning, closer) ---
   text           String?                  // spoken text for text-type items
   textType       String?                  // activator | filler | tip | warning | closer
