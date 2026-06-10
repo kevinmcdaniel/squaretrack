@@ -1,0 +1,27 @@
+$kind: http-request
+url: "{{api-url}}/api/module"
+method: POST
+order: 5500
+description: |-
+  POST /api/module where step 1's startId does NOT match step 0's end formation.
+  A broken chain is valid data — it still saves (201) but with isValid: false and
+  the offending step's order listed in chainBreaks (e.g. [1]). Use this to verify
+  the editor-highlight path. Both (callId, startId) pairs must still be real
+  call_formation rows (a missing pair is a 406, not a chain break).
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  mode: raw
+  raw: |-
+    {
+      "name": "Broken chain demo",
+      "startFormId": 1,
+      "steps": [
+        { "order": 0, "callId": 5, "startId": 1 },
+        { "order": 1, "callId": 6, "startId": 1 }
+      ]
+    }
+  options:
+    raw:
+      language: json

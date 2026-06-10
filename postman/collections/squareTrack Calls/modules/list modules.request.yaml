@@ -1,0 +1,8 @@
+$kind: http-request
+url: "{{api-url}}/api/module"
+method: GET
+order: 1000
+description: |-
+  GET /api/module — list choreo modules (presentation-free choreography, #70/#71).
+  Always 200 with data: array (never null). Each row includes nested steps
+  (with callFormation → call/startForm/endForm) plus startForm/endForm names.

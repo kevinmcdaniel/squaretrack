@@ -1,0 +1,35 @@
+$kind: http-request
+url: "{{api-url}}/api/module/{{moduleId}}"
+method: PUT
+order: 6000
+description: |-
+  PUT /api/module/:id — replace metadata + steps wholesale in one transaction.
+  Recomputes endFormId, isValid, safeAfter*, and returns chainBreaks[].
+  - 200 on success.
+  - 404 not found.
+  - 406 / 409 same validation as POST.
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  mode: raw
+  raw: |-
+    {
+      "name": "Heads Square Thru module",
+      "startFormId": 1,
+      "teachOrderId": null,
+      "isVerified": true,
+      "steps": [
+        {
+          "order": 0,
+          "callId": 5,
+          "startId": 1,
+          "designator": "heads",
+          "count": 4,
+          "warning": null
+        }
+      ]
+    }
+  options:
+    raw:
+      language: json

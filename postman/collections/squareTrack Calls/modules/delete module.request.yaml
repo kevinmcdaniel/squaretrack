@@ -1,0 +1,10 @@
+$kind: http-request
+url: "{{api-url}}/api/module/{{moduleId}}"
+method: DELETE
+order: 7000
+description: |-
+  DELETE /api/module/:id — delete a module and its steps (cascade).
+  - 200 with data: { id } on success.
+  - 404 not found.
+  - 409 when a presentation_item still references this module (delete those
+    presentations first; the reference is onDelete: Restrict).

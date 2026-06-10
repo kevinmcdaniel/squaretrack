@@ -1,0 +1,50 @@
+$kind: http-request
+url: "{{api-url}}/api/module"
+method: POST
+order: 5000
+description: |-
+  POST /api/module — create a choreo module + steps in one transaction (#71).
+  Server derives endFormId from the last step, computes isValid (true only when
+  every step chains), and returns chainBreaks[] alongside data.
+  - 201 on success.
+  - 406 missing name/startFormId, a step without callId/startId, an unknown
+    (callId, startId) call_formation, or a body endFormId that contradicts the
+    last step's end formation.
+  - 409 startFormId / endFormId / teachOrderId / step call_formation FK missing.
+
+  Replace callId/startId below with real call_formation pairs. For a clean chain,
+  step 0's startId should equal startFormId, and each step's startId should equal
+  the previous step's end formation.
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  mode: raw
+  raw: |-
+    {
+      "name": "Heads Square Thru module",
+      "startFormId": 1,
+      "teachOrderId": null,
+      "isVerified": false,
+      "steps": [
+        {
+          "order": 0,
+          "callId": 5,
+          "startId": 1,
+          "designator": "heads",
+          "count": 4,
+          "warning": null
+        },
+        {
+          "order": 1,
+          "callId": 6,
+          "startId": 2,
+          "designator": null,
+          "count": null,
+          "warning": null
+        }
+      ]
+    }
+  options:
+    raw:
+      language: json
