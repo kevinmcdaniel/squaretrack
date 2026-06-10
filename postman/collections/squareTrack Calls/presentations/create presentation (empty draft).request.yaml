@@ -1,0 +1,23 @@
+$kind: http-request
+url: "{{api-url}}/api/presentation"
+method: POST
+order: 5500
+description: |-
+  POST /api/presentation with items: [] — the import flow's first step: persist
+  the raw pasted text before parsing. Returns 201 with an id; items are filled
+  in later via PUT once the choreo module is saved. (Refs the #72 empty-items /
+  draft scope add.)
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  mode: raw
+  raw: |-
+    {
+      "name": "Untitled paste",
+      "sourceText": "heads square thru four, and right and left thru, veer left, ferris wheel",
+      "items": []
+    }
+  options:
+    raw:
+      language: json

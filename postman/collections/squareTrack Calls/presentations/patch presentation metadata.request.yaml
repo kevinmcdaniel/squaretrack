@@ -1,0 +1,21 @@
+$kind: http-request
+url: "{{api-url}}/api/presentation/{{presentationId}}"
+method: PATCH
+order: 6500
+description: |-
+  PATCH /api/presentation/:id — update metadata only (name, source, activator,
+  rating, notes) without touching items. Used by the session conductor to log a
+  rating after calling a tip. 200 with shallow data; 404 not found.
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  mode: raw
+  raw: |-
+    {
+      "rating": "excellent",
+      "notes": "danced clean at the Tuesday club"
+    }
+  options:
+    raw:
+      language: json

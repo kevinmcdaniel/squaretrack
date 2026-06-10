@@ -1,0 +1,9 @@
+$kind: http-request
+url: "{{api-url}}/api/presentation?search=&source=&activator=&moduleId=&safeAfterMax="
+method: GET
+order: 1000
+description: |-
+  GET /api/presentation — list presentations (shallow; no items nested).
+  Filters (all optional): search (name substring), source, activator,
+  moduleId (presentations including a module), safeAfterMax (every referenced
+  module's safeAfterEntryOrder <= value — session conductor). 200 with data: array.
