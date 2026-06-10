@@ -7,10 +7,17 @@ description: |-
   Server derives endFormId from the last step, computes isValid (true only when
   every step chains), and returns chainBreaks[] alongside data.
   - 201 on success.
+  - 200 + reusedExisting: true when a module with literally identical step rows
+    already exists (#21) — data is the existing module; no duplicate is created.
   - 406 missing name/startFormId, a step without callId/startId, an unknown
     (callId, startId) call_formation, or a body endFormId that contradicts the
     last step's end formation.
   - 409 startFormId / endFormId / teachOrderId / step call_formation FK missing.
+
+  Variant detection (#21): a choreo-equivalent module (same Taminations text via
+  call.tamSeq, e.g. a synonym-level twin call) is still created (201) but both
+  modules adopt a shared variantGroupId. Send this request twice to see the
+  reuse; list with ?variantGroupId= to see a group.
 
   Replace callId/startId below with real call_formation pairs. For a clean chain,
   step 0's startId should equal startFormId, and each step's startId should equal

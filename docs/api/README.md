@@ -31,6 +31,26 @@ These rules are enforced across every endpoint. New endpoints must follow them.
 
 Returning `null` for an empty list lost information (consumers had to check both shapes), broke generic FE list components, and made tests fragile against seeded reference data. The convention above eliminates that ambiguity: shape is determined by route, not by data presence.
 
+### Create endpoints — usually 201, sometimes 200
+
+`POST` creates a resource and returns **201**. One deliberate exception:
+
+- **`POST /api/module`** is find-or-adopt (#21). When the posted steps are a
+  literal duplicate of an existing module's, no new row is created — it returns
+  **200** with `data` = the existing module and a top-level `reusedExisting: true`.
+  This lets multiple presentations share one choreographic unit. FE create flows
+  must treat `200 + reusedExisting` as success, not just `201`.
+
+### Sidecar fields (beside `data`)
+
+Some endpoints add advisory fields next to `data` in the envelope (not inside it):
+
+- **`POST`/`PUT /api/module`** → `chainBreaks: number[]` — step `order`s whose
+  start formation doesn't follow the prior step's end. The module still saves
+  (`isValid: false`); a broken chain is not an error.
+- **`POST`/`PUT /api/presentation`** → `flowWarnings: { afterItemOrder: number }[]`
+  — boundaries where adjacent modules don't chain. Saves regardless.
+
 ### Error responses
 
 Always include the same envelope. The `data` value depends on error class:

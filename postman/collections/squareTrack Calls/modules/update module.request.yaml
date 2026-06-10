@@ -5,6 +5,9 @@ order: 6000
 description: |-
   PUT /api/module/:id — replace metadata + steps wholesale in one transaction.
   Recomputes endFormId, isValid, safeAfter*, and returns chainBreaks[].
+  Variant detection (#21) re-runs: the module joins/leaves a variantGroupId as
+  its steps change (PUT never merges modules — the id is preserved); a group
+  left with a single member is dissolved.
   - 200 on success.
   - 404 not found.
   - 406 / 409 same validation as POST.

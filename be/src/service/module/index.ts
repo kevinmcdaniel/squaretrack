@@ -1,5 +1,6 @@
 import { prisma } from '../../database.js';
 import { validationError } from '../../common/errorHandler.js';
+import { findVariantMatch, resolveGroupId, clearLoneGroupMember } from './variant.js';
 
 export type ModuleStepInput = {
   order: number;
@@ -183,34 +184,78 @@ export const createModuleService = async (data: ModuleInput) => {
   const { steps, name, startFormId, teachOrderId, endFormId, isVerified, ...flow } = data;
   const analysis = await analyze(startFormId, endFormId, steps, teachOrderId);
 
-  const module = await prisma.choreo_module.create({
-    data: {
-      name,
-      startFormId,
-      endFormId: analysis.endFormId,
-      teachOrderId: teachOrderId ?? null,
-      isVerified: isVerified ?? false,
-      isValid: analysis.isValid,
-      safeAfterEntryOrder: analysis.safeAfterEntryOrder,
-      safeAfterFasrOrder: analysis.safeAfterFasrOrder,
-      inFlowRotation: flow.inFlowRotation ?? null,
-      inFlowDirection: flow.inFlowDirection ?? null,
-      outFlowRotation: flow.outFlowRotation ?? null,
-      outFlowDirection: flow.outFlowDirection ?? null,
-      steps: { create: buildStepCreate(steps) },
+  // Variant detection (#21) runs inside the transaction at Serializable
+  // isolation: the comparison key is unstored by design, so there is no unique
+  // constraint to backstop it. Without this, two concurrent identical POSTs
+  // could both miss the exact-dup check and both insert — the very duplication
+  // this feature prevents. An exact step-row duplicate is never re-created; the
+  // existing module is returned so presentations share one choreo unit.
+  return prisma.$transaction(
+    async (tx) => {
+      const match = await findVariantMatch(steps, undefined, tx);
+      if (match.exactModuleId != null) {
+        const existing = await tx.choreo_module.findUnique({
+          where: { id: match.exactModuleId },
+          include: MODULE_INCLUDE,
+        });
+        return { module: existing!, chainBreaks: analysis.chainBreaks, reusedExisting: true };
+      }
+
+      const groupId = resolveGroupId(match);
+      if (groupId != null) {
+        await tx.choreo_module.updateMany({
+          where: { id: { in: match.matchedIds } },
+          data: { variantGroupId: groupId },
+        });
+      }
+      const module = await tx.choreo_module.create({
+        data: {
+          name,
+          startFormId,
+          endFormId: analysis.endFormId,
+          teachOrderId: teachOrderId ?? null,
+          isVerified: isVerified ?? false,
+          isValid: analysis.isValid,
+          variantGroupId: groupId,
+          safeAfterEntryOrder: analysis.safeAfterEntryOrder,
+          safeAfterFasrOrder: analysis.safeAfterFasrOrder,
+          inFlowRotation: flow.inFlowRotation ?? null,
+          inFlowDirection: flow.inFlowDirection ?? null,
+          outFlowRotation: flow.outFlowRotation ?? null,
+          outFlowDirection: flow.outFlowDirection ?? null,
+          steps: { create: buildStepCreate(steps) },
+        },
+        include: MODULE_INCLUDE,
+      });
+      return { module, chainBreaks: analysis.chainBreaks, reusedExisting: false };
     },
-    include: MODULE_INCLUDE,
-  });
-  return { module, chainBreaks: analysis.chainBreaks };
+    { isolationLevel: 'Serializable' },
+  );
 };
 
 export const updateModuleService = async (id: number, data: ModuleInput) => {
   const { steps, name, startFormId, teachOrderId, endFormId, isVerified, ...flow } = data;
   const analysis = await analyze(startFormId, endFormId, steps, teachOrderId);
 
+  // Variant detection on edit runs inside the transaction (Serializable, same
+  // rationale as create): re-match against everything but this module. An
+  // identical-row match never merges modules on PUT — the edited module keeps
+  // its id and simply joins the group.
   const module = await prisma.$transaction(async (tx) => {
+    const match = await findVariantMatch(steps, id, tx);
+    const groupId = resolveGroupId(match);
+    const previous = await tx.choreo_module.findUnique({
+      where: { id },
+      select: { variantGroupId: true },
+    });
     await tx.choreo_module_step.deleteMany({ where: { moduleId: id } });
-    return tx.choreo_module.update({
+    if (groupId != null) {
+      await tx.choreo_module.updateMany({
+        where: { id: { in: match.matchedIds } },
+        data: { variantGroupId: groupId },
+      });
+    }
+    const updated = await tx.choreo_module.update({
       where: { id },
       data: {
         name,
@@ -219,6 +264,7 @@ export const updateModuleService = async (id: number, data: ModuleInput) => {
         teachOrderId: teachOrderId ?? null,
         ...(isVerified != null ? { isVerified } : {}),
         isValid: analysis.isValid,
+        variantGroupId: groupId,
         safeAfterEntryOrder: analysis.safeAfterEntryOrder,
         safeAfterFasrOrder: analysis.safeAfterFasrOrder,
         inFlowRotation: flow.inFlowRotation ?? null,
@@ -229,7 +275,11 @@ export const updateModuleService = async (id: number, data: ModuleInput) => {
       },
       include: MODULE_INCLUDE,
     });
-  });
+    if (previous?.variantGroupId && previous.variantGroupId !== groupId) {
+      await clearLoneGroupMember(tx, previous.variantGroupId);
+    }
+    return updated;
+  }, { isolationLevel: 'Serializable' });
   return { module, chainBreaks: analysis.chainBreaks };
 };
 

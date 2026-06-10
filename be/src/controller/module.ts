@@ -84,9 +84,16 @@ export const getModule = async (req: Request, res: Response, next: NextFunction)
 export const createModule = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const input = validateModuleBody(req.body);
-    const { module, chainBreaks } = await createModuleService(input);
+    const { module, chainBreaks, reusedExisting } = await createModuleService(input);
+    if (reusedExisting) {
+      // Exact step-row duplicate (#21): no new module created; the caller
+      // should reference the existing one.
+      res.json({ message: 'Identical choreo module already exists', data: module, chainBreaks, reusedExisting: true });
+      return;
+    }
     res.status(201).json({ message: 'Choreo module created', data: module, chainBreaks });
   } catch (error: any) {
+    if (error?.code === 'P2034') return next(new conflictError('Concurrent module write conflict; please retry.'));
     if (error?.code === 'P2002') return next(new conflictError('Duplicate step order within the module.'));
     if (error?.code === 'P2003') return next(new conflictError('startFormId, endFormId, teachOrderId, or a step call_formation does not exist.'));
     next(error);
@@ -101,6 +108,7 @@ export const updateModule = async (req: Request, res: Response, next: NextFuncti
     const { module, chainBreaks } = await updateModuleService(id, input);
     res.json({ message: 'Choreo module updated', data: module, chainBreaks });
   } catch (error: any) {
+    if (error?.code === 'P2034') return next(new conflictError('Concurrent module write conflict; please retry.'));
     if (error?.code === 'P2002') return next(new conflictError('Duplicate step order within the module.'));
     if (error?.code === 'P2003') return next(new conflictError('startFormId, endFormId, teachOrderId, or a step call_formation does not exist.'));
     next(error);
