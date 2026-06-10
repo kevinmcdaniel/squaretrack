@@ -1,0 +1,34 @@
+$kind: http-request
+url: "{{api-url}}/api/presentation/{{presentationId}}"
+method: PUT
+order: 6000
+description: |-
+  PUT /api/presentation/:id — replace all items + item steps in one transaction
+  (cascades the old items away first). Recomputes flowWarnings.
+  - 200 with data + flowWarnings[].
+  - 404 not found.
+  - 406 same validation as POST.
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  mode: raw
+  raw: |-
+    {
+      "name": "Heads lead right tip (revised)",
+      "source": "personal",
+      "activator": "heads",
+      "items": [
+        {
+          "order": 0,
+          "type": "module_ref",
+          "moduleId": 1,
+          "steps": [
+            { "stepOrder": 0, "textBefore": "Easy", "callNameAlternate": null }
+          ]
+        }
+      ]
+    }
+  options:
+    raw:
+      language: json

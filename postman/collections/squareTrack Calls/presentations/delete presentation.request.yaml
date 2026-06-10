@@ -1,0 +1,9 @@
+$kind: http-request
+url: "{{api-url}}/api/presentation/{{presentationId}}"
+method: DELETE
+order: 7000
+description: |-
+  DELETE /api/presentation/:id — delete a presentation; cascades its items and
+  item steps. The referenced choreo modules are left intact.
+  - 200 with data: { id }.
+  - 404 not found.

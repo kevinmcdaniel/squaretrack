@@ -1,0 +1,8 @@
+$kind: http-request
+url: "{{api-url}}/api/presentation/{{presentationId}}/items/{{itemId}}"
+method: DELETE
+order: 9000
+description: |-
+  DELETE /api/presentation/:id/items/:itemId — remove one item (and its steps);
+  remaining items are reordered to close the gap. 200 with data: { id }; 404 if
+  the item is not on this presentation. Set {{itemId}} from a GET-by-id response.

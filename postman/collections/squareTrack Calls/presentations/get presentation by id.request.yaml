@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{api-url}}/api/presentation/{{presentationId}}"
+method: GET
+order: 2000
+description: |-
+  GET /api/presentation/:id — full nested items + item steps. For module_ref
+  items, each step is mirrored with its choreo moduleStep (order, callId, startId,
+  designator, count, warning, call.name) for display.
+  - 200 found.
+  - 404 + data: null not found.
+  - 406 non-numeric id.
+  Set {{presentationId}} from a "create presentation" response.

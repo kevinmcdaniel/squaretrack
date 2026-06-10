@@ -1,0 +1,24 @@
+$kind: http-request
+url: "{{api-url}}/api/presentation/{{presentationId}}/items"
+method: POST
+order: 8000
+description: |-
+  POST /api/presentation/:id/items — append a single item (module_ref or text)
+  without a full replace. order is assigned as max existing + 1. Used by the
+  session conductor to assemble a tip one module at a time.
+  - 201 with data: the created item (order shown).
+  - 406 unknown moduleId / bad stepOrder; 404 presentation not found.
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  mode: raw
+  raw: |-
+    {
+      "type": "text",
+      "text": "thank you, partners",
+      "textType": "closer"
+    }
+  options:
+    raw:
+      language: json

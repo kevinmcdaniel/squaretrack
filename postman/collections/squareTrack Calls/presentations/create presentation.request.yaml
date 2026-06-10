@@ -1,0 +1,54 @@
+$kind: http-request
+url: "{{api-url}}/api/presentation"
+method: POST
+order: 5000
+description: |-
+  POST /api/presentation — create a presentation with interleaved items
+  (module_ref + text) and per-step cueing decoration, in one transaction (#72).
+  - 201 with data + flowWarnings[] (a flow break between adjacent modules is
+    NOT an error; it is reported as { afterItemOrder }).
+  - 406 unknown moduleId, a stepOrder not in the module, a duplicate item order,
+    or a missing name.
+
+  Replace moduleId below with a real choreo_module id (see "create module").
+  stepOrder values must match that module's choreo_module_step.order.
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  mode: raw
+  raw: |-
+    {
+      "name": "Heads lead right tip",
+      "source": "personal",
+      "activator": "heads",
+      "rating": null,
+      "notes": null,
+      "sourceText": "heads square thru four, and right and left thru",
+      "items": [
+        {
+          "order": 0,
+          "type": "text",
+          "text": "Heads",
+          "textType": "activator"
+        },
+        {
+          "order": 1,
+          "type": "module_ref",
+          "moduleId": 1,
+          "steps": [
+            {
+              "stepOrder": 0,
+              "textBefore": "And now",
+              "textAfter": null,
+              "callNameAlternate": null,
+              "warning": null,
+              "helperText": null
+            }
+          ]
+        }
+      ]
+    }
+  options:
+    raw:
+      language: json
