@@ -53,16 +53,21 @@ export type VariantMatch = {
   existingGroupId: string | null;
 };
 
+// Accepts the base client or a transaction client, so detection can run inside
+// the create/update transaction.
+type VariantClient = Pick<typeof prisma, 'call' | 'choreo_module'>;
+
 export async function findVariantMatch(
   steps: ModuleStepInput[],
   excludeModuleId?: number,
+  client: VariantClient = prisma,
 ): Promise<VariantMatch> {
   const none: VariantMatch = { exactModuleId: null, matchedIds: [], existingGroupId: null };
   if (steps.length === 0) return none; // empty modules never participate
 
   const tamByCall = new Map(
     (
-      await prisma.call.findMany({
+      await client.call.findMany({
         where: { callId: { in: [...new Set(steps.map((s) => s.callId))] } },
         select: { callId: true, tamSeq: true },
       })
@@ -79,12 +84,15 @@ export async function findVariantMatch(
   const inputKey = keyOf(inputRows);
   const firstStart = [...inputRows].sort((a, b) => a.order - b.order)[0]!.startId;
 
-  // Narrow candidates to modules whose first step starts from the same FASR
-  // formation — a necessary condition for key equality.
-  const candidates = await prisma.choreo_module.findMany({
+  // Narrow candidates to modules that contain a step starting from the same
+  // FASR formation as the input's first step — a safe superset (the full keyOf
+  // compare runs below). Deliberately not pinned to `order: 0`: keyOf/sameRows
+  // are order-agnostic (they sort first), so a module with non-0-based step
+  // orders must still be reachable.
+  const candidates = await client.choreo_module.findMany({
     where: {
       ...(excludeModuleId != null ? { id: { not: excludeModuleId } } : {}),
-      steps: { some: { order: 0, startId: firstStart } },
+      steps: { some: { startId: firstStart } },
     },
     select: {
       id: true,

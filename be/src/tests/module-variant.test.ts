@@ -128,6 +128,23 @@ describe('variant detection on POST /api/module', () => {
     expect(second.body.data.variantGroupId).toBeNull();
   });
 
+  it('detects identical choreo even when step orders are not 0-based', async () => {
+    const { formA, formB, callX, callY } = await fixtures('NonZero');
+    const body = {
+      startFormId: formA.formId,
+      steps: [
+        { order: 1, callId: callX.callId, startId: formA.formId },
+        { order: 2, callId: callY.callId, startId: formB.formId },
+      ],
+    };
+    const first = await request(app).post('/api/module').send({ name: `${T}NonZero1`, ...body });
+    expect(first.status).toBe(201);
+    const second = await request(app).post('/api/module').send({ name: `${T}NonZero2`, ...body });
+    expect(second.status).toBe(200); // narrowing must not pin order:0
+    expect(second.body.reusedExisting).toBe(true);
+    expect(second.body.data.id).toBe(first.body.data.id);
+  });
+
   it('empty-step modules never participate in variant detection', async () => {
     const { formA } = await fixtures('Empty');
     const first = await request(app).post('/api/module').send({
