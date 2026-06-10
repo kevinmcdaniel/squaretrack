@@ -31,6 +31,10 @@ export type ModuleListFilters = {
   variantGroupId?: string;
 };
 
+// List and get both load steps + formation names. The list is intentionally
+// nested (not shallow like presentation list): module pickers and the session
+// conductor need each module's step preview without an N+1, and #71's list
+// acceptance asserts steps[].callFormation.call.name.
 const MODULE_INCLUDE = {
   startForm: { select: { name: true } },
   endForm: { select: { name: true } },
@@ -79,6 +83,12 @@ async function analyze(
   }
 
   const ordered = [...steps].sort((a, b) => a.order - b.order);
+
+  // Reject duplicate step orders up front (406) rather than letting them hit the
+  // choreo_module_step PK @@id([moduleId, order]) as a 500.
+  if (new Set(ordered.map((s) => s.order)).size !== ordered.length) {
+    throw new validationError('Duplicate step order within the module.');
+  }
 
   const callFormations = await prisma.call_formation.findMany({
     where: { OR: ordered.map((s) => ({ callId: s.callId, startId: s.startId })) },
@@ -165,6 +175,9 @@ export const listModulesService = async (filters: ModuleListFilters) => {
 export const getModuleService = async (id: number) => {
   return prisma.choreo_module.findUnique({ where: { id }, include: MODULE_INCLUDE });
 };
+
+export const moduleExists = async (id: number) =>
+  (await prisma.choreo_module.count({ where: { id } })) > 0;
 
 export const createModuleService = async (data: ModuleInput) => {
   const { steps, name, startFormId, teachOrderId, endFormId, isVerified, ...flow } = data;

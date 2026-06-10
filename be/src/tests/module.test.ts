@@ -118,6 +118,19 @@ describe('POST /api/module', () => {
     void formB;
   });
 
+  it('rejects duplicate step order within the module (406, not 500)', async () => {
+    const { formA, callX } = await fixtures('DupStep');
+    const res = await request(app).post('/api/module').send({
+      name: `${T}DupStepMod`,
+      startFormId: formA.formId,
+      steps: [
+        { order: 0, callId: callX.callId, startId: formA.formId },
+        { order: 0, callId: callX.callId, startId: formA.formId },
+      ],
+    });
+    expect(res.status).toBe(406);
+  });
+
   it('returns 406 when name is missing', async () => {
     const { formA } = await fixtures('NoName');
     const res = await request(app).post('/api/module').send({

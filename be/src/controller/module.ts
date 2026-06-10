@@ -4,6 +4,7 @@ import { isNumeric, routeParam } from '../common/utils.js';
 import {
   listModulesService,
   getModuleService,
+  moduleExists,
   createModuleService,
   updateModuleService,
   deleteModuleService,
@@ -86,6 +87,7 @@ export const createModule = async (req: Request, res: Response, next: NextFuncti
     const { module, chainBreaks } = await createModuleService(input);
     res.status(201).json({ message: 'Choreo module created', data: module, chainBreaks });
   } catch (error: any) {
+    if (error?.code === 'P2002') return next(new conflictError('Duplicate step order within the module.'));
     if (error?.code === 'P2003') return next(new conflictError('startFormId, endFormId, teachOrderId, or a step call_formation does not exist.'));
     next(error);
   }
@@ -95,10 +97,11 @@ export const updateModule = async (req: Request, res: Response, next: NextFuncti
   try {
     const id = moduleIdFromParams(req);
     const input = validateModuleBody(req.body);
-    if (!(await getModuleService(id))) throw new notFoundError(`Module id:${id} not found.`);
+    if (!(await moduleExists(id))) throw new notFoundError(`Module id:${id} not found.`);
     const { module, chainBreaks } = await updateModuleService(id, input);
     res.json({ message: 'Choreo module updated', data: module, chainBreaks });
   } catch (error: any) {
+    if (error?.code === 'P2002') return next(new conflictError('Duplicate step order within the module.'));
     if (error?.code === 'P2003') return next(new conflictError('startFormId, endFormId, teachOrderId, or a step call_formation does not exist.'));
     next(error);
   }
@@ -107,7 +110,7 @@ export const updateModule = async (req: Request, res: Response, next: NextFuncti
 export const deleteModule = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = moduleIdFromParams(req);
-    if (!(await getModuleService(id))) throw new notFoundError(`Module id:${id} not found.`);
+    if (!(await moduleExists(id))) throw new notFoundError(`Module id:${id} not found.`);
     const refs = await countModulePresentationRefs(id);
     if (refs > 0) {
       throw new conflictError(`Module id:${id} is referenced by ${refs} presentation item(s); delete those first.`);
@@ -122,7 +125,7 @@ export const deleteModule = async (req: Request, res: Response, next: NextFuncti
 export const listModulePresentations = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const id = moduleIdFromParams(req);
-    if (!(await getModuleService(id))) throw new notFoundError(`Module id:${id} not found.`);
+    if (!(await moduleExists(id))) throw new notFoundError(`Module id:${id} not found.`);
     const records = await listModulePresentationsService(id);
     res.json({ data: records, message: 'Presentations that include this module' });
   } catch (error) {
