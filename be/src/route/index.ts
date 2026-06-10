@@ -8,6 +8,7 @@ import { teachOrderRoute } from "./calls/teach-orders.js";
 import { callFormationRoute } from "./calls/call-formations.js";
 import { callFamilyRoute } from "./calls/call-families.js";
 import { moduleRoute } from "./calls/modules.js";
+import { presentationRoute } from "./calls/presentations.js";
 
 export const indexRoute = express.Router();
 
@@ -24,3 +25,4 @@ indexRoute.use('/teach-order', teachOrderRoute);
 indexRoute.use('/call-formation', callFormationRoute);
 indexRoute.use('/call-family', callFamilyRoute);
 indexRoute.use('/module', moduleRoute);
+indexRoute.use('/presentation', presentationRoute);
