@@ -1,0 +1,12 @@
+$kind: http-request
+url: "{{api-url}}/api/module?startFormId={{formationId}}&search=&teachOrderId=&safeAfterMax=&variantGroupId="
+method: GET
+order: 1500
+description: |-
+  GET /api/module with filters (all optional, combine freely):
+  - startFormId   — modules that begin from this formation
+  - teachOrderId  — modules tied to a teach order
+  - safeAfterMax  — modules whose safeAfterEntryOrder <= value (session conductor)
+  - search        — case-insensitive substring on name
+  - variantGroupId — all members of a variant group (#21)
+  Empty query values are ignored. 200 with data: array.

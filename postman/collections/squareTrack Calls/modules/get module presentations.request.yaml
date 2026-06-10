@@ -1,0 +1,8 @@
+$kind: http-request
+url: "{{api-url}}/api/module/{{moduleId}}/presentations"
+method: GET
+order: 4000
+description: |-
+  GET /api/module/:id/presentations — every presentation that references this
+  module (via presentation_item.moduleId). Shallow rows, no nested items.
+  200 with data: array; 404 if the module id does not exist.

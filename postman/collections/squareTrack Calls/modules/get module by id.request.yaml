@@ -1,0 +1,10 @@
+$kind: http-request
+url: "{{api-url}}/api/module/{{moduleId}}"
+method: GET
+order: 2000
+description: |-
+  GET /api/module/:id — single module with full steps.
+  - 200 found.
+  - 404 + data: null not found.
+  - 406 non-numeric id.
+  Set the {{moduleId}} env var to an id returned by "create module".
