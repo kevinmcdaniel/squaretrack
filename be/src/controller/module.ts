@@ -84,7 +84,13 @@ export const getModule = async (req: Request, res: Response, next: NextFunction)
 export const createModule = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const input = validateModuleBody(req.body);
-    const { module, chainBreaks } = await createModuleService(input);
+    const { module, chainBreaks, reusedExisting } = await createModuleService(input);
+    if (reusedExisting) {
+      // Exact step-row duplicate (#21): no new module created; the caller
+      // should reference the existing one.
+      res.json({ message: 'Identical choreo module already exists', data: module, chainBreaks, reusedExisting: true });
+      return;
+    }
     res.status(201).json({ message: 'Choreo module created', data: module, chainBreaks });
   } catch (error: any) {
     if (error?.code === 'P2002') return next(new conflictError('Duplicate step order within the module.'));
