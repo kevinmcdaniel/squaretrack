@@ -93,6 +93,7 @@ export const createPresentation = async (req: Request, res: Response, next: Next
     const { presentation, flowWarnings } = await createPresentationService(input);
     res.status(201).json({ message: 'Presentation created', data: presentation, flowWarnings });
   } catch (error: any) {
+    if (error?.code === 'P2002') return next(new conflictError('Duplicate item order or step order in the presentation.'));
     if (error?.code === 'P2003') return next(new conflictError('A referenced module does not exist.'));
     next(error);
   }
@@ -106,6 +107,7 @@ export const updatePresentation = async (req: Request, res: Response, next: Next
     const { presentation, flowWarnings } = await updatePresentationService(id, input);
     res.json({ message: 'Presentation updated', data: presentation, flowWarnings });
   } catch (error: any) {
+    if (error?.code === 'P2002') return next(new conflictError('Duplicate item order or step order in the presentation.'));
     if (error?.code === 'P2003') return next(new conflictError('A referenced module does not exist.'));
     next(error);
   }
@@ -142,6 +144,7 @@ export const appendPresentationItem = async (req: Request, res: Response, next: 
     const record = await appendItemService(id, item);
     res.status(201).json({ message: 'Presentation item appended', data: record });
   } catch (error: any) {
+    if (error?.code === 'P2002') return next(new conflictError('Duplicate item order or step order in the presentation.'));
     if (error?.code === 'P2003') return next(new conflictError('A referenced module does not exist.'));
     next(error);
   }

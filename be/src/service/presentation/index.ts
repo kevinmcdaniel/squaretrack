@@ -147,7 +147,14 @@ async function analyzeItems(items: ItemInput[]): Promise<FlowWarning[]> {
     if (item.type !== 'module_ref') continue;
     const mod = moduleById.get(item.moduleId!);
     if (!mod) throw new validationError(`Module id ${item.moduleId} does not exist.`);
+    const seenStepOrders = new Set<number>();
     for (const step of item.steps ?? []) {
+      // Reject duplicate stepOrder up front (406) rather than hitting the
+      // presentation_item_step PK @@id([itemId, stepOrder]) as a 500.
+      if (seenStepOrders.has(step.stepOrder)) {
+        throw new validationError(`Duplicate stepOrder ${step.stepOrder} within item order ${item.order}.`);
+      }
+      seenStepOrders.add(step.stepOrder);
       if (!mod.orders.has(step.stepOrder)) {
         throw new validationError(`stepOrder ${step.stepOrder} is not a step of module ${item.moduleId}.`);
       }

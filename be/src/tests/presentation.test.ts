@@ -139,6 +139,20 @@ describe('POST /api/presentation', () => {
     expect(res.status).toBe(406);
   });
 
+  it('rejects duplicate stepOrder within one item (406, not 500)', async () => {
+    const { moduleAB } = await fixtures('DupStep');
+    const res = await request(app).post('/api/presentation').send({
+      name: `${T}DupStepPres`,
+      items: [
+        {
+          order: 0, type: 'module_ref', moduleId: moduleAB.id,
+          steps: [{ stepOrder: 0, textBefore: 'a' }, { stepOrder: 0, textBefore: 'b' }],
+        },
+      ],
+    });
+    expect(res.status).toBe(406);
+  });
+
   it('rejects duplicate item order within the presentation (406)', async () => {
     const { moduleAB } = await fixtures('DupOrder');
     const res = await request(app).post('/api/presentation').send({
