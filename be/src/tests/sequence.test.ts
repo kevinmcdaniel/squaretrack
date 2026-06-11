@@ -183,6 +183,16 @@ describe('POST /api/sequence/parse', () => {
     expect(res.body.data.module.steps[0].count).toBe(4);
   });
 
+  it('exposes the cleaned call text used for matching (#18 quick-add)', async () => {
+    const res = await request(app)
+      .post('/api/sequence/parse')
+      .send({ text: 'now heads square thru 4' });
+    expect(res.status).toBe(200);
+    // designator, count, and leading filler stripped — just the matchable call name,
+    // which the import editor prefills into quick-add (new call / synonym alias).
+    expect(res.body.data.module.steps[0].callText).toBe('square thru');
+  });
+
   it('resolves call by exact name match', async () => {
     await prisma.call.create({ data: { name: `${T}parse circle` } });
     const res = await request(app)

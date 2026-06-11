@@ -11,6 +11,10 @@ const FILLER_PREFIXES = ['and', 'then', 'now', 'go', 'ok', 'okay', 'easy'];
 export type ParsedModuleStep = {
   order: number;
   rawLine: string;
+  // The call name after stripping designator, count, and spoken filler — the exact
+  // text matched against call.name / call_synonym.alias. The import editor prefills
+  // it into quick-add when a line does not resolve.
+  callText: string;
   designator?: string;
   count?: number;
   callMatches: { callId: number; name: string; confidence: number }[];
@@ -145,6 +149,7 @@ export async function parseSequenceText(rawText: string): Promise<ParsedDraft> {
     moduleSteps.push({
       order: stepOrder,
       rawLine,
+      callText,
       designator,
       count,
       callMatches,
