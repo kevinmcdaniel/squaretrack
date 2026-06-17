@@ -7,6 +7,7 @@ import {
   listFormations,
   pasteAndParse,
   saveImport,
+  activatePresentation,
   type CallOption,
   type FormationOption,
   type SaveImportInput,
@@ -19,21 +20,25 @@ import { type StepRowHandlers, stepNeedsAttention } from './StepRow';
 import { UnresolvedBanner } from './UnresolvedBanner';
 import { emptyDraft, importReducer } from './reducer';
 
-// Root of the import editor. Owns the two-layer draft (choreo steps + interleaved
-// presentation items) in a reducer, orchestrates paste → save-raw → parse, and lets
-// the caller resolve unmatched calls / formations inline before the save.
 export function SequenceImport({
   formations,
   startFormationId,
+  initialPresentationId,
+  initialSourceText,
 }: {
   formations: FormationLite[];
   startFormationId: number;
+  initialPresentationId?: number;
+  initialSourceText?: string;
 }) {
-  const [draft, dispatch] = useReducer(importReducer, emptyDraft(startFormationId));
+  const initial = emptyDraft(startFormationId);
+  if (initialPresentationId) initial.presentationId = initialPresentationId;
+  if (initialSourceText) initial.sourceText = initialSourceText;
+
+  const [draft, dispatch] = useReducer(importReducer, initial);
   const [callOptions, setCallOptions] = useState<CallOption[]>([]);
   const [allFormations, setAllFormations] = useState<FormationOption[]>([]);
 
-  // Load the catalogs once for the inline pickers.
   useEffect(() => {
     let live = true;
     void (async () => {
@@ -42,9 +47,7 @@ export function SequenceImport({
       if (calls.ok) setCallOptions(calls.data);
       if (forms.ok) setAllFormations(forms.data);
     })();
-    return () => {
-      live = false;
-    };
+    return () => { live = false; };
   }, []);
 
   const stepsByOrder = useMemo(
@@ -58,15 +61,19 @@ export function SequenceImport({
   const hasDraft = draft.moduleSteps.length > 0 || draft.presentationItems.length > 0;
 
   const handleParse = async (text: string): Promise<string | null> => {
-    const result = await pasteAndParse({ name: draft.name, sourceText: text });
+    const bracketName = /^\s*\[([^\]]+)\]\s*$/m.exec(text)?.[1]?.trim() ?? null;
+    const result = await pasteAndParse({ name: draft.name || bracketName || '', sourceText: text });
     if (!result.ok) return result.error;
     dispatch({ type: 'SET_DRAFT', parsed: result.data.draft });
-    dispatch({ type: 'SET_META', patch: { presentationId: result.data.presentationId } });
+    dispatch({ type: 'SET_META', patch: {
+      presentationId: result.data.presentationId,
+      moduleId: null,
+      isValid: false,
+      ...(bracketName && !draft.name ? { name: bracketName } : {}),
+    }});
     return null;
   };
 
-  // After a call is chosen, pull its registered FASRs and auto-pin when there is
-  // exactly one — otherwise the FormationPicker prompts for a choice.
   const loadFormationsInto = async (callId: number, localIds: string[]) => {
     const res = await formationsForCall(callId);
     if (!res.ok) return;
@@ -120,9 +127,7 @@ export function SequenceImport({
     },
   };
 
-  const canSave = draft.moduleSteps.length > 0 && unresolvedCount === 0;
-
-  const handleSave = async (): Promise<SaveOutcome> => {
+  const handleSaveDraft = async (): Promise<SaveOutcome> => {
     const payload: SaveImportInput = {
       presentationId: draft.presentationId,
       name: draft.name,
@@ -135,8 +140,8 @@ export function SequenceImport({
       teachOrderId: draft.teachOrderId,
       moduleSteps: draft.moduleSteps.map((s) => ({
         order: s.order,
-        callId: s.callId as number,
-        startId: s.startId as number,
+        callId: s.callId,
+        startId: s.startId,
         designator: s.designator,
         count: s.count,
         warning: s.warning,
@@ -163,13 +168,27 @@ export function SequenceImport({
     if (!res.ok) return { ok: false, message: res.error };
 
     const { moduleId, isValid, chainBreaks, reusedExisting, flowWarnings, presentationId } = res.data;
-    dispatch({ type: 'SET_META', patch: { presentationId } });
-    const parts = [`Saved ✓ — choreo module #${moduleId}${reusedExisting ? ' (reused existing)' : ''}.`];
-    parts.push(
-      isValid ? 'Formation chain valid.' : `${chainBreaks.length} chain break${chainBreaks.length === 1 ? '' : 's'} (saved as draft).`,
-    );
+    dispatch({ type: 'SET_META', patch: { presentationId, moduleId, isValid } });
+
+    const parts = [`Draft saved — module #${moduleId}${reusedExisting ? ' (reused existing)' : ''}.`];
+    if (isValid) {
+      parts.push('Chain valid. Click Activate when ready.');
+    } else {
+      parts.push(
+        unresolvedCount > 0
+          ? `${unresolvedCount} unresolved step${unresolvedCount === 1 ? '' : 's'}.`
+          : `${chainBreaks.length} chain break${chainBreaks.length === 1 ? '' : 's'}.`,
+      );
+    }
     if (flowWarnings.length) parts.push(`${flowWarnings.length} flow warning${flowWarnings.length === 1 ? '' : 's'}.`);
     return { ok: true, message: parts.join(' ') };
+  };
+
+  const handleActivate = async (): Promise<SaveOutcome> => {
+    if (draft.presentationId == null) return { ok: false, message: 'Save draft first.' };
+    const res = await activatePresentation(draft.presentationId);
+    if (!res.ok) return { ok: false, message: res.error };
+    return { ok: true, message: 'Activated — sequence is now searchable.' };
   };
 
   return (
@@ -195,7 +214,14 @@ export function SequenceImport({
             allFormations={allFormations}
             handlers={handlers}
           />
-          <FooterBar canSave={canSave} blockedCount={unresolvedCount} onSave={handleSave} />
+          <FooterBar
+            hasDraft={hasDraft}
+            unresolvedCount={unresolvedCount}
+            moduleId={draft.moduleId}
+            isValid={draft.isValid}
+            onSaveDraft={handleSaveDraft}
+            onActivate={handleActivate}
+          />
         </section>
       )}
     </div>

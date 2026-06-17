@@ -157,6 +157,8 @@ export function importReducer(state: DraftImport, action: ImportAction): DraftIm
 export function emptyDraft(startFormationId: number): DraftImport {
   return {
     presentationId: null,
+    moduleId: null,
+    isValid: false,
     name: '',
     source: null,
     activator: null,

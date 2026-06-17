@@ -69,6 +69,8 @@ export type DraftPresentationItem =
 
 export type DraftImport = {
   presentationId: number | null; // set after step-1 raw save
+  moduleId: number | null;       // set after module save
+  isValid: boolean;              // set after module save; gates Activate
   // presentation-layer meta
   name: string;
   source: string | null; // taminations | callerlab | personal | <caller>

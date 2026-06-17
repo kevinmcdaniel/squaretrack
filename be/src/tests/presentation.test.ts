@@ -314,3 +314,77 @@ describe('DELETE /api/presentation/:id/items/:itemId', () => {
     expect(orders).toEqual([0, 1]); // gap closed, contiguous
   });
 });
+
+// ── Presentation status ──────────────────────────────────────────────────────
+
+describe('presentation status field', () => {
+  it('defaults to draft on create', async () => {
+    const res = await request(app).post('/api/presentation').send({ name: `${T}StatusDefault`, items: [] });
+    expect(res.status).toBe(201);
+    expect(res.body.data.status).toBe('draft');
+  });
+
+  it('PATCH can set status to active', async () => {
+    const created = await request(app).post('/api/presentation').send({ name: `${T}StatusPatch`, items: [] });
+    const id = created.body.data.id;
+    const res = await request(app).patch(`/api/presentation/${id}`).send({ status: 'active' });
+    expect(res.status).toBe(200);
+    expect(res.body.data.status).toBe('active');
+  });
+
+  it('GET ?status=draft returns only drafts', async () => {
+    const d = await request(app).post('/api/presentation').send({ name: `${T}FilterDraft`, items: [] });
+    const dId = d.body.data.id;
+    await request(app).patch(`/api/presentation/${dId}`).send({ status: 'active' });
+    await request(app).post('/api/presentation').send({ name: `${T}FilterDraft2`, items: [] });
+    const res = await request(app).get('/api/presentation?status=draft');
+    expect(res.status).toBe(200);
+    const names = res.body.data.map((p: any) => p.name);
+    expect(names.some((n: string) => n === `${T}FilterDraft2`)).toBe(true);
+    expect(names.some((n: string) => n === `${T}FilterDraft`)).toBe(false);
+  });
+});
+
+// ── POST /api/presentation/bulk-intake ──────────────────────────────────────
+
+describe('POST /api/presentation/bulk-intake', () => {
+  it('creates draft presentations for new sequences', async () => {
+    const res = await request(app).post('/api/presentation/bulk-intake').send({
+      sequences: [
+        { name: `${T}Bulk1`, sourceText: `${T}unique text one` },
+        { name: `${T}Bulk2`, sourceText: `${T}unique text two` },
+      ],
+    });
+    expect(res.status).toBe(201);
+    expect(res.body.data.saved).toHaveLength(2);
+    expect(res.body.data.skipped).toHaveLength(0);
+  });
+
+  it('skips sequences whose normalized sourceText already exists', async () => {
+    const text = `${T}duplicate bulk text`;
+    await request(app).post('/api/presentation/bulk-intake').send({
+      sequences: [{ name: `${T}BulkOrig`, sourceText: text }],
+    });
+    const res = await request(app).post('/api/presentation/bulk-intake').send({
+      sequences: [{ name: `${T}BulkDup`, sourceText: text }],
+    });
+    expect(res.status).toBe(201);
+    expect(res.body.data.saved).toHaveLength(0);
+    expect(res.body.data.skipped).toHaveLength(1);
+  });
+
+  it('returns 400 when sequences array is missing', async () => {
+    const res = await request(app).post('/api/presentation/bulk-intake').send({});
+    expect(res.status).toBe(406);
+  });
+
+  it('saved presentations have status draft', async () => {
+    const res = await request(app).post('/api/presentation/bulk-intake').send({
+      sequences: [{ name: `${T}BulkStatus`, sourceText: `${T}status check text` }],
+    });
+    expect(res.status).toBe(201);
+    const id = res.body.data.saved[0].id;
+    const get = await request(app).get(`/api/presentation/${id}`);
+    expect(get.body.data.status).toBe('draft');
+  });
+});

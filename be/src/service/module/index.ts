@@ -4,8 +4,8 @@ import { findVariantMatch, resolveGroupId, clearLoneGroupMember } from './varian
 
 export type ModuleStepInput = {
   order: number;
-  callId: number;
-  startId: number;
+  callId: number | null;
+  startId: number | null;
   designator?: string | null;
   count?: number | null;
   warning?: string | null;
@@ -13,7 +13,7 @@ export type ModuleStepInput = {
 
 export type ModuleInput = {
   name: string;
-  startFormId: number;
+  startFormId: number | null;
   endFormId?: number | null;
   inFlowRotation?: string | null;
   inFlowDirection?: string | null;
@@ -60,7 +60,7 @@ const key = (callId: number, startId: number) => `${callId}:${startId}`;
 // each step whose start formation doesn't match where the previous step left
 // dancers. isValid is true only when every step chains.
 type Analysis = {
-  endFormId: number;
+  endFormId: number | null;
   isValid: boolean;
   chainBreaks: number[];
   safeAfterEntryOrder: number | null;
@@ -68,19 +68,18 @@ type Analysis = {
 };
 
 // Validate step references against call_formation, derive endFormId, detect
-// chain breaks, and compute teach-order safety positions. Throws validationError
-// on unknown (callId, startId) refs or an endFormId that contradicts the steps.
+// chain breaks, and compute teach-order safety positions. Draft steps (null
+// callId/startId) are skipped in formation-chain validation and mark the module
+// isValid: false. Throws validationError on unknown (callId, startId) refs or
+// an endFormId that contradicts the derived value from resolved steps.
 async function analyze(
-  startFormId: number,
+  startFormId: number | null,
   bodyEndFormId: number | null | undefined,
   steps: ModuleStepInput[],
   teachOrderId: number | null | undefined,
 ): Promise<Analysis> {
   if (steps.length === 0) {
-    if (bodyEndFormId == null) {
-      throw new validationError('endFormId is required for a module with no steps.');
-    }
-    return { endFormId: bodyEndFormId, isValid: false, chainBreaks: [], safeAfterEntryOrder: null, safeAfterFasrOrder: null };
+    return { endFormId: bodyEndFormId ?? null, isValid: false, chainBreaks: [], safeAfterEntryOrder: null, safeAfterFasrOrder: null };
   }
 
   const ordered = [...steps].sort((a, b) => a.order - b.order);
@@ -91,38 +90,57 @@ async function analyze(
     throw new validationError('Duplicate step order within the module.');
   }
 
+  // Resolved steps are those with both callId and startId set.
+  const resolvedSteps = ordered.filter((s): s is ModuleStepInput & { callId: number; startId: number } =>
+    s.callId != null && s.startId != null,
+  );
+
+  // Any unresolved steps make isValid false regardless of chain.
+  const hasUnresolved = resolvedSteps.length < ordered.length;
+
+  if (resolvedSteps.length === 0) {
+    return { endFormId: bodyEndFormId ?? null, isValid: false, chainBreaks: [], safeAfterEntryOrder: null, safeAfterFasrOrder: null };
+  }
+
   const callFormations = await prisma.call_formation.findMany({
-    where: { OR: ordered.map((s) => ({ callId: s.callId, startId: s.startId })) },
+    where: { OR: resolvedSteps.map((s) => ({ callId: s.callId, startId: s.startId })) },
   });
   const endById = new Map(callFormations.map((cf) => [key(cf.callId, cf.startId), cf.endId]));
 
-  for (const s of ordered) {
+  for (const s of resolvedSteps) {
     if (!endById.has(key(s.callId, s.startId))) {
       throw new validationError(`No call_formation for callId ${s.callId} from startId ${s.startId}.`);
     }
   }
 
+  // Chain-break detection only runs across consecutive resolved steps. An
+  // unresolved step between two resolved steps breaks the chain at the resolved
+  // step that follows it (we cannot verify the transition through a null step).
   const chainBreaks: number[] = [];
-  let prevEnd: number | null = null;
+  let prevEnd: number | null = startFormId;
   for (let i = 0; i < ordered.length; i++) {
     const step = ordered[i]!;
-    const expectedStart: number | null = i === 0 ? startFormId : prevEnd;
-    if (step.startId !== expectedStart) chainBreaks.push(step.order);
+    if (step.callId == null || step.startId == null) {
+      // Unresolved step — unknown end formation; subsequent chain check is skipped.
+      prevEnd = null;
+      continue;
+    }
+    if (prevEnd !== null && step.startId !== prevEnd) chainBreaks.push(step.order);
     prevEnd = endById.get(key(step.callId, step.startId))!;
   }
 
-  const derivedEnd = prevEnd!;
-  if (bodyEndFormId != null && bodyEndFormId !== derivedEnd) {
+  const derivedEnd = prevEnd;
+  if (bodyEndFormId != null && derivedEnd != null && bodyEndFormId !== derivedEnd) {
     throw new validationError(
       `endFormId ${bodyEndFormId} does not match the formation the last step leaves dancers in (${derivedEnd}).`,
     );
   }
 
-  const safe = await computeSafeAfter(teachOrderId, ordered);
+  const safe = await computeSafeAfter(teachOrderId, resolvedSteps);
 
   return {
     endFormId: derivedEnd,
-    isValid: chainBreaks.length === 0,
+    isValid: !hasUnresolved && chainBreaks.length === 0,
     chainBreaks,
     safeAfterEntryOrder: safe.entryOrder,
     safeAfterFasrOrder: safe.fasrOrder,
@@ -134,7 +152,7 @@ async function analyze(
 // step appears in it.
 async function computeSafeAfter(
   teachOrderId: number | null | undefined,
-  steps: ModuleStepInput[],
+  steps: Array<ModuleStepInput & { callId: number; startId: number }>,
 ): Promise<{ entryOrder: number | null; fasrOrder: number | null }> {
   if (teachOrderId == null) return { entryOrder: null, fasrOrder: null };
   const fasrs = await prisma.teach_order_entry_fasr.findMany({
@@ -184,15 +202,22 @@ export const createModuleService = async (data: ModuleInput) => {
   const { steps, name, startFormId, teachOrderId, endFormId, isVerified, ...flow } = data;
   const analysis = await analyze(startFormId, endFormId, steps, teachOrderId);
 
+  const resolvedSteps = steps.filter(
+    (s): s is ModuleStepInput & { callId: number; startId: number } => s.callId != null && s.startId != null,
+  );
+
   // Variant detection (#21) runs inside the transaction at Serializable
   // isolation: the comparison key is unstored by design, so there is no unique
   // constraint to backstop it. Without this, two concurrent identical POSTs
   // could both miss the exact-dup check and both insert — the very duplication
   // this feature prevents. An exact step-row duplicate is never re-created; the
   // existing module is returned so presentations share one choreo unit.
+  // Draft modules (any unresolved steps) skip variant detection entirely.
   return prisma.$transaction(
     async (tx) => {
-      const match = await findVariantMatch(steps, undefined, tx);
+      const match = resolvedSteps.length === steps.length
+        ? await findVariantMatch(resolvedSteps, undefined, tx)
+        : { exactModuleId: null, matchedIds: [], existingGroupId: null };
       if (match.exactModuleId != null) {
         const existing = await tx.choreo_module.findUnique({
           where: { id: match.exactModuleId },
@@ -237,12 +262,18 @@ export const updateModuleService = async (id: number, data: ModuleInput) => {
   const { steps, name, startFormId, teachOrderId, endFormId, isVerified, ...flow } = data;
   const analysis = await analyze(startFormId, endFormId, steps, teachOrderId);
 
+  const resolvedSteps = steps.filter(
+    (s): s is ModuleStepInput & { callId: number; startId: number } => s.callId != null && s.startId != null,
+  );
+
   // Variant detection on edit runs inside the transaction (Serializable, same
   // rationale as create): re-match against everything but this module. An
   // identical-row match never merges modules on PUT — the edited module keeps
-  // its id and simply joins the group.
+  // its id and simply joins the group. Draft modules skip detection.
   const module = await prisma.$transaction(async (tx) => {
-    const match = await findVariantMatch(steps, id, tx);
+    const match = resolvedSteps.length === steps.length
+      ? await findVariantMatch(resolvedSteps, id, tx)
+      : { exactModuleId: null, matchedIds: [], existingGroupId: null };
     const groupId = resolveGroupId(match);
     const previous = await tx.choreo_module.findUnique({
       where: { id },

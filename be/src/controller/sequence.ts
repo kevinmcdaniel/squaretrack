@@ -2,7 +2,7 @@ import { type Request, type Response, type NextFunction } from 'express';
 import { validationError, conflictError, notFoundError } from '../common/errorHandler.js';
 import { isNumeric, routeParam } from '../common/utils.js';
 import { listSequencesService, getSequenceService, createSequenceService } from '../service/sequence/index.js';
-import { parseSequenceText } from '../service/parser.js';
+import { parseSequenceText, splitSequences } from '../service/parser.js';
 
 export const listSequence = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -34,6 +34,17 @@ export const parseSequence = async (req: Request, res: Response, next: NextFunct
     if (!text) throw new validationError('text is required.');
     const draft = await parseSequenceText(text);
     res.json({ message: 'Parsed draft', data: draft });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const splitSequence = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { text } = req.body;
+    if (!text) throw new validationError('text is required.');
+    const sequences = splitSequences(text);
+    res.json({ message: 'Split sequences', data: sequences });
   } catch (error) {
     next(error);
   }

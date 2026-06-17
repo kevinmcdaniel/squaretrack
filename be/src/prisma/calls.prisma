@@ -214,10 +214,10 @@ model sequence_calls {
 model choreo_module {
   id                  Int                  @id @default(autoincrement())
   name                String
-  startFormId         Int                  // formation the module begins from
-  startForm           formation            @relation("moduleStart", fields: [startFormId], references: [formId])
-  endFormId           Int                  // formation the module leaves dancers in
-  endForm             formation            @relation("moduleEnd", fields: [endFormId], references: [formId])
+  startFormId         Int?                 // null for draft modules; formation the module begins from
+  startForm           formation?           @relation("moduleStart", fields: [startFormId], references: [formId])
+  endFormId           Int?                 // null for draft modules; derived from last resolved step
+  endForm             formation?           @relation("moduleEnd", fields: [endFormId], references: [formId])
   inFlowRotation      String?              // flow entering this module
   inFlowDirection     String?
   outFlowRotation     String?              // flow exiting this module
@@ -237,11 +237,11 @@ model choreo_module {
 // One call within a module. No spoken text. Inherent warnings live here.
 model choreo_module_step {
   moduleId      Int
-  module        choreo_module  @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  module        choreo_module   @relation(fields: [moduleId], references: [id], onDelete: Cascade)
   order         Int
-  callId        Int
-  startId       Int
-  callFormation call_formation @relation(fields: [callId, startId], references: [callId, startId])
+  callId        Int?            // null for unresolved draft steps
+  startId       Int?            // null for unresolved draft steps
+  callFormation call_formation? @relation(fields: [callId, startId], references: [callId, startId])
   designator    String?        // heads | sides | centers | ends | leads | trailers | beaus | belles
   count         Int?           // e.g. 4 for "square thru 4"
   // Inherent choreographic warning — true regardless of presentation. Distinct
@@ -255,6 +255,7 @@ model choreo_module_step {
 model presentation {
   id         Int                 @id @default(autoincrement())
   name       String
+  status     String              @default("draft")  // draft | active
   source     String?             // taminations | callerlab | personal | <caller name>
   activator  String?             // heads | sides
   rating     String?             // excellent | good | acceptable | poor

@@ -22,22 +22,16 @@ function moduleIdFromParams(req: Request): number {
   return parseInt(idParam, 10);
 }
 
-// A module body is well-formed when name/startFormId are present and every step
-// carries callId + startId. Choreographic validity (chaining, endFormId) is the
-// service's job — this only guards the shape.
+// A module body is well-formed when name is present. startFormId and step
+// callId/startId may be null for draft modules. Choreographic validity
+// (chaining, endFormId) is the service's job — this only guards the shape.
 function validateModuleBody(body: any): ModuleInput {
   if (!body?.name) throw new validationError('name is required.');
-  if (body.startFormId == null) throw new validationError('startFormId is required.');
   const steps = body.steps ?? [];
   if (!Array.isArray(steps)) throw new validationError('steps must be an array.');
-  for (const step of steps) {
-    if (step.callId == null || step.startId == null) {
-      throw new validationError('each step requires callId and startId.');
-    }
-  }
   return {
     name: body.name,
-    startFormId: Number(body.startFormId),
+    startFormId: body.startFormId != null ? Number(body.startFormId) : null,
     endFormId: body.endFormId != null ? Number(body.endFormId) : null,
     inFlowRotation: body.inFlowRotation ?? null,
     inFlowDirection: body.inFlowDirection ?? null,

@@ -141,13 +141,14 @@ describe('POST /api/module', () => {
     expect(res.status).toBe(406);
   });
 
-  it('returns 406 when startFormId is missing', async () => {
+  it('accepts a null startFormId as a valid draft module', async () => {
     const res = await request(app).post('/api/module').send({
       name: `${T}NoStart`,
-      endFormId: 1,
+      startFormId: null,
       steps: [],
     });
-    expect(res.status).toBe(406);
+    expect(res.status).toBe(201);
+    expect(res.body.data.isValid).toBe(false);
   });
 
   it('returns 409 for a nonexistent startFormId on an empty module', async () => {
@@ -285,5 +286,48 @@ describe('GET /api/module/:id/presentations', () => {
     const res = await request(app).get(`/api/module/${id}/presentations`);
     expect(res.status).toBe(200);
     expect(res.body.data.some((p: any) => p.name === `${T}PresWrap`)).toBe(true);
+  });
+});
+
+// ── Draft module (unresolved steps) ─────────────────────────────────────────
+
+describe('POST /api/module with draft (unresolved) steps', () => {
+  it('saves a module with null callId/startId and returns isValid: false', async () => {
+    const res = await request(app).post('/api/module').send({
+      name: `${T}DraftMod`,
+      startFormId: null,
+      steps: [
+        { order: 0, callId: null, startId: null },
+        { order: 1, callId: null, startId: null },
+      ],
+    });
+    expect(res.status).toBe(201);
+    expect(res.body.data.isValid).toBe(false);
+    expect(res.body.data.endFormId).toBeNull();
+  });
+
+  it('saves a module with mixed resolved/unresolved steps, isValid: false', async () => {
+    const { formA, callX } = await fixtures('MixedDraft');
+    const res = await request(app).post('/api/module').send({
+      name: `${T}MixedDraftMod`,
+      startFormId: formA.formId,
+      steps: [
+        { order: 0, callId: callX.callId, startId: formA.formId },
+        { order: 1, callId: null, startId: null },
+      ],
+    });
+    expect(res.status).toBe(201);
+    expect(res.body.data.isValid).toBe(false);
+  });
+
+  it('saves a fully-resolved module and returns isValid: true', async () => {
+    const { formA, callX } = await fixtures('FullDraft');
+    const res = await request(app).post('/api/module').send({
+      name: `${T}FullDraftMod`,
+      startFormId: formA.formId,
+      steps: [{ order: 0, callId: callX.callId, startId: formA.formId }],
+    });
+    expect(res.status).toBe(201);
+    expect(res.body.data.isValid).toBe(true);
   });
 });

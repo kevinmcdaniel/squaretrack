@@ -12,6 +12,11 @@ export type ActionResult<T> = { ok: true; data: T } | { ok: false; error: string
 
 export type CallOption = { callId: number; name: string };
 export type FormationOption = { startId: number; name: string };
+export type SplitItem = { name: string; sourceText: string };
+export type BulkIntakeResult = {
+  saved: Array<{ id: number; name: string }>;
+  skipped: Array<{ id: number; name: string; sourceText: string }>;
+};
 
 // Step 1 (persist raw) + step 2 (parse) of the import flow, in one round trip.
 // The raw presentation document is saved first so a paste is captured even if the
@@ -67,8 +72,8 @@ export async function listFormations(): Promise<ActionResult<FormationOption[]>>
 
 export type SaveModuleStep = {
   order: number;
-  callId: number;
-  startId: number;
+  callId: number | null;
+  startId: number | null;
   designator: string | null;
   count: number | null;
   warning: string | null;
@@ -208,4 +213,27 @@ export async function addCallFormation(input: {
   if (!fetched.ok) return { ok: false, error: fetched.error };
   const opt = fetched.data.find((f) => f.startId === input.startId);
   return opt ? { ok: true, data: opt } : { ok: false, error: 'Linked, but could not reload formations.' };
+}
+
+// ---- Bulk intake -----------------------------------------------------------
+
+export async function splitText(text: string): Promise<ActionResult<SplitItem[]>> {
+  const trimmed = text.trim();
+  if (!trimmed) return { ok: false, error: 'Paste some text first.' };
+  const res = await mutateData<SplitItem[]>('sequence/split', 'POST', { text: trimmed });
+  if (!res.ok || !res.body.data) return { ok: false, error: res.body.message || 'Could not split the text.' };
+  return { ok: true, data: res.body.data };
+}
+
+export async function bulkIntake(sequences: SplitItem[]): Promise<ActionResult<BulkIntakeResult>> {
+  if (sequences.length === 0) return { ok: false, error: 'No sequences to save.' };
+  const res = await mutateData<BulkIntakeResult>('presentation/bulk-intake', 'POST', { sequences });
+  if (!res.ok || !res.body.data) return { ok: false, error: res.body.message || 'Bulk intake failed.' };
+  return { ok: true, data: res.body.data };
+}
+
+export async function activatePresentation(presentationId: number): Promise<ActionResult<void>> {
+  const res = await mutateData(`presentation/${presentationId}`, 'PATCH', { status: 'active' });
+  if (!res.ok) return { ok: false, error: res.body.message || 'Could not activate the presentation.' };
+  return { ok: true, data: undefined };
 }

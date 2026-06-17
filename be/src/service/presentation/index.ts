@@ -21,6 +21,7 @@ export type ItemInput = {
 
 export type PresentationInput = {
   name: string;
+  status?: string;
   source?: string | null;
   activator?: string | null;
   rating?: string | null;
@@ -31,6 +32,7 @@ export type PresentationInput = {
 
 export type PresentationMeta = {
   name?: string;
+  status?: string;
   source?: string | null;
   activator?: string | null;
   rating?: string | null;
@@ -40,6 +42,7 @@ export type PresentationMeta = {
 export type PresentationListFilters = {
   search?: string;
   source?: string;
+  status?: string;
   moduleId?: number;
   safeAfterMax?: number;
   activator?: string;
@@ -202,6 +205,7 @@ export const listPresentationsService = async (filters: PresentationListFilters)
     where: {
       ...(filters.search ? { name: { contains: filters.search, mode: 'insensitive' } } : {}),
       ...(filters.source ? { source: filters.source } : {}),
+      ...(filters.status ? { status: filters.status } : {}),
       ...(filters.activator ? { activator: filters.activator } : {}),
       ...(filters.moduleId != null ? { items: { some: { moduleId: filters.moduleId } } } : {}),
       ...(filters.safeAfterMax != null
@@ -229,6 +233,7 @@ export const createPresentationService = async (data: PresentationInput) => {
   const created = await prisma.presentation.create({
     data: {
       name: meta.name,
+      status: meta.status ?? 'draft',
       source: meta.source ?? null,
       activator: meta.activator ?? null,
       rating: meta.rating ?? null,
@@ -250,6 +255,7 @@ export const updatePresentationService = async (id: number, data: PresentationIn
       where: { id },
       data: {
         name: meta.name,
+        ...(meta.status != null ? { status: meta.status } : {}),
         source: meta.source ?? null,
         activator: meta.activator ?? null,
         rating: meta.rating ?? null,
@@ -268,12 +274,51 @@ export const patchPresentationService = async (id: number, meta: PresentationMet
     where: { id },
     data: {
       ...(meta.name != null ? { name: meta.name } : {}),
+      ...(meta.status != null ? { status: meta.status } : {}),
       ...(meta.source !== undefined ? { source: meta.source } : {}),
       ...(meta.activator !== undefined ? { activator: meta.activator } : {}),
       ...(meta.rating !== undefined ? { rating: meta.rating } : {}),
       ...(meta.notes !== undefined ? { notes: meta.notes } : {}),
     },
   });
+
+// Dedup key: trim only — preserves newlines and structure so stored text is
+// human-readable. Aggressive normalization (lowercase + whitespace collapse)
+// would strip the line-per-step structure needed for later display.
+function dedupKey(text: string): string {
+  return text.trim();
+}
+
+export type BulkIntakeItem = { name: string; sourceText: string };
+export type BulkIntakeResult = {
+  saved: Array<{ id: number; name: string }>;
+  skipped: Array<{ id: number; name: string; sourceText: string }>;
+};
+
+// Batch-save new draft presentations, skipping any whose trimmed sourceText
+// already exists. Each new presentation is created with status='draft' and no items.
+export const bulkIntakePresentationsService = async (sequences: BulkIntakeItem[]): Promise<BulkIntakeResult> => {
+  const result: BulkIntakeResult = { saved: [], skipped: [] };
+
+  for (const seq of sequences) {
+    const key = dedupKey(seq.sourceText);
+    const existing = await prisma.presentation.findFirst({
+      where: { sourceText: { equals: key } },
+      select: { id: true, name: true, sourceText: true },
+    });
+    if (existing) {
+      result.skipped.push({ id: existing.id, name: existing.name, sourceText: existing.sourceText ?? '' });
+      continue;
+    }
+    const created = await prisma.presentation.create({
+      data: { name: seq.name, status: 'draft', sourceText: key },
+      select: { id: true, name: true },
+    });
+    result.saved.push(created);
+  }
+
+  return result;
+};
 
 export const deletePresentationService = async (id: number) =>
   prisma.presentation.delete({ where: { id } });

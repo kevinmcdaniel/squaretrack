@@ -57,8 +57,12 @@ export type VariantMatch = {
 // the create/update transaction.
 type VariantClient = Pick<typeof prisma, 'call' | 'choreo_module'>;
 
+// Variant detection only operates on fully-resolved steps (non-null callId/startId).
+// The service layer filters to resolved steps before calling this function.
+type ResolvedStepInput = ModuleStepInput & { callId: number; startId: number };
+
 export async function findVariantMatch(
-  steps: ModuleStepInput[],
+  steps: ResolvedStepInput[],
   excludeModuleId?: number,
   client: VariantClient = prisma,
 ): Promise<VariantMatch> {
@@ -113,13 +117,16 @@ export async function findVariantMatch(
 
   const match: VariantMatch = { exactModuleId: null, matchedIds: [], existingGroupId: null };
   for (const cand of candidates) {
+    // Skip candidates that have any unresolved (null) steps — draft modules
+    // are not comparable and should never be returned as variant matches.
+    if (cand.steps.some((s) => s.callId == null || s.startId == null || s.callFormation == null)) continue;
     const rows: StepRow[] = cand.steps.map((s) => ({
       order: s.order,
-      callId: s.callId,
-      startId: s.startId,
+      callId: s.callId!,
+      startId: s.startId!,
       designator: s.designator,
       count: s.count,
-      tamSeq: s.callFormation.call.tamSeq,
+      tamSeq: s.callFormation!.call.tamSeq,
     }));
     if (keyOf(rows) !== inputKey) continue;
     match.matchedIds.push(cand.id);
