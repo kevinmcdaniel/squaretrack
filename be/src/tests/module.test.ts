@@ -330,4 +330,15 @@ describe('POST /api/module with draft (unresolved) steps', () => {
     expect(res.status).toBe(201);
     expect(res.body.data.isValid).toBe(true);
   });
+
+  it('marks a fully-resolved module invalid when startFormId is null (unanchored chain)', async () => {
+    const { formA, callX } = await fixtures('Unanchored');
+    const res = await request(app).post('/api/module').send({
+      name: `${T}UnanchoredMod`,
+      startFormId: null,
+      steps: [{ order: 0, callId: callX.callId, startId: formA.formId }],
+    });
+    expect(res.status).toBe(201);
+    expect(res.body.data.isValid).toBe(false);
+  });
 });

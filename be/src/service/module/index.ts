@@ -70,8 +70,9 @@ type Analysis = {
 // Validate step references against call_formation, derive endFormId, detect
 // chain breaks, and compute teach-order safety positions. Draft steps (null
 // callId/startId) are skipped in formation-chain validation and mark the module
-// isValid: false. Throws validationError on unknown (callId, startId) refs or
-// an endFormId that contradicts the derived value from resolved steps.
+// isValid: false; a null startFormId leaves the chain unanchored at its first
+// step and is likewise isValid: false. Throws validationError on unknown
+// (callId, startId) refs or an endFormId that contradicts the derived value.
 async function analyze(
   startFormId: number | null,
   bodyEndFormId: number | null | undefined,
@@ -140,7 +141,9 @@ async function analyze(
 
   return {
     endFormId: derivedEnd,
-    isValid: !hasUnresolved && chainBreaks.length === 0,
+    // An unanchored module (null startFormId) can't have its first step's entry
+    // verified, so it is never valid even when every step resolves and chains.
+    isValid: startFormId != null && !hasUnresolved && chainBreaks.length === 0,
     chainBreaks,
     safeAfterEntryOrder: safe.entryOrder,
     safeAfterFasrOrder: safe.fasrOrder,

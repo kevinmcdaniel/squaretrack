@@ -387,4 +387,17 @@ describe('POST /api/presentation/bulk-intake', () => {
     const get = await request(app).get(`/api/presentation/${id}`);
     expect(get.body.data.status).toBe('draft');
   });
+
+  it('dedupes identical sourceText within a single batch (saves one, skips the rest)', async () => {
+    const text = `${T}intra batch duplicate text`;
+    const res = await request(app).post('/api/presentation/bulk-intake').send({
+      sequences: [
+        { name: `${T}IntraA`, sourceText: text },
+        { name: `${T}IntraB`, sourceText: text },
+      ],
+    });
+    expect(res.status).toBe(201);
+    expect(res.body.data.saved).toHaveLength(1);
+    expect(res.body.data.skipped).toHaveLength(1);
+  });
 });

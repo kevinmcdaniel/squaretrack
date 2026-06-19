@@ -295,29 +295,54 @@ export type BulkIntakeResult = {
   skipped: Array<{ id: number; name: string; sourceText: string }>;
 };
 
-// Batch-save new draft presentations, skipping any whose trimmed sourceText
-// already exists. Each new presentation is created with status='draft' and no items.
+// Batch-save new draft presentations (status='draft', no items). Deduplicates
+// before writing — both within the incoming batch (first occurrence of a trimmed
+// sourceText wins) and against presentations already stored. New rows go in one
+// createManyAndReturn; every dropped item is reported in `skipped`, pointed at the
+// presentation that already owns its text (an existing row or the batch winner).
 export const bulkIntakePresentationsService = async (sequences: BulkIntakeItem[]): Promise<BulkIntakeResult> => {
-  const result: BulkIntakeResult = { saved: [], skipped: [] };
-
+  // 1. Collapse intra-batch duplicates; remember keys that had later occurrences.
+  const firstByKey = new Map<string, BulkIntakeItem>();
+  const batchDupKeys: string[] = [];
   for (const seq of sequences) {
     const key = dedupKey(seq.sourceText);
-    const existing = await prisma.presentation.findFirst({
-      where: { sourceText: { equals: key } },
-      select: { id: true, name: true, sourceText: true },
-    });
-    if (existing) {
-      result.skipped.push({ id: existing.id, name: existing.name, sourceText: existing.sourceText ?? '' });
-      continue;
-    }
-    const created = await prisma.presentation.create({
-      data: { name: seq.name, status: 'draft', sourceText: key },
-      select: { id: true, name: true },
-    });
-    result.saved.push(created);
+    if (firstByKey.has(key)) batchDupKeys.push(key);
+    else firstByKey.set(key, seq);
+  }
+  const keys = [...firstByKey.keys()];
+
+  // 2. Find which of those already exist in the DB.
+  const existing = await prisma.presentation.findMany({
+    where: { sourceText: { in: keys } },
+    select: { id: true, name: true, sourceText: true },
+  });
+  const existingByKey = new Map(existing.map((e) => [e.sourceText ?? '', e]));
+
+  // 3. Create the genuinely-new ones in a single round trip.
+  const toCreate = keys
+    .filter((key) => !existingByKey.has(key))
+    .map((key) => ({ name: firstByKey.get(key)!.name, status: 'draft', sourceText: key }));
+  const created = toCreate.length
+    ? await prisma.presentation.createManyAndReturn({
+        data: toCreate,
+        select: { id: true, name: true, sourceText: true },
+      })
+    : [];
+  const createdByKey = new Map(created.map((c) => [c.sourceText ?? '', c]));
+
+  // 4. saved = freshly created; skipped = DB-existing plus the collapsed batch
+  //    duplicates, each pointed at the presentation that now holds the text.
+  const skipped: BulkIntakeResult['skipped'] = existing.map((e) => ({
+    id: e.id,
+    name: e.name,
+    sourceText: e.sourceText ?? '',
+  }));
+  for (const key of batchDupKeys) {
+    const owner = existingByKey.get(key) ?? createdByKey.get(key);
+    if (owner) skipped.push({ id: owner.id, name: owner.name, sourceText: owner.sourceText ?? '' });
   }
 
-  return result;
+  return { saved: created.map((c) => ({ id: c.id, name: c.name })), skipped };
 };
 
 export const deletePresentationService = async (id: number) =>
