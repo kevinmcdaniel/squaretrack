@@ -8,7 +8,12 @@ import type {
   TextType,
 } from './types';
 
-const uid = (): string => globalThis.crypto.randomUUID();
+// localId only needs to be unique within this client session (React keys + draft
+// addressing). crypto.randomUUID() is unavailable outside secure contexts (non-localhost
+// HTTP), so fall back to a non-crypto id rather than throwing and crashing the editor.
+const uid = (): string =>
+  globalThis.crypto?.randomUUID?.() ??
+  `id-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
 
 // Re-derive a module step's resolution from its current matches and selection.
 // Called after a quick-add or pick so a row flips out of the red unresolved state
