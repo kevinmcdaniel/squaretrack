@@ -1,11 +1,12 @@
 'use client';
 
-import { useEffect, useMemo, useReducer, useState } from 'react';
+import { useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import {
   formationsForCall,
   listCalls,
   listFormations,
   pasteAndParse,
+  parseOnly,
   saveImport,
   activatePresentation,
   type CallOption,
@@ -38,6 +39,7 @@ export function SequenceImport({
   const [draft, dispatch] = useReducer(importReducer, initial);
   const [callOptions, setCallOptions] = useState<CallOption[]>([]);
   const [allFormations, setAllFormations] = useState<FormationOption[]>([]);
+  const autoParsed = useRef(false);
 
   useEffect(() => {
     let live = true;
@@ -49,6 +51,22 @@ export function SequenceImport({
     })();
     return () => { live = false; };
   }, []);
+
+  // Parse-on-load: when re-opening a saved draft (?presentationId=N) whose raw text
+  // has not yet been parsed, run the parser once so the step review is immediately
+  // visible. parseOnly (not pasteAndParse) preserves the existing presentationId.
+  useEffect(() => {
+    if (autoParsed.current) return;
+    if (initialPresentationId == null) return;
+    const text = (initialSourceText ?? '').trim();
+    if (!text) return;
+    if (draft.moduleSteps.length > 0 || draft.presentationItems.length > 0) return;
+    autoParsed.current = true;
+    void (async () => {
+      const res = await parseOnly(text);
+      if (res.ok) dispatch({ type: 'SET_DRAFT', parsed: res.data });
+    })();
+  }, [initialPresentationId, initialSourceText, draft.moduleSteps.length, draft.presentationItems.length]);
 
   const stepsByOrder = useMemo(
     () => new Map(draft.moduleSteps.map((s) => [s.order, s])),

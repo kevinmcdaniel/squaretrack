@@ -45,6 +45,21 @@ export async function pasteAndParse(input: {
   return { ok: true, data: { presentationId: saved.body.data.id, draft: parsed.body.data } };
 }
 
+// Parse without persisting. Used when re-opening an already-saved draft
+// (?presentationId=N): the raw presentation already exists, so re-running the
+// stateless parser is enough to repopulate the step review — POSTing a second
+// presentation (as pasteAndParse does) would orphan a duplicate.
+export async function parseOnly(sourceText: string): Promise<ActionResult<ParsedDraft>> {
+  const text = sourceText.trim();
+  if (!text) return { ok: false, error: 'Nothing to parse.' };
+
+  const parsed = await mutateData<ParsedDraft>('sequence/parse', 'POST', { text });
+  if (!parsed.ok || !parsed.body.data) {
+    return { ok: false, error: parsed.body.message || 'Could not parse the text.' };
+  }
+  return { ok: true, data: parsed.body.data };
+}
+
 // All calls, for the CallPicker autocomplete. The list endpoint has no server-side
 // search, so the picker filters this client-side (the catalog is small).
 export async function listCalls(): Promise<ActionResult<CallOption[]>> {

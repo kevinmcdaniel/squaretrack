@@ -4,6 +4,8 @@ import { writeFileSync } from 'node:fs';
 const SEQ_NAME = '_TEST_E2E';
 const PRES_NAME = '_TEST_E2E_PRES';
 const MOD_NAME = '_TEST_E2E_MOD';
+const DRAFT_NAME = '_TEST_E2E_DRAFT';
+const DRAFT_SOURCE = 'Heads square thru four\nswing thru\npass thru';
 
 /**
  * Seeds one call_formation (so a call has a FASR for the accordion + the call-formations
@@ -20,6 +22,7 @@ export default async function globalSetup() {
   // (presentation_item.moduleId is onDelete: Restrict), module before its
   // call_formation (choreo_module_step references it).
   await client.query(`DELETE FROM presentation WHERE name = $1`, [PRES_NAME]);
+  await client.query(`DELETE FROM presentation WHERE name = $1`, [DRAFT_NAME]);
   await client.query(`DELETE FROM choreo_module WHERE name = $1`, [MOD_NAME]);
   await client.query(`DELETE FROM sequence_calls WHERE "seqId" IN (SELECT "seqId" FROM sequence WHERE name = $1)`, [SEQ_NAME]);
   await client.query(`DELETE FROM sequence WHERE name = $1`, [SEQ_NAME]);
@@ -84,11 +87,19 @@ export default async function globalSetup() {
     [refItemRes.rows[0].id],
   );
 
+  // Raw draft fixture: sourceText, no items — the parse-on-load path hydrates the
+  // step review from this when opened via ?presentationId=N.
+  const draftRes = await client.query(
+    `INSERT INTO presentation (name,status,"sourceText") VALUES ($1,'draft',$2) RETURNING id`,
+    [DRAFT_NAME, DRAFT_SOURCE],
+  );
+  const draftPresentationId = draftRes.rows[0].id;
+
   writeFileSync(
     new URL('./.seed.json', import.meta.url),
     JSON.stringify({
       callId, callName, startId, startName, endId, seqId, seqName: SEQ_NAME,
-      moduleId, presentationId, presentationName: PRES_NAME,
+      moduleId, presentationId, presentationName: PRES_NAME, draftPresentationId,
     }),
   );
 
