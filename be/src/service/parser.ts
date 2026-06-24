@@ -11,6 +11,10 @@ const FILLER_PREFIXES = ['and', 'then', 'now', 'go', 'ok', 'okay', 'easy'];
 export type ParsedModuleStep = {
   order: number;
   rawLine: string;
+  // The call name after stripping designator, count, and spoken filler — the exact
+  // text matched against call.name / call_synonym.alias. The import editor prefills
+  // it into quick-add when a line does not resolve.
+  callText: string;
   designator?: string;
   count?: number;
   callMatches: { callId: number; name: string; confidence: number }[];
@@ -145,6 +149,7 @@ export async function parseSequenceText(rawText: string): Promise<ParsedDraft> {
     moduleSteps.push({
       order: stepOrder,
       rawLine,
+      callText,
       designator,
       count,
       callMatches,
@@ -159,4 +164,53 @@ export async function parseSequenceText(rawText: string): Promise<ParsedDraft> {
   flushModuleRef();
 
   return { module: { steps: moduleSteps }, presentation: { sourceText: rawText, items } };
+}
+
+export type SplitSequence = { name: string; sourceText: string };
+
+// Split a multi-sequence document into individual sequences. Sequences are
+// separated by lines of 10+ asterisks (optionally followed by author notes like
+// "(km)"). Names are inferred from the nearest preceding [bracket header] in the
+// chunk, or from the first non-empty non-separator line when no header is present.
+export function splitSequences(text: string): SplitSequence[] {
+  const SEPARATOR = /^\s*\*[\s*]{9,}\**\s*(?:\([^)]*\))?\s*$/;
+  const HEADER = /^\s*\[([^\]]+)\]\s*$/;
+
+  const lines = text.split(/\r?\n/);
+  const chunks: string[][] = [];
+  let current: string[] = [];
+
+  for (const line of lines) {
+    if (SEPARATOR.test(line)) {
+      if (current.some((l) => l.trim())) chunks.push(current);
+      current = [];
+    } else {
+      current.push(line);
+    }
+  }
+  if (current.some((l) => l.trim())) chunks.push(current);
+
+  return chunks.map((chunkLines) => {
+    const sourceText = chunkLines.join('\n').trim();
+
+    // Look for the first [bracket header] line to use as the name.
+    let name: string | null = null;
+    for (const line of chunkLines) {
+      const m = HEADER.exec(line);
+      if (m) { name = m[1]!.trim(); break; }
+    }
+
+    // Fall back to the first non-empty, non-separator content line.
+    if (!name) {
+      for (const line of chunkLines) {
+        const trimmed = line.trim();
+        if (trimmed && !SEPARATOR.test(line) && !HEADER.test(line)) {
+          name = trimmed.slice(0, 60);
+          break;
+        }
+      }
+    }
+
+    return { name: name ?? 'Untitled sequence', sourceText };
+  });
 }

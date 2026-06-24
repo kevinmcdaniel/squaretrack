@@ -8,6 +8,7 @@ import {
   updatePresentationService,
   patchPresentationService,
   deletePresentationService,
+  bulkIntakePresentationsService,
   presentationExists,
   appendItemService,
   deleteItemService,
@@ -65,6 +66,7 @@ export const listPresentations = async (req: Request, res: Response, next: NextF
     const filters: PresentationListFilters = {
       search: typeof req.query.search === 'string' ? req.query.search : undefined,
       source: typeof req.query.source === 'string' ? req.query.source : undefined,
+      status: typeof req.query.status === 'string' ? req.query.status : undefined,
       activator: typeof req.query.activator === 'string' ? req.query.activator : undefined,
       moduleId: numericQuery(req.query.moduleId),
       safeAfterMax: numericQuery(req.query.safeAfterMax),
@@ -117,8 +119,8 @@ export const patchPresentation = async (req: Request, res: Response, next: NextF
   try {
     const id = presentationIdFromParams(req);
     if (!(await presentationExists(id))) throw new notFoundError(`Presentation id:${id} not found.`);
-    const { name, source, activator, rating, notes } = req.body;
-    const record = await patchPresentationService(id, { name, source, activator, rating, notes });
+    const { name, status, source, activator, rating, notes } = req.body;
+    const record = await patchPresentationService(id, { name, status, source, activator, rating, notes });
     res.json({ message: 'Presentation metadata updated', data: record });
   } catch (error) {
     next(error);
@@ -159,6 +161,22 @@ export const deletePresentationItem = async (req: Request, res: Response, next: 
     const removed = await deleteItemService(id, itemId);
     if (!removed) throw new notFoundError(`Item id:${itemId} not found on presentation id:${id}.`);
     res.json({ message: 'Presentation item deleted', data: { id: itemId } });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const bulkIntakePresentations = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { sequences } = req.body;
+    if (!Array.isArray(sequences) || sequences.length === 0) {
+      throw new validationError('sequences must be a non-empty array.');
+    }
+    for (const seq of sequences) {
+      if (!seq.name || !seq.sourceText) throw new validationError('Each sequence must have name and sourceText.');
+    }
+    const result = await bulkIntakePresentationsService(sequences);
+    res.status(201).json({ message: 'Bulk intake complete', data: result });
   } catch (error) {
     next(error);
   }

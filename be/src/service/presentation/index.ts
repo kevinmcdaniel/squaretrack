@@ -21,6 +21,7 @@ export type ItemInput = {
 
 export type PresentationInput = {
   name: string;
+  status?: string;
   source?: string | null;
   activator?: string | null;
   rating?: string | null;
@@ -31,6 +32,7 @@ export type PresentationInput = {
 
 export type PresentationMeta = {
   name?: string;
+  status?: string;
   source?: string | null;
   activator?: string | null;
   rating?: string | null;
@@ -40,6 +42,7 @@ export type PresentationMeta = {
 export type PresentationListFilters = {
   search?: string;
   source?: string;
+  status?: string;
   moduleId?: number;
   safeAfterMax?: number;
   activator?: string;
@@ -202,6 +205,7 @@ export const listPresentationsService = async (filters: PresentationListFilters)
     where: {
       ...(filters.search ? { name: { contains: filters.search, mode: 'insensitive' } } : {}),
       ...(filters.source ? { source: filters.source } : {}),
+      ...(filters.status ? { status: filters.status } : {}),
       ...(filters.activator ? { activator: filters.activator } : {}),
       ...(filters.moduleId != null ? { items: { some: { moduleId: filters.moduleId } } } : {}),
       ...(filters.safeAfterMax != null
@@ -229,6 +233,7 @@ export const createPresentationService = async (data: PresentationInput) => {
   const created = await prisma.presentation.create({
     data: {
       name: meta.name,
+      status: meta.status ?? 'draft',
       source: meta.source ?? null,
       activator: meta.activator ?? null,
       rating: meta.rating ?? null,
@@ -250,6 +255,7 @@ export const updatePresentationService = async (id: number, data: PresentationIn
       where: { id },
       data: {
         name: meta.name,
+        ...(meta.status != null ? { status: meta.status } : {}),
         source: meta.source ?? null,
         activator: meta.activator ?? null,
         rating: meta.rating ?? null,
@@ -268,12 +274,76 @@ export const patchPresentationService = async (id: number, meta: PresentationMet
     where: { id },
     data: {
       ...(meta.name != null ? { name: meta.name } : {}),
+      ...(meta.status != null ? { status: meta.status } : {}),
       ...(meta.source !== undefined ? { source: meta.source } : {}),
       ...(meta.activator !== undefined ? { activator: meta.activator } : {}),
       ...(meta.rating !== undefined ? { rating: meta.rating } : {}),
       ...(meta.notes !== undefined ? { notes: meta.notes } : {}),
     },
   });
+
+// Dedup key: trim only — preserves newlines and structure so stored text is
+// human-readable. Aggressive normalization (lowercase + whitespace collapse)
+// would strip the line-per-step structure needed for later display.
+function dedupKey(text: string): string {
+  return text.trim();
+}
+
+export type BulkIntakeItem = { name: string; sourceText: string };
+export type BulkIntakeResult = {
+  saved: Array<{ id: number; name: string }>;
+  skipped: Array<{ id: number; name: string; sourceText: string }>;
+};
+
+// Batch-save new draft presentations (status='draft', no items). Deduplicates
+// before writing — both within the incoming batch (first occurrence of a trimmed
+// sourceText wins) and against presentations already stored. New rows go in one
+// createManyAndReturn; every dropped item is reported in `skipped`, pointed at the
+// presentation that already owns its text (an existing row or the batch winner).
+export const bulkIntakePresentationsService = async (sequences: BulkIntakeItem[]): Promise<BulkIntakeResult> => {
+  // 1. Collapse intra-batch duplicates; remember keys that had later occurrences.
+  const firstByKey = new Map<string, BulkIntakeItem>();
+  const batchDupKeys: string[] = [];
+  for (const seq of sequences) {
+    const key = dedupKey(seq.sourceText);
+    if (firstByKey.has(key)) batchDupKeys.push(key);
+    else firstByKey.set(key, seq);
+  }
+  const keys = [...firstByKey.keys()];
+
+  // 2. Find which of those already exist in the DB.
+  const existing = await prisma.presentation.findMany({
+    where: { sourceText: { in: keys } },
+    select: { id: true, name: true, sourceText: true },
+  });
+  const existingByKey = new Map(existing.map((e) => [e.sourceText ?? '', e]));
+
+  // 3. Create the genuinely-new ones in a single round trip.
+  const toCreate = keys
+    .filter((key) => !existingByKey.has(key))
+    .map((key) => ({ name: firstByKey.get(key)!.name, status: 'draft', sourceText: key }));
+  const created = toCreate.length
+    ? await prisma.presentation.createManyAndReturn({
+        data: toCreate,
+        select: { id: true, name: true, sourceText: true },
+      })
+    : [];
+  const createdByKey = new Map(created.map((c) => [c.sourceText ?? '', c]));
+
+  // 4. saved = freshly created; skipped = DB-existing plus the collapsed batch
+  //    duplicates, each pointed at the presentation that now holds the text.
+  const skipped: BulkIntakeResult['skipped'] = existing.map((e) => ({
+    id: e.id,
+    name: e.name,
+    sourceText: e.sourceText ?? '',
+  }));
+  for (const key of batchDupKeys) {
+    const owner = existingByKey.get(key) ?? createdByKey.get(key);
+    if (owner) skipped.push({ id: owner.id, name: owner.name, sourceText: owner.sourceText ?? '' });
+  }
+
+  return { saved: created.map((c) => ({ id: c.id, name: c.name })), skipped };
+};
 
 export const deletePresentationService = async (id: number) =>
   prisma.presentation.delete({ where: { id } });

@@ -183,6 +183,16 @@ describe('POST /api/sequence/parse', () => {
     expect(res.body.data.module.steps[0].count).toBe(4);
   });
 
+  it('exposes the cleaned call text used for matching (#18 quick-add)', async () => {
+    const res = await request(app)
+      .post('/api/sequence/parse')
+      .send({ text: 'now heads square thru 4' });
+    expect(res.status).toBe(200);
+    // designator, count, and leading filler stripped — just the matchable call name,
+    // which the import editor prefills into quick-add (new call / synonym alias).
+    expect(res.body.data.module.steps[0].callText).toBe('square thru');
+  });
+
   it('resolves call by exact name match', async () => {
     await prisma.call.create({ data: { name: `${T}parse circle` } });
     const res = await request(app)
@@ -325,5 +335,51 @@ describe('POST /api/sequence', () => {
     await cleanupTestData();
     const seqs = await prisma.sequence.findMany({ where: { name: { startsWith: T } } });
     expect(seqs.length).toBe(0);
+  });
+});
+
+// ── POST /api/sequence/split ────────────────────────────────────────────────
+
+describe('POST /api/sequence/split', () => {
+  it('splits a document with two asterisk-separated sequences', async () => {
+    const text = 'Circle Left\nAllemande Left\n* * * * * * * * * * * * * * *\nStar Thru\nPass Thru';
+    const res = await request(app).post('/api/sequence/split').send({ text });
+    expect(res.status).toBe(200);
+    expect(res.body.data).toHaveLength(2);
+    expect(res.body.data[0].sourceText).toContain('Circle Left');
+    expect(res.body.data[1].sourceText).toContain('Star Thru');
+  });
+
+  it('infers name from [bracket header]', async () => {
+    const text = '[w02 basics review]\nCircle Left\n* * * * * * * * * * * * * * *\n[w02 sashay]\nRollaway';
+    const res = await request(app).post('/api/sequence/split').send({ text });
+    expect(res.status).toBe(200);
+    expect(res.body.data[0].name).toBe('w02 basics review');
+    expect(res.body.data[1].name).toBe('w02 sashay');
+  });
+
+  it('falls back to first content line when no header present', async () => {
+    const text = 'Circle Left\nAllemande Left';
+    const res = await request(app).post('/api/sequence/split').send({ text });
+    expect(res.status).toBe(200);
+    expect(res.body.data[0].name).toBe('Circle Left');
+  });
+
+  it('handles separator with trailing author note like (km)', async () => {
+    const text = 'Circle Left\n* * * * * * * * * * * * * * * (km)\nStar Thru';
+    const res = await request(app).post('/api/sequence/split').send({ text });
+    expect(res.status).toBe(200);
+    expect(res.body.data).toHaveLength(2);
+  });
+
+  it('returns a single item for text with no separator', async () => {
+    const res = await request(app).post('/api/sequence/split').send({ text: 'Circle Left\nAllemande Left' });
+    expect(res.status).toBe(200);
+    expect(res.body.data).toHaveLength(1);
+  });
+
+  it('returns 400 when text is missing', async () => {
+    const res = await request(app).post('/api/sequence/split').send({});
+    expect(res.status).toBe(406);
   });
 });
