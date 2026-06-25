@@ -18,6 +18,20 @@ test('opening a draft auto-parses so step review shows without a manual click', 
   await expect(page.locator('[data-unresolved]').first()).toBeVisible();
 });
 
+test('splitting a line in the editor produces separate steps', async ({ page }) => {
+  await page.goto(`/sequences/${draftPresentationId}/edit`);
+  await expect(page.getByRole('heading', { name: 'Step review' })).toBeVisible();
+
+  const rows = page.locator('[data-unresolved]');
+  const before = await rows.count();
+
+  await rows.first().getByRole('button', { name: 'Split line' }).click();
+  await page.getByRole('textbox', { name: 'Split into calls' }).fill('first call\nsecond call');
+  await page.getByRole('button', { name: 'Apply', exact: true }).click();
+
+  await expect(page.locator('[data-unresolved]')).toHaveCount(before + 1);
+});
+
 test('opening a linked sequence hydrates it with calls locked', async ({ page }) => {
   await page.goto(`/sequences/${presentationId}/edit`);
 

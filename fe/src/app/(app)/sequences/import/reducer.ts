@@ -144,6 +144,7 @@ export function hydrateDraftFromPresentation(
 export type ImportAction =
   | { type: 'SET_DRAFT'; parsed: ParsedDraft }
   | { type: 'UPDATE_MODULE_STEP'; localId: string; patch: Partial<DraftModuleStep> }
+  | { type: 'SPLIT_MODULE_STEP'; localId: string; pieces: string[] }
   // Edits a top-level text item, or (with stepOrder) one module_ref step's decoration.
   | { type: 'UPDATE_PRESENTATION_ITEM'; localId: string; stepOrder?: number; patch: Partial<DraftModuleRefStep> & { text?: string; textType?: TextType } }
   | { type: 'ADD_PRESENTATION_TEXT'; afterOrder: number; textType: TextType }
@@ -155,6 +156,25 @@ export type ImportAction =
 // after an add / delete / reorder.
 function resequence(items: DraftPresentationItem[]): DraftPresentationItem[] {
   return items.map((item, i) => ({ ...item, order: i }));
+}
+
+// A brand-new unresolved step minted by a line-split. Choreographic fields start
+// empty; the caller resolves call + formation through the picker.
+function freshStep(callText: string): DraftModuleStep {
+  return {
+    localId: uid(),
+    order: 0, // renumbered by the reducer
+    callId: null,
+    startId: null,
+    callText: callText.trim(),
+    designator: null,
+    count: null,
+    warning: null,
+    resolution: 'unresolved',
+    rawLine: '',
+    callMatches: [],
+    formationMatches: [],
+  };
 }
 
 export function importReducer(state: DraftImport, action: ImportAction): DraftImport {
@@ -174,6 +194,44 @@ export function importReducer(state: DraftImport, action: ImportAction): DraftIm
           s.localId === action.localId ? { ...s, ...action.patch } : s,
         ),
       };
+
+    // Split one parsed step into several calls (e.g. "sides face, grand square").
+    // Both layers renumber together: moduleSteps re-order 0..n by position, and the
+    // module_ref decorations shift past the split point with empty decos for the new
+    // pieces — the first piece keeps the original step's cueing text.
+    case 'SPLIT_MODULE_STEP': {
+      const idx = state.moduleSteps.findIndex((s) => s.localId === action.localId);
+      if (idx === -1) return state;
+      const pieces = action.pieces.map((p) => p.trim()).filter(Boolean);
+      if (pieces.length < 2) return state;
+
+      const splitOrder = state.moduleSteps[idx]!.order;
+      const inserted = pieces.length - 1;
+
+      const moduleSteps = [
+        ...state.moduleSteps.slice(0, idx),
+        ...pieces.map(freshStep),
+        ...state.moduleSteps.slice(idx + 1),
+      ].map((s, i) => ({ ...s, order: i }));
+
+      const presentationItems = state.presentationItems.map((item) => {
+        if (item.type !== 'module_ref') return item;
+        const shifted = item.steps.map((st) =>
+          st.stepOrder > splitOrder ? { ...st, stepOrder: st.stepOrder + inserted } : st,
+        );
+        const added: DraftModuleRefStep[] = Array.from({ length: inserted }, (_, k) => ({
+          stepOrder: splitOrder + 1 + k,
+          textBefore: null,
+          textAfter: null,
+          callNameAlternate: null,
+          warning: null,
+          helperText: null,
+        }));
+        return { ...item, steps: [...shifted, ...added].sort((a, b) => a.stepOrder - b.stepOrder) };
+      });
+
+      return { ...state, moduleSteps, presentationItems };
+    }
 
     case 'UPDATE_PRESENTATION_ITEM':
       return {

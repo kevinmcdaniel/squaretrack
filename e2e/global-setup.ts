@@ -5,7 +5,7 @@ const SEQ_NAME = '_TEST_E2E';
 const PRES_NAME = '_TEST_E2E_PRES';
 const MOD_NAME = '_TEST_E2E_MOD';
 const DRAFT_NAME = '_TEST_E2E_DRAFT';
-const DRAFT_SOURCE = 'Heads square thru four\nswing thru\npass thru';
+const DRAFT_SOURCE = 'Heads square thru four\nsides face, grand square\nswing thru';
 
 /**
  * Seeds one call_formation (so a call has a FASR for the accordion + the call-formations

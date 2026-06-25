@@ -152,6 +152,8 @@ export function SequenceImport({
           : [...(s?.formationMatches ?? []), opt];
       dispatch({ type: 'UPDATE_MODULE_STEP', localId, patch: { startId: opt.startId, formationMatches } });
     },
+
+    onSplitStep: (localId, pieces) => dispatch({ type: 'SPLIT_MODULE_STEP', localId, pieces }),
   };
 
   const handleSaveDraft = async (): Promise<SaveOutcome> => {
