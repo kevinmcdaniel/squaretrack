@@ -174,6 +174,54 @@ describe('POST /api/sequence/parse', () => {
     expect(items[1].steps[0].stepOrder).toBe(0);
   });
 
+  // ── #20 parser refinements ──
+
+  it('reads a first-row [Title] as the sequence name, not a step', async () => {
+    const res = await request(app)
+      .post('/api/sequence/parse')
+      .send({ text: '[Basics Review]\ncircle left' });
+    expect(res.status).toBe(200);
+    expect(res.body.data.name).toBe('Basics Review');
+    expect(res.body.data.module.steps.length).toBe(1);
+    expect(res.body.data.module.steps[0].callText).toBe('circle left');
+  });
+
+  it('reads a {heads/sides} activator and parses the call after it', async () => {
+    const res = await request(app)
+      .post('/api/sequence/parse')
+      .send({ text: '{heads/sides} circle left' });
+    expect(res.status).toBe(200);
+    expect(res.body.data.activator).toBe('heads');
+    expect(res.body.data.module.steps.length).toBe(1);
+    expect(res.body.data.module.steps[0].callText).toBe('circle left');
+  });
+
+  it('accepts {S/H} shorthand for a sides-lead activator', async () => {
+    const res = await request(app)
+      .post('/api/sequence/parse')
+      .send({ text: '{S/H} do-sa-do' });
+    expect(res.body.data.activator).toBe('sides');
+    expect(res.body.data.module.steps.length).toBe(1);
+  });
+
+  it('splits a comma line into separate call steps', async () => {
+    const res = await request(app)
+      .post('/api/sequence/parse')
+      .send({ text: 'sides face, grand square' });
+    expect(res.status).toBe(200);
+    expect(res.body.data.module.steps.length).toBe(2);
+    expect(res.body.data.module.steps[0].designator).toBe('sides');
+    expect(res.body.data.module.steps[1].callText).toBe('grand square');
+  });
+
+  it('handles an activator prefix on a comma-split line', async () => {
+    const res = await request(app)
+      .post('/api/sequence/parse')
+      .send({ text: '{H/S} sides face, grand square' });
+    expect(res.body.data.activator).toBe('heads');
+    expect(res.body.data.module.steps.length).toBe(2);
+  });
+
   it('extracts designator and count onto the module step', async () => {
     const res = await request(app)
       .post('/api/sequence/parse')
