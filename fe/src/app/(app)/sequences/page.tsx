@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { fetchData } from '@/lib/hac/fetch';
+import { DeleteDraftButton } from './DeleteDraftButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -66,7 +67,7 @@ export default async function Page() {
       ) : (
         <ul className="divide-y divide-gray-100 rounded border border-gray-200 bg-white">
           {drafts.map((d) => (
-            <li key={d.id} className="flex items-center justify-between px-4 py-3">
+            <li key={d.id} className="flex items-center justify-between gap-3 px-4 py-3">
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm font-medium text-gray-900">{d.name}</p>
                 {d.sourceText && (
@@ -75,12 +76,15 @@ export default async function Page() {
                   </p>
                 )}
               </div>
-              <Link
-                href={`/sequences/import?presentationId=${d.id}`}
-                className="ml-4 shrink-0 text-sm text-blue-600 hover:underline"
-              >
-                Continue
-              </Link>
+              <div className="flex shrink-0 items-center gap-3">
+                <Link
+                  href={`/sequences/${d.id}/edit`}
+                  className="text-sm font-medium text-blue-600 hover:underline"
+                >
+                  Edit
+                </Link>
+                <DeleteDraftButton id={d.id} name={d.name} />
+              </div>
             </li>
           ))}
         </ul>

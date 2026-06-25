@@ -3,14 +3,32 @@ import { readFileSync } from 'node:fs';
 
 const seed = JSON.parse(readFileSync(new URL('../.seed.json', import.meta.url), 'utf8')) as {
   draftPresentationId: number;
+  presentationId: number;
+  presentationName: string;
+  callName: string;
 };
-const { draftPresentationId } = seed;
+const { draftPresentationId, presentationId, presentationName, callName } = seed;
 
 test('opening a draft auto-parses so step review shows without a manual click', async ({ page }) => {
-  await page.goto(`/sequences/import?presentationId=${draftPresentationId}`);
+  await page.goto(`/sequences/${draftPresentationId}/edit`);
 
   // Parse-on-load: the step-review section and at least one call step row appear
   // without the user clicking Parse.
   await expect(page.getByRole('heading', { name: 'Step review' })).toBeVisible();
   await expect(page.locator('[data-unresolved]').first()).toBeVisible();
+});
+
+test('opening a linked sequence hydrates it with calls locked', async ({ page }) => {
+  await page.goto(`/sequences/${presentationId}/edit`);
+
+  // Hydrated from the saved presentation: step review + the saved call + metadata.
+  await expect(page.getByRole('heading', { name: 'Step review' })).toBeVisible();
+  await expect(page.getByText(callName, { exact: false }).first()).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'Name' })).toHaveValue(presentationName);
+
+  // Linked → choreography locked: no call resolver, no "change" button, and the raw
+  // paste box is hidden (you don't re-parse a linked sequence).
+  await expect(page.getByPlaceholder('Search calls…')).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'change' })).toHaveCount(0);
+  await expect(page.getByLabel('Calling text')).toHaveCount(0);
 });
