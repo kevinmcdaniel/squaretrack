@@ -32,6 +32,31 @@ test('splitting a line in the editor produces separate steps', async ({ page }) 
   await expect(page.locator('[data-unresolved]')).toHaveCount(before + 1);
 });
 
+test('parse-on-load fills the title and activator from the source text', async ({ page }) => {
+  await page.goto(`/sequences/${draftPresentationId}/edit`);
+  await expect(page.getByRole('heading', { name: 'Step review' })).toBeVisible();
+  await expect(page.getByRole('textbox', { name: 'Name' })).toHaveValue('E2E Draft Title');
+  await expect(page.getByRole('combobox', { name: 'Activator' })).toHaveValue('heads');
+});
+
+test('removing a step drops it from the review', async ({ page }) => {
+  await page.goto(`/sequences/${draftPresentationId}/edit`);
+  await expect(page.getByRole('heading', { name: 'Step review' })).toBeVisible();
+  const rows = page.locator('[data-unresolved]');
+  const before = await rows.count();
+  await rows.first().getByRole('button', { name: 'Remove' }).click();
+  await expect(page.locator('[data-unresolved]')).toHaveCount(before - 1);
+});
+
+test('un-split merges a step into the previous one', async ({ page }) => {
+  await page.goto(`/sequences/${draftPresentationId}/edit`);
+  await expect(page.getByRole('heading', { name: 'Step review' })).toBeVisible();
+  const rows = page.locator('[data-unresolved]');
+  const before = await rows.count();
+  await rows.nth(1).getByRole('button', { name: 'Un-split' }).click();
+  await expect(page.locator('[data-unresolved]')).toHaveCount(before - 1);
+});
+
 test('opening a linked sequence hydrates it with calls locked', async ({ page }) => {
   await page.goto(`/sequences/${presentationId}/edit`);
 

@@ -145,6 +145,8 @@ export type ImportAction =
   | { type: 'SET_DRAFT'; parsed: ParsedDraft }
   | { type: 'UPDATE_MODULE_STEP'; localId: string; patch: Partial<DraftModuleStep> }
   | { type: 'SPLIT_MODULE_STEP'; localId: string; pieces: string[] }
+  | { type: 'REMOVE_MODULE_STEP'; localId: string }
+  | { type: 'MERGE_MODULE_STEP'; localId: string }
   // Edits a top-level text item, or (with stepOrder) one module_ref step's decoration.
   | { type: 'UPDATE_PRESENTATION_ITEM'; localId: string; stepOrder?: number; patch: Partial<DraftModuleRefStep> & { text?: string; textType?: TextType } }
   | { type: 'ADD_PRESENTATION_TEXT'; afterOrder: number; textType: TextType }
@@ -177,12 +179,28 @@ function freshStep(callText: string): DraftModuleStep {
   };
 }
 
+// Drop the decoration for a removed step and close the gap in stepOrder, keeping
+// the module_ref item aligned with the renumbered moduleSteps.
+function removeStepDecoration(items: DraftPresentationItem[], removedOrder: number): DraftPresentationItem[] {
+  return items.map((item) => {
+    if (item.type !== 'module_ref') return item;
+    const steps = item.steps
+      .filter((st) => st.stepOrder !== removedOrder)
+      .map((st) => (st.stepOrder > removedOrder ? { ...st, stepOrder: st.stepOrder - 1 } : st));
+    return { ...item, steps };
+  });
+}
+
 export function importReducer(state: DraftImport, action: ImportAction): DraftImport {
   switch (action.type) {
     case 'SET_DRAFT':
       return {
         ...state,
         sourceText: action.parsed.presentation.sourceText,
+        // A first-row [Title] names the sequence (unless the caller already named
+        // it); a {heads/sides} line sets the toggle activator.
+        ...(action.parsed.name && !state.name ? { name: action.parsed.name } : {}),
+        ...(action.parsed.activator ? { activator: action.parsed.activator } : {}),
         moduleSteps: hydrateModuleSteps(action.parsed),
         presentationItems: hydratePresentationItems(action.parsed),
       };
@@ -231,6 +249,48 @@ export function importReducer(state: DraftImport, action: ImportAction): DraftIm
       });
 
       return { ...state, moduleSteps, presentationItems };
+    }
+
+    // Remove a step (the safety net for a bad parse / over-split). Both layers
+    // renumber to close the gap.
+    case 'REMOVE_MODULE_STEP': {
+      const idx = state.moduleSteps.findIndex((s) => s.localId === action.localId);
+      if (idx === -1) return state;
+      const removedOrder = state.moduleSteps[idx]!.order;
+      const moduleSteps = state.moduleSteps.filter((_, i) => i !== idx).map((s, i) => ({ ...s, order: i }));
+      return { ...state, moduleSteps, presentationItems: removeStepDecoration(state.presentationItems, removedOrder) };
+    }
+
+    // Un-split: merge a step back into the previous one (the inverse of split). The
+    // combined text becomes a fresh unresolved call to re-pick.
+    case 'MERGE_MODULE_STEP': {
+      const idx = state.moduleSteps.findIndex((s) => s.localId === action.localId);
+      if (idx <= 0) return state; // the first step has nothing to merge into
+      const cur = state.moduleSteps[idx]!;
+      const removedOrder = cur.order;
+      const mergedText = [state.moduleSteps[idx - 1]!.callText, cur.callText]
+        .map((t) => t.trim())
+        .filter(Boolean)
+        .join(', ');
+      const moduleSteps = state.moduleSteps
+        .map((s, i) =>
+          i === idx - 1
+            ? {
+                ...s,
+                callText: mergedText,
+                callId: null,
+                startId: null,
+                designator: null,
+                count: null,
+                callMatches: [],
+                formationMatches: [],
+                resolution: 'unresolved' as const,
+              }
+            : s,
+        )
+        .filter((_, i) => i !== idx)
+        .map((s, i) => ({ ...s, order: i }));
+      return { ...state, moduleSteps, presentationItems: removeStepDecoration(state.presentationItems, removedOrder) };
     }
 
     case 'UPDATE_PRESENTATION_ITEM':

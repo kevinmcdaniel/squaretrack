@@ -154,6 +154,8 @@ export function SequenceImport({
     },
 
     onSplitStep: (localId, pieces) => dispatch({ type: 'SPLIT_MODULE_STEP', localId, pieces }),
+    onRemoveStep: (localId) => dispatch({ type: 'REMOVE_MODULE_STEP', localId }),
+    onMergeStep: (localId) => dispatch({ type: 'MERGE_MODULE_STEP', localId }),
   };
 
   const handleSaveDraft = async (): Promise<SaveOutcome> => {

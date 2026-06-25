@@ -20,6 +20,8 @@ export type StepRowHandlers = {
   onCatalogAddCall: (call: CallOption) => void;
   onPickFormation: (localId: string, opt: FormationOption) => void;
   onSplitStep: (localId: string, pieces: string[]) => void;
+  onRemoveStep: (localId: string) => void;
+  onMergeStep: (localId: string) => void;
 };
 
 // Split-a-line editor: one call per line. Pre-fills with the step's text and, when
@@ -187,13 +189,33 @@ export function CallStepRow({
         )}
 
         {!locked && (
-          <button
-            type="button"
-            onClick={() => setSplitting((v) => !v)}
-            className="ml-auto rounded bg-gray-100 px-1.5 py-0.5 text-[10px] font-medium text-gray-500 hover:bg-gray-200"
-          >
-            Split line
-          </button>
+          <span className="ml-auto flex items-center gap-1">
+            {step.order > 0 && (
+              <button
+                type="button"
+                onClick={() => handlers.onMergeStep(step.localId)}
+                title="Merge into the previous call"
+                className="rounded bg-gray-100 px-1.5 py-0.5 text-[10px] font-medium text-gray-500 hover:bg-gray-200"
+              >
+                Un-split
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={() => setSplitting((v) => !v)}
+              className="rounded bg-gray-100 px-1.5 py-0.5 text-[10px] font-medium text-gray-500 hover:bg-gray-200"
+            >
+              Split line
+            </button>
+            <button
+              type="button"
+              onClick={() => handlers.onRemoveStep(step.localId)}
+              title="Remove this step"
+              className="rounded bg-gray-100 px-1.5 py-0.5 text-[10px] font-medium text-red-500 hover:bg-red-50"
+            >
+              Remove
+            </button>
+          </span>
         )}
       </div>
 

@@ -30,6 +30,8 @@ export type ParsedPresentationItem =
   | { order: number; type: 'text'; textType: TextType; text: string };
 
 export type ParsedDraft = {
+  name?: string; // from a first-row [Title]
+  activator?: 'heads' | 'sides'; // from a {heads/sides} toggle line
   module: { steps: ParsedModuleStep[] };
   presentation: { sourceText: string; items: ParsedPresentationItem[] };
 };
