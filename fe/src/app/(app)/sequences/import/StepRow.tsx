@@ -36,19 +36,24 @@ export function CallStepRow({
   callOptions,
   allFormations,
   handlers,
+  locked = false,
 }: {
   step: DraftModuleStep;
   deco: DraftModuleRefStep;
   callOptions: CallOption[];
   allFormations: FormationOption[];
   handlers: StepRowHandlers;
+  locked?: boolean;
 }) {
   const callResolved = step.callId != null;
   const [editingCall, setEditingCall] = useState(false);
-  const showPicker = !callResolved || editingCall;
+  // Linked sequences lock the choreography: no resolver, no re-pick (#20).
+  const showPicker = !locked && (!callResolved || editingCall);
 
   const needsAttention = stepNeedsAttention(step);
   const callName = resolvedCallName(step);
+  const formationName =
+    step.startId != null ? allFormations.find((f) => f.startId === step.startId)?.name ?? null : null;
 
   const border = !needsAttention
     ? 'border-gray-200'
@@ -89,20 +94,28 @@ export function CallStepRow({
       ) : (
         <>
           <span className="font-medium text-gray-900">{callName ?? step.callText}</span>
-          <button
-            type="button"
-            onClick={() => setEditingCall(true)}
-            className="rounded bg-gray-100 px-1.5 py-0.5 text-[10px] font-medium text-gray-500 hover:bg-gray-200"
-          >
-            change
-          </button>
-          <FormationPicker
-            callId={step.callId!}
-            options={step.formationMatches}
-            selectedId={step.startId}
-            allFormations={allFormations}
-            onPick={(opt) => handlers.onPickFormation(step.localId, opt)}
-          />
+          {!locked && (
+            <button
+              type="button"
+              onClick={() => setEditingCall(true)}
+              className="rounded bg-gray-100 px-1.5 py-0.5 text-[10px] font-medium text-gray-500 hover:bg-gray-200"
+            >
+              change
+            </button>
+          )}
+          {locked ? (
+            formationName && (
+              <span className="rounded bg-slate-50 px-1.5 py-0.5 text-xs text-slate-600">from {formationName}</span>
+            )
+          ) : (
+            <FormationPicker
+              callId={step.callId!}
+              options={step.formationMatches}
+              selectedId={step.startId}
+              allFormations={allFormations}
+              onPick={(opt) => handlers.onPickFormation(step.localId, opt)}
+            />
+          )}
         </>
       )}
 

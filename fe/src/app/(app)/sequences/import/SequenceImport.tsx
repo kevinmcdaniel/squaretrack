@@ -19,24 +19,33 @@ import { PasteDropzone } from './PasteDropzone';
 import { StepList } from './StepList';
 import { type StepRowHandlers, stepNeedsAttention } from './StepRow';
 import { UnresolvedBanner } from './UnresolvedBanner';
-import { emptyDraft, importReducer } from './reducer';
+import type { LoadedPresentation } from './types';
+import { emptyDraft, hydrateDraftFromPresentation, importReducer, presentationIsLinked } from './reducer';
 
 export function SequenceImport({
   formations,
   startFormationId,
-  initialPresentationId,
-  initialSourceText,
+  initialPresentation,
 }: {
   formations: FormationLite[];
   startFormationId: number;
-  initialPresentationId?: number;
-  initialSourceText?: string;
+  initialPresentation?: LoadedPresentation;
 }) {
-  const initial = emptyDraft(startFormationId);
-  if (initialPresentationId) initial.presentationId = initialPresentationId;
-  if (initialSourceText) initial.sourceText = initialSourceText;
+  // A presentation with a module_ref item is linked to choreography: the calls
+  // render read-only and the raw paste box is hidden (#20 lifecycle gate).
+  const linked = initialPresentation ? presentationIsLinked(initialPresentation) : false;
 
-  const [draft, dispatch] = useReducer(importReducer, initial);
+  // Lazy init (runs once): hydrate a saved presentation that already has items;
+  // otherwise start empty, carrying a raw draft's id + sourceText for parse-on-load.
+  const [draft, dispatch] = useReducer(importReducer, initialPresentation, (p) => {
+    if (p && p.items.length > 0) return hydrateDraftFromPresentation(p, startFormationId);
+    const d = emptyDraft(startFormationId);
+    if (p) {
+      d.presentationId = p.id;
+      d.sourceText = p.sourceText ?? '';
+    }
+    return d;
+  });
   const [callOptions, setCallOptions] = useState<CallOption[]>([]);
   const [allFormations, setAllFormations] = useState<FormationOption[]>([]);
   const autoParsed = useRef(false);
@@ -57,8 +66,8 @@ export function SequenceImport({
   // visible. parseOnly (not pasteAndParse) preserves the existing presentationId.
   useEffect(() => {
     if (autoParsed.current) return;
-    if (initialPresentationId == null) return;
-    const text = (initialSourceText ?? '').trim();
+    if (initialPresentation == null) return;
+    const text = (initialPresentation.sourceText ?? '').trim();
     if (!text) return;
     if (draft.moduleSteps.length > 0 || draft.presentationItems.length > 0) return;
     autoParsed.current = true;
@@ -66,7 +75,7 @@ export function SequenceImport({
       const res = await parseOnly(text);
       if (res.ok) dispatch({ type: 'SET_DRAFT', parsed: res.data });
     })();
-  }, [initialPresentationId, initialSourceText, draft.moduleSteps.length, draft.presentationItems.length]);
+  }, [initialPresentation, draft.moduleSteps.length, draft.presentationItems.length]);
 
   const stepsByOrder = useMemo(
     () => new Map(draft.moduleSteps.map((s) => [s.order, s])),
@@ -216,14 +225,22 @@ export function SequenceImport({
         <MetaForm draft={draft} formations={formations} onMeta={(patch) => dispatch({ type: 'SET_META', patch })} />
       </section>
 
-      <section className="space-y-3">
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-500">Source</h2>
-        <PasteDropzone initialText={draft.sourceText} hasDraft={hasDraft} onParse={handleParse} />
-      </section>
+      {!linked && (
+        <section className="space-y-3">
+          <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-500">Source</h2>
+          <PasteDropzone initialText={draft.sourceText} hasDraft={hasDraft} onParse={handleParse} />
+        </section>
+      )}
 
       {hasDraft && (
         <section className="space-y-3">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-500">Step review</h2>
+          {linked && (
+            <p className="rounded border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-600">
+              Linked to choreography — calls are locked. Edit cueing text and details only; to change the
+              choreography, save a copy.
+            </p>
+          )}
           <UnresolvedBanner count={unresolvedCount} />
           <StepList
             items={draft.presentationItems}
@@ -231,15 +248,18 @@ export function SequenceImport({
             callOptions={callOptions}
             allFormations={allFormations}
             handlers={handlers}
+            locked={linked}
           />
-          <FooterBar
-            hasDraft={hasDraft}
-            unresolvedCount={unresolvedCount}
-            moduleId={draft.moduleId}
-            isValid={draft.isValid}
-            onSaveDraft={handleSaveDraft}
-            onActivate={handleActivate}
-          />
+          {!linked && (
+            <FooterBar
+              hasDraft={hasDraft}
+              unresolvedCount={unresolvedCount}
+              moduleId={draft.moduleId}
+              isValid={draft.isValid}
+              onSaveDraft={handleSaveDraft}
+              onActivate={handleActivate}
+            />
+          )}
         </section>
       )}
     </div>

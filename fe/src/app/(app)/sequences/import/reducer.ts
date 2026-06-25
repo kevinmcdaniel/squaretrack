@@ -3,6 +3,7 @@ import type {
   DraftModuleRefStep,
   DraftModuleStep,
   DraftPresentationItem,
+  LoadedPresentation,
   ParsedDraft,
   Resolution,
   TextType,
@@ -63,6 +64,81 @@ export function hydratePresentationItems(parsed: ParsedDraft): DraftPresentation
       })),
     };
   });
+}
+
+// Is this loaded presentation linked to choreography? A module_ref item with a
+// real moduleId means the choreo module exists — edits are then text/metadata
+// only (the module is shared/deduped via #21 and must not be mutated from here).
+export function presentationIsLinked(p: LoadedPresentation): boolean {
+  return p.items.some((i) => i.type === 'module_ref' && i.moduleId != null);
+}
+
+// Hydrate the editor from a saved presentation (GET /api/presentation/:id) for
+// re-edit. The editor models a single choreo module — all the import flow
+// produces — so steps come from the first module_ref item; text items and per-step
+// cueing decorations carry over verbatim. callMatches is seeded from the resolved
+// call name so labels render the current selection without a catalog lookup.
+export function hydrateDraftFromPresentation(
+  p: LoadedPresentation,
+  fallbackStartFormationId: number,
+): DraftImport {
+  const moduleRef = p.items.find((i) => i.type === 'module_ref' && i.moduleId != null);
+
+  const moduleSteps: DraftModuleStep[] = (moduleRef?.steps ?? []).map((st) => {
+    const ms = st.moduleStep;
+    const callId = ms?.callId ?? null;
+    const startId = ms?.startId ?? null;
+    const callName = ms?.call?.name ?? null;
+    return {
+      localId: uid(),
+      order: st.stepOrder,
+      callId,
+      startId,
+      callText: callName ?? '',
+      designator: ms?.designator ?? null,
+      count: ms?.count ?? null,
+      warning: ms?.warning ?? null,
+      resolution: callId != null && startId != null ? 'resolved' : 'unresolved',
+      rawLine: '',
+      callMatches: callId != null && callName ? [{ callId, name: callName, confidence: 1 }] : [],
+      formationMatches: startId != null ? [{ startId, name: '' }] : [],
+    };
+  });
+
+  const presentationItems: DraftPresentationItem[] = p.items.map((item) => {
+    if (item.type === 'text') {
+      return { localId: uid(), order: item.order, type: 'text', textType: item.textType ?? 'filler', text: item.text ?? '' };
+    }
+    return {
+      localId: uid(),
+      order: item.order,
+      type: 'module_ref',
+      steps: item.steps.map((st) => ({
+        stepOrder: st.stepOrder,
+        textBefore: st.textBefore,
+        textAfter: st.textAfter,
+        callNameAlternate: st.callNameAlternate,
+        warning: st.warning,
+        helperText: st.helperText,
+      })),
+    };
+  });
+
+  return {
+    presentationId: p.id,
+    moduleId: moduleRef?.moduleId ?? null,
+    isValid: moduleRef?.module?.isValid ?? false,
+    name: p.name ?? '',
+    source: p.source,
+    activator: (p.activator as DraftImport['activator']) ?? null,
+    rating: p.rating,
+    notes: p.notes,
+    sourceText: p.sourceText ?? '',
+    startFormationId: moduleRef?.module?.startFormId ?? fallbackStartFormationId,
+    teachOrderId: null,
+    moduleSteps,
+    presentationItems,
+  };
 }
 
 export type ImportAction =

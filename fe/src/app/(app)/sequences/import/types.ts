@@ -34,6 +34,53 @@ export type ParsedDraft = {
   presentation: { sourceText: string; items: ParsedPresentationItem[] };
 };
 
+// ---- Loaded presentation (GET /api/presentation/:id) ----------------------
+// The nested read shape used to hydrate the editor when re-opening a saved
+// sequence. Mirrors be/src/service/presentation shapeItem.
+
+export type LoadedModuleStep = {
+  order: number;
+  callId: number | null;
+  startId: number | null;
+  designator: string | null;
+  count: number | null;
+  warning: string | null;
+  call: { name: string | null } | null;
+};
+
+export type LoadedItemStep = {
+  stepOrder: number;
+  textBefore: string | null;
+  textAfter: string | null;
+  callNameAlternate: string | null;
+  warning: string | null;
+  helperText: string | null;
+  moduleStep: LoadedModuleStep | null;
+};
+
+export type LoadedItem = {
+  id: number;
+  order: number;
+  type: 'module_ref' | 'text';
+  moduleId: number | null;
+  text: string | null;
+  textType: TextType | null;
+  module: { id: number; name: string; startFormId: number | null; endFormId: number | null; isValid: boolean } | null;
+  steps: LoadedItemStep[];
+};
+
+export type LoadedPresentation = {
+  id: number;
+  name: string;
+  status: string;
+  source: string | null;
+  activator: string | null;
+  rating: string | null;
+  notes: string | null;
+  sourceText: string | null;
+  items: LoadedItem[];
+};
+
 // ---- Client draft state ---------------------------------------------------
 
 // Choreographic — no spoken text. Maps to choreo_module_step on save.
