@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useReducer, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import {
   formationsForCall,
   listCalls,
@@ -8,6 +9,8 @@ import {
   pasteAndParse,
   parseOnly,
   saveImport,
+  savePresentationMeta,
+  copyDraft,
   activatePresentation,
   type CallOption,
   type FormationOption,
@@ -20,7 +23,7 @@ import { StepList } from './StepList';
 import { type StepRowHandlers, stepNeedsAttention } from './StepRow';
 import { UnresolvedBanner } from './UnresolvedBanner';
 import type { LoadedPresentation } from './types';
-import { emptyDraft, hydrateDraftFromPresentation, importReducer, presentationIsLinked } from './reducer';
+import { emptyDraft, hydrateDraftFromPresentation, importReducer, presentationIsLocked } from './reducer';
 
 export function SequenceImport({
   formations,
@@ -31,9 +34,10 @@ export function SequenceImport({
   startFormationId: number;
   initialPresentation?: LoadedPresentation;
 }) {
-  // A presentation with a module_ref item is linked to choreography: the calls
-  // render read-only and the raw paste box is hidden (#20 lifecycle gate).
-  const linked = initialPresentation ? presentationIsLinked(initialPresentation) : false;
+  // Locked once activated: the calls render read-only and the raw paste box is
+  // hidden (#20 lifecycle gate). Drafts — even with a saved WIP module — stay editable.
+  const locked = initialPresentation ? presentationIsLocked(initialPresentation) : false;
+  const router = useRouter();
 
   // Lazy init (runs once): hydrate a saved presentation that already has items;
   // otherwise start empty, carrying a raw draft's id + sourceText for parse-on-load.
@@ -161,6 +165,7 @@ export function SequenceImport({
   const handleSaveDraft = async (): Promise<SaveOutcome> => {
     const payload: SaveImportInput = {
       presentationId: draft.presentationId,
+      moduleId: draft.moduleId,
       name: draft.name,
       source: draft.source,
       activator: draft.activator,
@@ -201,6 +206,12 @@ export function SequenceImport({
     const { moduleId, isValid, chainBreaks, reusedExisting, flowWarnings, presentationId } = res.data;
     dispatch({ type: 'SET_META', patch: { presentationId, moduleId, isValid } });
 
+    // Valid → the sequence is ready; show it. WIP → stay and report what's left.
+    if (isValid) {
+      router.push(`/sequences/${presentationId}`);
+      return { ok: true, message: 'Saved.' };
+    }
+
     const parts = [`Draft saved — module #${moduleId}${reusedExisting ? ' (reused existing)' : ''}.`];
     if (isValid) {
       parts.push('Chain valid. Click Activate when ready.');
@@ -219,7 +230,38 @@ export function SequenceImport({
     if (draft.presentationId == null) return { ok: false, message: 'Save draft first.' };
     const res = await activatePresentation(draft.presentationId);
     if (!res.ok) return { ok: false, message: res.error };
+    router.push(`/sequences/${draft.presentationId}`);
     return { ok: true, message: 'Activated — sequence is now searchable.' };
+  };
+
+  // Locked (activated) save: presentation metadata only; choreography untouched.
+  const handleSaveMeta = async (): Promise<SaveOutcome> => {
+    if (draft.presentationId == null) return { ok: false, message: 'Nothing to save.' };
+    const res = await savePresentationMeta(draft.presentationId, {
+      name: draft.name,
+      source: draft.source,
+      activator: draft.activator,
+      rating: draft.rating,
+      notes: draft.notes,
+    });
+    if (!res.ok) return { ok: false, message: res.error };
+    router.push(`/sequences/${draft.presentationId}`);
+    return { ok: true, message: 'Saved.' };
+  };
+
+  // Save as copy: a new draft with its own identity, opened for editing.
+  const handleCopy = async (): Promise<SaveOutcome> => {
+    const res = await copyDraft({
+      name: draft.name,
+      source: draft.source,
+      activator: draft.activator,
+      rating: draft.rating,
+      notes: draft.notes,
+      sourceText: draft.sourceText,
+    });
+    if (!res.ok) return { ok: false, message: res.error };
+    router.push(`/sequences/${res.data.id}/edit`);
+    return { ok: true, message: 'Copied.' };
   };
 
   return (
@@ -229,7 +271,7 @@ export function SequenceImport({
         <MetaForm draft={draft} formations={formations} onMeta={(patch) => dispatch({ type: 'SET_META', patch })} />
       </section>
 
-      {!linked && (
+      {!locked && (
         <section className="space-y-3">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-500">Source</h2>
           <PasteDropzone initialText={draft.sourceText} hasDraft={hasDraft} onParse={handleParse} />
@@ -239,10 +281,10 @@ export function SequenceImport({
       {hasDraft && (
         <section className="space-y-3">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-500">Step review</h2>
-          {linked && (
+          {locked && (
             <p className="rounded border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-600">
-              Linked to choreography — calls are locked. Edit cueing text and details only; to change the
-              choreography, save a copy.
+              Activated — calls are locked. Edit cueing text and details only; to change the choreography,
+              save a copy.
             </p>
           )}
           <UnresolvedBanner count={unresolvedCount} />
@@ -252,18 +294,16 @@ export function SequenceImport({
             callOptions={callOptions}
             allFormations={allFormations}
             handlers={handlers}
-            locked={linked}
+            locked={locked}
           />
-          {!linked && (
-            <FooterBar
-              hasDraft={hasDraft}
-              unresolvedCount={unresolvedCount}
-              moduleId={draft.moduleId}
-              isValid={draft.isValid}
-              onSaveDraft={handleSaveDraft}
-              onActivate={handleActivate}
-            />
-          )}
+          <FooterBar
+            saveLabel={locked ? 'Save details' : 'Save draft'}
+            unresolvedCount={locked ? 0 : unresolvedCount}
+            canActivate={!locked && draft.moduleId != null && draft.isValid}
+            onSave={locked ? handleSaveMeta : handleSaveDraft}
+            onActivate={locked ? undefined : handleActivate}
+            onCopy={handleCopy}
+          />
         </section>
       )}
     </div>

@@ -70,4 +70,7 @@ test('opening a linked sequence hydrates it with calls locked', async ({ page })
   await expect(page.getByPlaceholder('Search calls…')).toHaveCount(0);
   await expect(page.getByRole('button', { name: 'change' })).toHaveCount(0);
   await expect(page.getByLabel('Calling text')).toHaveCount(0);
+
+  // A locked editor still offers Save as copy (revision).
+  await expect(page.getByRole('button', { name: 'Save as copy' })).toBeVisible();
 });

@@ -66,11 +66,11 @@ export function hydratePresentationItems(parsed: ParsedDraft): DraftPresentation
   });
 }
 
-// Is this loaded presentation linked to choreography? A module_ref item with a
-// real moduleId means the choreo module exists — edits are then text/metadata
-// only (the module is shared/deduped via #21 and must not be mutated from here).
-export function presentationIsLinked(p: LoadedPresentation): boolean {
-  return p.items.some((i) => i.type === 'module_ref' && i.moduleId != null);
+// Locked = the sequence has been activated (status 'active'): its choreography is
+// committed, so the editor permits text/metadata edits only. A draft — even one that
+// already has a saved (WIP) module — stays fully editable while you fix it.
+export function presentationIsLocked(p: LoadedPresentation): boolean {
+  return p.status === 'active';
 }
 
 // Hydrate the editor from a saved presentation (GET /api/presentation/:id) for
