@@ -31,6 +31,8 @@ export type ParsedPresentationItem =
 // The two-layer parse result: a presentation-free choreo module draft plus a
 // presentation draft wrapping it with cueing text (issue #70).
 export type ParsedDraft = {
+  name?: string; // from a first-row [Title]
+  activator?: 'heads' | 'sides'; // from a {heads/sides} toggle line — the lead position
   module: { steps: ParsedModuleStep[] };
   presentation: { sourceText: string; items: ParsedPresentationItem[] };
 };
@@ -79,11 +81,22 @@ function extractTextBefore(text: string): { text: string; textBefore?: string } 
 }
 
 export async function parseSequenceText(rawText: string): Promise<ParsedDraft> {
-  const lines = rawText
+  const rawLines = rawText
     .split('\n')
     .map((l) => l.trim())
     .filter((l) => l.length > 0);
 
+  // First-row [Title] — a whole-line bracket that is not a reserved text marker
+  // ([tip]/[filler]/[recovery]/[warning]) — names the sequence rather than a step.
+  let name: string | undefined;
+  let lines = rawLines;
+  const titleMatch = rawLines[0]?.match(/^\[([^\]]+)\]$/);
+  if (titleMatch && !['tip', 'filler', 'recovery', 'warning'].includes(titleMatch[1]!.trim().toLowerCase())) {
+    name = titleMatch[1]!.trim();
+    lines = rawLines.slice(1);
+  }
+
+  let activator: 'heads' | 'sides' | undefined;
   const moduleSteps: ParsedModuleStep[] = [];
   const items: ParsedPresentationItem[] = [];
 
@@ -99,20 +112,11 @@ export async function parseSequenceText(rawText: string): Promise<ParsedDraft> {
     }
   };
 
-  for (const rawLine of lines) {
-    const line = rawLine.replace(/\s+/g, ' ').trim(); // collapse whitespace, keep case
-    const { type, text } = classifyLine(line);
-
-    if (type !== 'call') {
-      flushModuleRef();
-      items.push({ order: itemOrder++, type: 'text', textType: type, text });
-      continue;
-    }
-
-    // Strip spoken filler both before and after the designator. The designator
-    // must still be recognized (it drives call resolution); the filler is kept,
-    // in source order, on the presentation layer as textBefore.
-    const { text: afterPreFiller, textBefore: preFiller } = extractTextBefore(text);
+  // Resolve one call's text into a module step plus its presentation decoration.
+  // Strips spoken filler around the designator (the designator drives resolution;
+  // the filler is kept, in source order, on the presentation layer as textBefore).
+  const processCall = async (callLineText: string, rawLine: string) => {
+    const { text: afterPreFiller, textBefore: preFiller } = extractTextBefore(callLineText);
     const { text: afterDesignator, designator } = extractDesignator(afterPreFiller);
     const { text: afterPostFiller, textBefore: postFiller } = extractTextBefore(afterDesignator);
     const { text: callText, count } = extractCount(afterPostFiller);
@@ -159,11 +163,42 @@ export async function parseSequenceText(rawText: string): Promise<ParsedDraft> {
       startId: formationMatches.length === 1 ? formationMatches[0].startId : undefined,
     });
     pendingDecoration.push({ stepOrder, ...(textBefore ? { textBefore } : {}) });
+  };
+
+  for (const rawLine of lines) {
+    let line = rawLine.replace(/\s+/g, ' ').trim(); // collapse whitespace, keep case
+
+    // {X/Y} activator prefix — sets the sequence activator (lead = first token);
+    // anything after the brace is a call on the same line (e.g. "{H/S} Rollaway").
+    const act = line.match(/^\{\s*(heads|sides|h|s)\s*\/\s*(?:heads|sides|h|s)\s*\}\s*(.*)$/i);
+    if (act) {
+      if (!activator) activator = act[1]!.toLowerCase().startsWith('s') ? 'sides' : 'heads';
+      line = act[2]!.trim();
+      if (!line) continue; // activator-only line, no call follows
+    }
+
+    const { type, text } = classifyLine(line);
+    if (type !== 'call') {
+      flushModuleRef();
+      items.push({ order: itemOrder++, type: 'text', textType: type, text });
+      continue;
+    }
+
+    // Comma-split: a multi-call line ("sides face, grand square") becomes one step
+    // per piece. Over-splits are recoverable in the editor (split/remove/un-split).
+    for (const piece of text.split(',').map((p) => p.trim()).filter(Boolean)) {
+      await processCall(piece, rawLine);
+    }
   }
 
   flushModuleRef();
 
-  return { module: { steps: moduleSteps }, presentation: { sourceText: rawText, items } };
+  return {
+    ...(name ? { name } : {}),
+    ...(activator ? { activator } : {}),
+    module: { steps: moduleSteps },
+    presentation: { sourceText: rawText, items },
+  };
 }
 
 export type SplitSequence = { name: string; sourceText: string };

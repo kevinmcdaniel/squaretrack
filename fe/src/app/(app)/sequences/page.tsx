@@ -1,13 +1,18 @@
 import Link from 'next/link';
 import { fetchData } from '@/lib/hac/fetch';
+import { DeleteDraftButton } from './DeleteDraftButton';
 
 export const dynamic = 'force-dynamic';
 
 type DraftPresentation = { id: number; name: string; sourceText: string | null; status: string };
 
 export default async function Page() {
-  const { data } = await fetchData<DraftPresentation[]>('presentation?status=draft', { shape: 'list' });
-  const drafts = data ?? [];
+  const [draftRes, activeRes] = await Promise.all([
+    fetchData<DraftPresentation[]>('presentation?status=draft', { shape: 'list' }),
+    fetchData<DraftPresentation[]>('presentation?status=active', { shape: 'list' }),
+  ]);
+  const drafts = draftRes.data ?? [];
+  const active = activeRes.data ?? [];
 
   return (
     <section className="max-w-4xl">
@@ -16,6 +21,28 @@ export default async function Page() {
         Active sequences are searchable by program and teach order. Drafts are saved raw text
         awaiting parsing and validation.
       </p>
+
+      <div className="mb-8">
+        <h2 className="mb-4 text-sm font-semibold uppercase tracking-wide text-gray-500">
+          Sequences{active.length > 0 ? ` (${active.length})` : ''}
+        </h2>
+        {active.length === 0 ? (
+          <p className="text-sm text-gray-500">No saved sequences yet.</p>
+        ) : (
+          <ul className="divide-y divide-gray-100 rounded border border-gray-200 bg-white">
+            {active.map((s) => (
+              <li key={s.id} className="flex items-center justify-between px-4 py-3">
+                <Link href={`/sequences/${s.id}`} className="min-w-0 flex-1 truncate text-sm font-medium text-blue-600 hover:underline">
+                  {s.name}
+                </Link>
+                <Link href={`/sequences/${s.id}`} className="ml-4 shrink-0 text-sm text-gray-500 hover:text-gray-700">
+                  View
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
 
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-sm font-semibold uppercase tracking-wide text-gray-500">
@@ -40,7 +67,7 @@ export default async function Page() {
       ) : (
         <ul className="divide-y divide-gray-100 rounded border border-gray-200 bg-white">
           {drafts.map((d) => (
-            <li key={d.id} className="flex items-center justify-between px-4 py-3">
+            <li key={d.id} className="flex items-center justify-between gap-3 px-4 py-3">
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm font-medium text-gray-900">{d.name}</p>
                 {d.sourceText && (
@@ -49,12 +76,15 @@ export default async function Page() {
                   </p>
                 )}
               </div>
-              <Link
-                href={`/sequences/import?presentationId=${d.id}`}
-                className="ml-4 shrink-0 text-sm text-blue-600 hover:underline"
-              >
-                Continue
-              </Link>
+              <div className="flex shrink-0 items-center gap-3">
+                <Link
+                  href={`/sequences/${d.id}/edit`}
+                  className="text-sm font-medium text-blue-600 hover:underline"
+                >
+                  Edit
+                </Link>
+                <DeleteDraftButton id={d.id} name={d.name} />
+              </div>
             </li>
           ))}
         </ul>

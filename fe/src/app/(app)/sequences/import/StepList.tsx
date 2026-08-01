@@ -14,12 +14,14 @@ export function StepList({
   callOptions,
   allFormations,
   handlers,
+  locked = false,
 }: {
   items: DraftPresentationItem[];
   stepsByOrder: Map<number, DraftModuleStep>;
   callOptions: CallOption[];
   allFormations: FormationOption[];
   handlers: StepRowHandlers;
+  locked?: boolean;
 }) {
   if (items.length === 0) {
     return <p className="text-sm text-gray-500">Parse some text to see the step review.</p>;
@@ -45,6 +47,7 @@ export function StepList({
                   callOptions={callOptions}
                   allFormations={allFormations}
                   handlers={handlers}
+                  locked={locked}
                 />
               );
             })}

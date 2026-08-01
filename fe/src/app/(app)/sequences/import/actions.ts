@@ -45,6 +45,21 @@ export async function pasteAndParse(input: {
   return { ok: true, data: { presentationId: saved.body.data.id, draft: parsed.body.data } };
 }
 
+// Parse without persisting. Used when re-opening an already-saved draft
+// (?presentationId=N): the raw presentation already exists, so re-running the
+// stateless parser is enough to repopulate the step review — POSTing a second
+// presentation (as pasteAndParse does) would orphan a duplicate.
+export async function parseOnly(sourceText: string): Promise<ActionResult<ParsedDraft>> {
+  const text = sourceText.trim();
+  if (!text) return { ok: false, error: 'Nothing to parse.' };
+
+  const parsed = await mutateData<ParsedDraft>('sequence/parse', 'POST', { text });
+  if (!parsed.ok || !parsed.body.data) {
+    return { ok: false, error: parsed.body.message || 'Could not parse the text.' };
+  }
+  return { ok: true, data: parsed.body.data };
+}
+
 // All calls, for the CallPicker autocomplete. The list endpoint has no server-side
 // search, so the picker filters this client-side (the catalog is small).
 export async function listCalls(): Promise<ActionResult<CallOption[]>> {
@@ -94,6 +109,7 @@ export type SaveItem =
 
 export type SaveImportInput = {
   presentationId: number | null;
+  moduleId: number | null;
   name: string;
   source: string | null;
   activator: string | null;
@@ -124,13 +140,19 @@ export async function saveImport(input: SaveImportInput): Promise<ActionResult<S
   if (input.moduleSteps.length === 0) return { ok: false, error: 'Nothing to save — parse some calls first.' };
   const name = input.name.trim() || `Imported sequence ${new Date().toISOString().slice(0, 16)}`;
 
-  const moduleRes = await mutateData<{ id: number; isValid: boolean }>('module', 'POST', {
+  const moduleBody = {
     name,
     startFormId: input.startFormationId,
     teachOrderId: input.teachOrderId,
     isVerified: false,
     steps: input.moduleSteps,
-  });
+  };
+  // Re-save updates the draft module in place (PUT) instead of minting a new one;
+  // the first save creates it. Variant dedup (#21) only runs on resolved modules.
+  const moduleRes =
+    input.moduleId != null
+      ? await mutateData<{ id: number; isValid: boolean }>(`module/${input.moduleId}`, 'PUT', moduleBody)
+      : await mutateData<{ id: number; isValid: boolean }>('module', 'POST', moduleBody);
   if (!moduleRes.ok || moduleRes.body.data?.id == null) {
     return { ok: false, error: moduleRes.body.message || 'Could not save the choreo module.' };
   }
@@ -236,4 +258,40 @@ export async function activatePresentation(presentationId: number): Promise<Acti
   const res = await mutateData(`presentation/${presentationId}`, 'PATCH', { status: 'active' });
   if (!res.ok) return { ok: false, error: res.body.message || 'Could not activate the presentation.' };
   return { ok: true, data: undefined };
+}
+
+// Post-link (locked) save: presentation metadata only, choreography untouched.
+export type PresentationMeta = {
+  name: string;
+  source: string | null;
+  activator: string | null;
+  rating: string | null;
+  notes: string | null;
+};
+
+export async function savePresentationMeta(
+  presentationId: number,
+  meta: PresentationMeta,
+): Promise<ActionResult<void>> {
+  const res = await mutateData(`presentation/${presentationId}`, 'PATCH', meta);
+  if (!res.ok) return { ok: false, error: res.body.message || 'Could not save the details.' };
+  return { ok: true, data: undefined };
+}
+
+// Save as copy (revision): clone the raw text + metadata into a new draft presentation
+// with its own identity. The choreography is re-derived (and #21-deduped) when the
+// copy is linked, so corrections to a copy never disturb the original.
+export async function copyDraft(meta: PresentationMeta & { sourceText: string }): Promise<ActionResult<{ id: number }>> {
+  const name = `Copy of ${meta.name.trim() || 'sequence'}`.slice(0, 120);
+  const res = await mutateData<{ id: number }>('presentation', 'POST', {
+    name,
+    source: meta.source,
+    activator: meta.activator,
+    rating: meta.rating,
+    notes: meta.notes,
+    sourceText: meta.sourceText,
+    items: [],
+  });
+  if (!res.ok || res.body.data?.id == null) return { ok: false, error: res.body.message || 'Could not copy the sequence.' };
+  return { ok: true, data: { id: res.body.data.id } };
 }
